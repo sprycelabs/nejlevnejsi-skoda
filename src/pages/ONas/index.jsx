@@ -51,7 +51,7 @@ const timeline = [
     desc: 'Vybudovali jsme vlastní systém sledování nabídek a síť ověřených partnerů v klíčových zemích EU. Objem obchodů překročil 100 vozů ročně.',
   },
   {
-    year: '2024',
+    year: '2026',
     title: 'Dnes',
     desc: 'Stovky spokojených zákazníků, od jednotlivců po firemní flotily. Každý případ řešíme individuálně, každý vůz s plnou zárukou a bez kompromisů.',
   },
@@ -99,7 +99,7 @@ export default function ONas() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-lg leading-relaxed"
             >
-              Jsme NOWAK CONSULTANCY SERVICES — specializovaný partner pro nákup vozů Škoda
+              Jsme nejlevnejsi-skoda.cz — specializovaný partner pro nákup vozů Škoda
               z evropských trhů. Díky přístupu k nabídkám stovek dealerů v celé EU zajišťujeme
               identické vozy za ceny, které čeští prodejci nenabídnou.
             </motion.p>
@@ -158,7 +158,7 @@ export default function ONas() {
                   Celý proces byl ale složitý — jazyková bariéra, administrativa, logistika.
                 </p>
                 <p>
-                  Proto NOWAK CONSULTANCY SERVICES vzniklo: aby tento proces zvládl za vás
+                  Proto nejlevnejsi-skoda.cz vzniklo: aby tento proces zvládl za vás
                   kdokoliv, bez znalostí a bez starostí. Za stejnou cenu, za jakou si sami nakoupíme.
                 </p>
               </div>
