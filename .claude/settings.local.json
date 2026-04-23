@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(npx create-vite@latest . --template react)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx kill-port *)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :5173)",
+      "Bash(xargs sed *)"
+    ]
+  }
+}
