@@ -13,8 +13,7 @@ const footerLinks = {
     { label: 'Jak to funguje', href: '/#jak-to-funguje' },
     { label: 'Financování', href: '/kontakt' },
     { label: 'Ceník dopravy', href: '/kontakt' },
-    { label: 'FAQ', href: '/kontakt' },
-    { label: 'Reference', href: '/o-nas' },
+    { label: 'FAQ', href: '/faq' },
   ],
   'Servis': [
     { label: 'Tovární záruka', href: '/o-nas' },
