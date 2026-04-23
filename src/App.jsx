@@ -12,6 +12,7 @@ import VozyPage from './pages/Vozy'
 import VozDetail from './pages/VozDetail'
 import ONas from './pages/ONas'
 import Kontakt from './pages/Kontakt'
+import FAQ from './pages/FAQ'
 import ScrollToTop from './components/ScrollToTop'
 
 function HomePage() {
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/vozy/:slug" element={<VozDetail />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/kontakt" element={<Kontakt />} />
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
     </BrowserRouter>
   )
