@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+﻿import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
@@ -19,9 +19,9 @@ export default function VozDetail() {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
         <div className="flex-1 flex items-center justify-center flex-col gap-4 pt-24">
-          <p className="text-2xl font-black text-gray-700">Vůz nenalezen</p>
+          <p className="text-2xl font-black text-gray-700">VĹŻz nenalezen</p>
           <Link to="/vozy" className="text-[#1e7e34] font-semibold hover:underline flex items-center gap-1">
-            <ArrowLeft size={16} /> Zpět na vozy
+            <ArrowLeft size={16} /> ZpÄ›t na vozy
           </Link>
         </div>
         <Footer />
@@ -33,21 +33,21 @@ export default function VozDetail() {
 
   const specs = [
     { label: 'Palivo', value: car.fuel },
-    { label: 'Převodovka', value: car.transmission },
-    { label: 'Spotřeba', value: car.consumption },
-    { label: 'Výkon', value: car.power },
-    { label: 'Rok výroby', value: String(car.year) },
+    { label: 'PĹ™evodovka', value: car.transmission },
+    { label: 'SpotĹ™eba', value: car.consumption },
+    { label: 'VĂ˝kon', value: car.power },
+    { label: 'Rok vĂ˝roby', value: String(car.year) },
     { label: 'Barva', value: car.color },
-    { label: 'Pohon', value: car.variant.includes('4x4') ? '4×4' : 'FWD' },
-    { label: 'Stav', value: 'Nové' },
+    { label: 'Pohon', value: car.variant.includes('4x4') ? '4Ă—4' : 'FWD' },
+    { label: 'Stav', value: 'NovĂ©' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      {/* ── HERO ── */}
-      <section className="relative bg-[#0d1f10] overflow-hidden pt-28">
+      {/* â”€â”€ HERO â”€â”€ */}
+      <section className="relative bg-[#0d1f10] overflow-hidden pt-40">
         {/* bg glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
@@ -55,7 +55,7 @@ export default function VozDetail() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           {/* breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
-            <Link to="/" className="hover:text-white transition-colors">Domů</Link>
+            <Link to="/" className="hover:text-white transition-colors">DomĹŻ</Link>
             <ChevronRight size={13} />
             <Link to="/vozy" className="hover:text-white transition-colors">Vozy</Link>
             <ChevronRight size={13} />
@@ -63,7 +63,7 @@ export default function VozDetail() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-end pb-0 pt-4">
-            {/* left — text */}
+            {/* left â€” text */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -78,7 +78,7 @@ export default function VozDetail() {
               </div>
 
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white mb-2">{car.name}</h1>
-              <p className="text-gray-300 text-base sm:text-xl mb-5 sm:mb-8">{car.variant} · {car.power}</p>
+              <p className="text-gray-300 text-base sm:text-xl mb-5 sm:mb-8">{car.variant} Â· {car.power}</p>
 
               {/* quick specs row */}
               <div className="flex flex-wrap gap-6 mb-8">
@@ -101,12 +101,12 @@ export default function VozDetail() {
                   {formatPrice(car.salePrice)}
                 </span>
                 <span className="text-gray-400 text-sm mt-1">
-                  vč. DPH · <span className="text-red-400 font-semibold">ušetříte {formatPrice(savings)}</span>
+                  vÄŤ. DPH Â· <span className="text-red-400 font-semibold">uĹˇetĹ™Ă­te {formatPrice(savings)}</span>
                 </span>
               </div>
             </motion.div>
 
-            {/* right — car image */}
+            {/* right â€” car image */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
@@ -135,11 +135,11 @@ export default function VozDetail() {
         </div>
       </section>
 
-      {/* ── MAIN CONTENT ── */}
+      {/* â”€â”€ MAIN CONTENT â”€â”€ */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
-          {/* ── LEFT column (2/3) ── */}
+          {/* â”€â”€ LEFT column (2/3) â”€â”€ */}
           <div className="lg:col-span-2 space-y-8">
 
             {/* Trust bar */}
@@ -150,9 +150,9 @@ export default function VozDetail() {
               className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4"
             >
               {[
-                { icon: ShieldCheck, title: 'Tovární záruka', sub: 'Platí v celé EU' },
-                { icon: Truck, title: 'Dovoz do ČR', sub: car.freeDelivery ? 'Zdarma' : 'Na dotaz' },
-                { icon: BadgePercent, title: 'Ušetříte', sub: formatPrice(savings) },
+                { icon: ShieldCheck, title: 'TovĂˇrnĂ­ zĂˇruka', sub: 'PlatĂ­ v celĂ© EU' },
+                { icon: Truck, title: 'Dovoz do ÄŚR', sub: car.freeDelivery ? 'Zdarma' : 'Na dotaz' },
+                { icon: BadgePercent, title: 'UĹˇetĹ™Ă­te', sub: formatPrice(savings) },
               ].map(({ icon: Icon, title, sub }) => (
                 <div key={title} className="bg-white rounded-lg border border-gray-100 shadow-sm p-4 sm:p-5 flex items-center gap-3 sm:gap-4">
                   <div className="w-10 h-10 bg-[#f0faf2] rounded-md flex items-center justify-center shrink-0">
@@ -174,7 +174,7 @@ export default function VozDetail() {
               className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden"
             >
               <div className="px-7 py-5 border-b border-gray-100">
-                <h2 className="text-xl font-black text-gray-900">Technické parametry</h2>
+                <h2 className="text-xl font-black text-gray-900">TechnickĂ© parametry</h2>
               </div>
               <div className="divide-y divide-gray-50">
                 {specs.map(({ label, value }) => (
@@ -196,35 +196,35 @@ export default function VozDetail() {
               <h2 className="text-xl font-black text-gray-900 mb-4">O tomto voze</h2>
               <div className="space-y-3 text-gray-600 leading-relaxed text-[15px]">
                 <p>
-                  <strong className="text-gray-900">{car.name} {car.variant}</strong> je dostupný přímo
-                  ze skladů evropských dealerů za výrazně nižší ceny než u českých prodejců.
-                  Vůz pochází z oficiální distribuční sítě Škoda Auto — tovární záruka platí stejně jako
-                  při nákupu v ČR.
+                  <strong className="text-gray-900">{car.name} {car.variant}</strong> je dostupnĂ˝ pĹ™Ă­mo
+                  ze skladĹŻ evropskĂ˝ch dealerĹŻ za vĂ˝raznÄ› niĹľĹˇĂ­ ceny neĹľ u ÄŤeskĂ˝ch prodejcĹŻ.
+                  VĹŻz pochĂˇzĂ­ z oficiĂˇlnĂ­ distribuÄŤnĂ­ sĂ­tÄ› Ĺ koda Auto â€” tovĂˇrnĂ­ zĂˇruka platĂ­ stejnÄ› jako
+                  pĹ™i nĂˇkupu v ÄŚR.
                 </p>
                 <p>
-                  Motor {car.variant} s výkonem {car.power} nabízí výbornou rovnováhu výkonu a
-                  spotřeby ({car.consumption}).
+                  Motor {car.variant} s vĂ˝konem {car.power} nabĂ­zĂ­ vĂ˝bornou rovnovĂˇhu vĂ˝konu a
+                  spotĹ™eby ({car.consumption}).
                   {car.transmission === 'Automat'
-                    ? ' Automat zajišťuje pohodlné řízení ve městě i na dálnici.'
-                    : ' Manuální převodovka zaručuje přímý kontakt s vozem a nižší náklady na servis.'}
+                    ? ' Automat zajiĹˇĹĄuje pohodlnĂ© Ĺ™Ă­zenĂ­ ve mÄ›stÄ› i na dĂˇlnici.'
+                    : ' ManuĂˇlnĂ­ pĹ™evodovka zaruÄŤuje pĹ™Ă­mĂ˝ kontakt s vozem a niĹľĹˇĂ­ nĂˇklady na servis.'}
                 </p>
                 <p>
-                  Celý proces nákupu zajišťujeme za vás — od výběru až po předání klíčků v ČR.
-                  Postaráme se o přepravu, přihlášení a veškerou administrativu.
+                  CelĂ˝ proces nĂˇkupu zajiĹˇĹĄujeme za vĂˇs â€” od vĂ˝bÄ›ru aĹľ po pĹ™edĂˇnĂ­ klĂ­ÄŤkĹŻ v ÄŚR.
+                  PostarĂˇme se o pĹ™epravu, pĹ™ihlĂˇĹˇenĂ­ a veĹˇkerou administrativu.
                 </p>
               </div>
 
               {/* Co je zahrnuto */}
               <div className="mt-7 pt-7 border-t border-gray-100">
-                <h3 className="font-black text-gray-900 mb-4">Co je zahrnuto v ceně</h3>
+                <h3 className="font-black text-gray-900 mb-4">Co je zahrnuto v cenÄ›</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   {[
-                    'Plná tovární záruka Škoda',
-                    'Technická přejímka v ČR',
-                    'Registrace vozu v ČR',
-                    'Předávací protokol',
-                    car.freeDelivery ? 'Přeprava do ČR zdarma' : 'Přeprava do ČR (na dotaz)',
-                    'Kompletní dokumentace',
+                    'PlnĂˇ tovĂˇrnĂ­ zĂˇruka Ĺ koda',
+                    'TechnickĂˇ pĹ™ejĂ­mka v ÄŚR',
+                    'Registrace vozu v ÄŚR',
+                    'PĹ™edĂˇvacĂ­ protokol',
+                    car.freeDelivery ? 'PĹ™eprava do ÄŚR zdarma' : 'PĹ™eprava do ÄŚR (na dotaz)',
+                    'KompletnĂ­ dokumentace',
                   ].map(item => (
                     <div key={item} className="flex items-center gap-2.5 text-sm text-gray-700">
                       <CheckCircle2 size={16} className="text-[#1e7e34] shrink-0" />
@@ -235,19 +235,19 @@ export default function VozDetail() {
               </div>
             </motion.div>
 
-            {/* Proč koupit */}
+            {/* ProÄŤ koupit */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-7 text-white"
             >
-              <h2 className="text-xl font-black mb-5">Proč koupit přes nás?</h2>
+              <h2 className="text-xl font-black mb-5">ProÄŤ koupit pĹ™es nĂˇs?</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
                 {[
-                  { icon: BadgePercent, title: `Ušetříte ${car.discount} %`, sub: 'oproti ČR ceně' },
-                  { icon: ShieldCheck, title: 'Plná záruka', sub: 'jako u CZ dealera' },
-                  { icon: Star, title: 'Bez starostí', sub: 'Vše vyřídíme za vás' },
+                  { icon: BadgePercent, title: `UĹˇetĹ™Ă­te ${car.discount} %`, sub: 'oproti ÄŚR cenÄ›' },
+                  { icon: ShieldCheck, title: 'PlnĂˇ zĂˇruka', sub: 'jako u CZ dealera' },
+                  { icon: Star, title: 'Bez starostĂ­', sub: 'VĹˇe vyĹ™Ă­dĂ­me za vĂˇs' },
                 ].map(({ icon: Icon, title, sub }) => (
                   <div key={title} className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-white/10 rounded-md flex items-center justify-center shrink-0">
@@ -263,7 +263,7 @@ export default function VozDetail() {
             </motion.div>
           </div>
 
-          {/* ── RIGHT sidebar ── */}
+          {/* â”€â”€ RIGHT sidebar â”€â”€ */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
 
@@ -278,12 +278,12 @@ export default function VozDetail() {
                   <div className="text-sm text-gray-400 line-through mb-0.5">{formatPrice(car.originalPrice)}</div>
                   <div className="text-4xl font-black text-[#1e7e34]">{formatPrice(car.salePrice)}</div>
                   <div className="flex items-center justify-between mt-1.5">
-                    <span className="text-sm text-gray-500">vč. DPH</span>
-                    <span className="text-sm font-semibold text-red-500">ušetříte {formatPrice(savings)}</span>
+                    <span className="text-sm text-gray-500">vÄŤ. DPH</span>
+                    <span className="text-sm font-semibold text-red-500">uĹˇetĹ™Ă­te {formatPrice(savings)}</span>
                   </div>
                   {car.freeDelivery && (
                     <div className="flex items-center gap-1.5 mt-3 text-xs text-[#1e7e34] font-medium">
-                      <Truck size={13} /> Doprava do ČR zdarma
+                      <Truck size={13} /> Doprava do ÄŚR zdarma
                     </div>
                   )}
                 </div>
@@ -292,12 +292,12 @@ export default function VozDetail() {
                   {/* stock */}
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
-                    Skladem {car.inStock} {car.inStock === 1 ? 'kus' : car.inStock < 5 ? 'kusy' : 'kusů'}
+                    Skladem {car.inStock} {car.inStock === 1 ? 'kus' : car.inStock < 5 ? 'kusy' : 'kusĹŻ'}
                   </div>
 
                   <button className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base">
                     <ShoppingCart size={18} />
-                    Přidat do košíku
+                    PĹ™idat do koĹˇĂ­ku
                   </button>
 
                   <a
@@ -323,13 +323,13 @@ export default function VozDetail() {
                 transition={{ duration: 0.4, delay: 0.35 }}
                 className="bg-white rounded-lg border border-gray-100 shadow-sm p-5"
               >
-                <h3 className="font-bold text-gray-900 text-sm mb-4">Rychlý přehled</h3>
+                <h3 className="font-bold text-gray-900 text-sm mb-4">RychlĂ˝ pĹ™ehled</h3>
                 <div className="space-y-3">
                   {[
                     { icon: Fuel, label: 'Palivo', value: car.fuel },
-                    { icon: Cog, label: 'Převodovka', value: car.transmission },
-                    { icon: Zap, label: 'Spotřeba', value: car.consumption },
-                    { icon: Package, label: 'Výkon', value: car.power },
+                    { icon: Cog, label: 'PĹ™evodovka', value: car.transmission },
+                    { icon: Zap, label: 'SpotĹ™eba', value: car.consumption },
+                    { icon: Package, label: 'VĂ˝kon', value: car.power },
                     { icon: Calendar, label: 'Rok', value: String(car.year) },
                     { icon: Palette, label: 'Barva', value: car.color },
                   ].map(({ icon: Icon, label, value }) => (
@@ -346,12 +346,12 @@ export default function VozDetail() {
           </div>
         </div>
 
-        {/* ── Podobné vozy ── */}
+        {/* â”€â”€ PodobnĂ© vozy â”€â”€ */}
         <div className="mt-16">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-black text-gray-900">Podobné vozy</h2>
+            <h2 className="text-2xl font-black text-gray-900">PodobnĂ© vozy</h2>
             <Link to="/vozy" className="text-[#1e7e34] font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
-              Všechny vozy <ArrowRight size={15} />
+              VĹˇechny vozy <ArrowRight size={15} />
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
@@ -372,7 +372,7 @@ export default function VozDetail() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-black text-gray-900">{relCar.name}</h3>
-                  <p className="text-gray-500 text-sm mb-3">{relCar.variant} · {relCar.power}</p>
+                  <p className="text-gray-500 text-sm mb-3">{relCar.variant} Â· {relCar.power}</p>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-xs text-gray-400 line-through">{formatPrice(relCar.originalPrice)}</div>

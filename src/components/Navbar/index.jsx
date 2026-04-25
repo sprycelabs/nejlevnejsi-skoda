@@ -47,7 +47,7 @@ export default function Navbar() {
       </div>
 
       {/* Main nav */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="select-none flex items-center">
           <img src="/logo.png" alt="Nejlevnější Škoda" style={{ height: '80px', width: 'auto' }} />

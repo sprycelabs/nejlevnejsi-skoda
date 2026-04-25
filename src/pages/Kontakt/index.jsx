@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
@@ -13,41 +13,41 @@ const contactItems = [
     icon: Phone,
     label: 'Telefon',
     value: '+420 733 455 966',
-    sub: 'Po–Pá 8:00–18:00',
+    sub: 'Poâ€“PĂˇ 8:00â€“18:00',
     href: 'tel:+420733455966',
   },
   {
     icon: Mail,
     label: 'E-mail',
     value: 'info@nejlevnejsi-skoda.cz',
-    sub: 'Odpovídáme do 24 hodin',
+    sub: 'OdpovĂ­dĂˇme do 24 hodin',
     href: 'mailto:info@nejlevnejsi-skoda.cz',
   },
   {
     icon: MapPin,
-    label: 'Sídlo',
-    value: 'Praha, Česká republika',
-    sub: 'Schůzky po domluvě',
+    label: 'SĂ­dlo',
+    value: 'Praha, ÄŚeskĂˇ republika',
+    sub: 'SchĹŻzky po domluvÄ›',
     href: null,
   },
   {
     icon: Clock,
-    label: 'Provozní doba',
-    value: 'Po–Pá 8:00–18:00',
-    sub: 'So 9:00–13:00',
+    label: 'ProvoznĂ­ doba',
+    value: 'Poâ€“PĂˇ 8:00â€“18:00',
+    sub: 'So 9:00â€“13:00',
     href: null,
   },
 ]
 
 const carModels = [
-  'Škoda Octavia',
-  'Škoda Fabia',
-  'Škoda Superb',
-  'Škoda Kodiaq',
-  'Škoda Karoq',
-  'Škoda Kamiq',
-  'Škoda Enyaq',
-  'Jiný model',
+  'Ĺ koda Octavia',
+  'Ĺ koda Fabia',
+  'Ĺ koda Superb',
+  'Ĺ koda Kodiaq',
+  'Ĺ koda Karoq',
+  'Ĺ koda Kamiq',
+  'Ĺ koda Enyaq',
+  'JinĂ˝ model',
 ]
 
 export default function Kontakt() {
@@ -79,13 +79,13 @@ export default function Kontakt() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-[#0d1f10] overflow-hidden pt-28">
+      <section className="relative bg-[#0d1f10] overflow-hidden pt-40">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/4" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
-            <Link to="/" className="hover:text-white transition-colors">Domů</Link>
+            <Link to="/" className="hover:text-white transition-colors">DomĹŻ</Link>
             <ChevronRight size={13} />
             <span className="text-gray-200">Kontakt</span>
           </div>
@@ -96,7 +96,7 @@ export default function Kontakt() {
               animate={{ opacity: 1, y: 0 }}
               className="text-[#28a745] font-semibold text-sm uppercase tracking-wider mb-3"
             >
-              Jsme tu pro vás
+              Jsme tu pro vĂˇs
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -104,9 +104,9 @@ export default function Kontakt() {
               transition={{ delay: 0.1 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-6"
             >
-              Nezávazná poptávka<br />
+              NezĂˇvaznĂˇ poptĂˇvka<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">
-                do 24 hodin odpovíme.
+                do 24 hodin odpovĂ­me.
               </span>
             </motion.h1>
             <motion.p
@@ -115,8 +115,8 @@ export default function Kontakt() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-lg leading-relaxed"
             >
-              Řekněte nám, jaký vůz hledáte. Připravíme konkrétní nabídku s reálnou cenou
-              z EU trhu — bez závazků, zdarma.
+              ĹeknÄ›te nĂˇm, jakĂ˝ vĹŻz hledĂˇte. PĹ™ipravĂ­me konkrĂ©tnĂ­ nabĂ­dku s reĂˇlnou cenou
+              z EU trhu â€” bez zĂˇvazkĹŻ, zdarma.
             </motion.p>
           </div>
         </div>
@@ -183,8 +183,8 @@ export default function Kontakt() {
               className="lg:col-span-3"
             >
               <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5 sm:p-8">
-                <h2 className="text-2xl font-black text-gray-900 mb-2">Nezávazná poptávka</h2>
-                <p className="text-gray-500 text-sm mb-8">Vyplňte formulář a my se vám ozveme s konkrétní nabídkou.</p>
+                <h2 className="text-2xl font-black text-gray-900 mb-2">NezĂˇvaznĂˇ poptĂˇvka</h2>
+                <p className="text-gray-500 text-sm mb-8">VyplĹte formulĂˇĹ™ a my se vĂˇm ozveme s konkrĂ©tnĂ­ nabĂ­dkou.</p>
 
                 {sent ? (
                   <motion.div
@@ -195,24 +195,24 @@ export default function Kontakt() {
                     <div className="w-16 h-16 bg-[#f0faf2] rounded-full flex items-center justify-center mb-5">
                       <CheckCircle size={32} className="text-[#1e7e34]" />
                     </div>
-                    <h3 className="text-xl font-black text-gray-900 mb-2">Zpráva odeslána!</h3>
+                    <h3 className="text-xl font-black text-gray-900 mb-2">ZprĂˇva odeslĂˇna!</h3>
                     <p className="text-gray-500 text-sm max-w-xs">
-                      Děkujeme za váš zájem. Ozveme se vám do 24 hodin s konkrétní nabídkou.
+                      DÄ›kujeme za vĂˇĹˇ zĂˇjem. Ozveme se vĂˇm do 24 hodin s konkrĂ©tnĂ­ nabĂ­dkou.
                     </p>
                     <button
                       onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', model: '', message: '' }) }}
                       className="mt-6 text-sm text-[#1e7e34] font-semibold hover:underline"
                     >
-                      Odeslat další poptávku
+                      Odeslat dalĹˇĂ­ poptĂˇvku
                     </button>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
-                      {/* Jméno */}
+                      {/* JmĂ©no */}
                       <div>
                         <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">
-                          Jméno a příjmení *
+                          JmĂ©no a pĹ™Ă­jmenĂ­ *
                         </label>
                         <div className="relative">
                           <User size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -222,7 +222,7 @@ export default function Kontakt() {
                             required
                             value={form.name}
                             onChange={handleChange}
-                            placeholder="Jan Novák"
+                            placeholder="Jan NovĂˇk"
                             className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-[#1e7e34] focus:ring-1 focus:ring-[#1e7e34] transition-colors"
                           />
                         </div>
@@ -269,7 +269,7 @@ export default function Kontakt() {
                     {/* Model */}
                     <div>
                       <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">
-                        Zájem o model
+                        ZĂˇjem o model
                       </label>
                       <div className="relative">
                         <Car size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -279,7 +279,7 @@ export default function Kontakt() {
                           onChange={handleChange}
                           className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-[#1e7e34] focus:ring-1 focus:ring-[#1e7e34] transition-colors appearance-none bg-white text-gray-700"
                         >
-                          <option value="">Vyberte model (volitelné)</option>
+                          <option value="">Vyberte model (volitelnĂ©)</option>
                           {carModels.map((m) => (
                             <option key={m} value={m}>{m}</option>
                           ))}
@@ -287,10 +287,10 @@ export default function Kontakt() {
                       </div>
                     </div>
 
-                    {/* Zpráva */}
+                    {/* ZprĂˇva */}
                     <div>
                       <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">
-                        Zpráva *
+                        ZprĂˇva *
                       </label>
                       <div className="relative">
                         <MessageSquare size={15} className="absolute left-3 top-3.5 text-gray-400" />
@@ -300,7 +300,7 @@ export default function Kontakt() {
                           value={form.message}
                           onChange={handleChange}
                           rows={4}
-                          placeholder="Popište, jaký vůz hledáte — model, výbavu, barvu, rok výroby..."
+                          placeholder="PopiĹˇte, jakĂ˝ vĹŻz hledĂˇte â€” model, vĂ˝bavu, barvu, rok vĂ˝roby..."
                           className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-[#1e7e34] focus:ring-1 focus:ring-[#1e7e34] transition-colors resize-none"
                         />
                       </div>
@@ -314,18 +314,18 @@ export default function Kontakt() {
                       {loading ? (
                         <>
                           <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Odesílám…
+                          OdesĂ­lĂˇmâ€¦
                         </>
                       ) : (
                         <>
                           <Send size={15} />
-                          Odeslat poptávku
+                          Odeslat poptĂˇvku
                         </>
                       )}
                     </button>
 
                     <p className="text-xs text-gray-400 text-center">
-                      Odesláním souhlasíte se zpracováním osobních údajů. Vaše data používáme výhradně pro odpověď na poptávku.
+                      OdeslĂˇnĂ­m souhlasĂ­te se zpracovĂˇnĂ­m osobnĂ­ch ĂşdajĹŻ. VaĹˇe data pouĹľĂ­vĂˇme vĂ˝hradnÄ› pro odpovÄ›ÄŹ na poptĂˇvku.
                     </p>
                   </form>
                 )}
@@ -343,7 +343,7 @@ export default function Kontakt() {
               <div className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-8 text-white">
                 <h3 className="text-xl font-black mb-2">Preferujete telefon?</h3>
                 <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  Zavolejte nám přímo — rádi vám zodpovíme jakékoli otázky a domluvíme se na dalším postupu.
+                  Zavolejte nĂˇm pĹ™Ă­mo â€” rĂˇdi vĂˇm zodpovĂ­me jakĂ©koli otĂˇzky a domluvĂ­me se na dalĹˇĂ­m postupu.
                 </p>
                 <a
                   href="tel:+420733455966"
@@ -353,30 +353,30 @@ export default function Kontakt() {
                   +420 733 455 966
                 </a>
                 <div className="mt-4 pt-4 border-t border-white/10 text-xs text-gray-400">
-                  Dostupní Po–Pá 8:00–18:00 a So 9:00–13:00
+                  DostupnĂ­ Poâ€“PĂˇ 8:00â€“18:00 a So 9:00â€“13:00
                 </div>
               </div>
 
               {/* FAQ */}
               <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-5 sm:p-8">
-                <h3 className="font-black text-gray-900 mb-5">Časté dotazy</h3>
+                <h3 className="font-black text-gray-900 mb-5">ÄŚastĂ© dotazy</h3>
                 <div className="space-y-5">
                   {[
                     {
-                      q: 'Jak dlouho trvá celý proces?',
-                      a: 'Od poptávky po předání klíčků obvykle 3–6 týdnů v závislosti na dostupnosti vozu.',
+                      q: 'Jak dlouho trvĂˇ celĂ˝ proces?',
+                      a: 'Od poptĂˇvky po pĹ™edĂˇnĂ­ klĂ­ÄŤkĹŻ obvykle 3â€“6 tĂ˝dnĹŻ v zĂˇvislosti na dostupnosti vozu.',
                     },
                     {
-                      q: 'Vztahuje se na vůz záruka?',
-                      a: 'Ano. Všechny vozy jsou nové nebo záruční s plnou zárukou Škoda Auto.',
+                      q: 'Vztahuje se na vĹŻz zĂˇruka?',
+                      a: 'Ano. VĹˇechny vozy jsou novĂ© nebo zĂˇruÄŤnĂ­ s plnou zĂˇrukou Ĺ koda Auto.',
                     },
                     {
-                      q: 'Je třeba jezdit do zahraničí?',
-                      a: 'Ne. Celý proces, včetně dopravy a registrace, zajišťujeme za vás.',
+                      q: 'Je tĹ™eba jezdit do zahraniÄŤĂ­?',
+                      a: 'Ne. CelĂ˝ proces, vÄŤetnÄ› dopravy a registrace, zajiĹˇĹĄujeme za vĂˇs.',
                     },
                     {
-                      q: 'Jaká je výše poplatku za službu?',
-                      a: 'Poplatek sdělíme transparentně předem. Je zahrnut v celkové ceně nabídky.',
+                      q: 'JakĂˇ je vĂ˝Ĺˇe poplatku za sluĹľbu?',
+                      a: 'Poplatek sdÄ›lĂ­me transparentnÄ› pĹ™edem. Je zahrnut v celkovĂ© cenÄ› nabĂ­dky.',
                     },
                   ].map(({ q, a }) => (
                     <div key={q} className="border-b border-gray-100 pb-5 last:border-0 last:pb-0">
