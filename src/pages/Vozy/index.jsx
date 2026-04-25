@@ -265,7 +265,7 @@ export default function VozyPage() {
       <Navbar />
 
       {/* Page header */}
-      <div className="bg-[#0d1f10] pt-24 sm:pt-28 pb-8 sm:pb-12">
+      <div className="bg-[#0d1f10] pt-28 sm:pt-32 pb-8 sm:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-[#86efac] text-sm font-semibold uppercase tracking-wider mb-2">Katalog</p>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white">Nové vozy Škoda</h1>
