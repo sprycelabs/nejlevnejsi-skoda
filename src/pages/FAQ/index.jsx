@@ -11,7 +11,7 @@ const faqs = [
     items: [
       {
         q: 'Jak je možné, že jsou vozy levnější než v ČR?',
-        a: 'V rámci EU existují výrazné cenové rozdíly u identických vozů. Stejná Škoda Octavia stojí v Německu, Belgii nebo Polsku o desítky tisíc korun méně než v České republice. Jde o strukturální rozdíl daný lokálními dealerskými maržemi a poptávkou — není to náhoda ani chyba.',
+        a: 'V rámci EU existují výrazné cenové rozdíly u identických vozů. Stejná Škoda Octavia stojí v některém jiném státě EU v danou chvíli o desítky tisíc korun méně než v České republice. Jde o strukturální rozdíl daný lokálními dealerskými maržemi, poptávkou a vývojem kurzu koruny vůči dolaru a euru — není to náhoda ani chyba.',
       },
       {
         q: 'Je nákup vozu ze zahraničí legální?',

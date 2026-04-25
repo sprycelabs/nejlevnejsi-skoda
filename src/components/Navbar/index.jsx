@@ -50,8 +50,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="select-none flex items-center">
-          <span className="font-black text-lg text-gray-900 tracking-tight">NEJLEVNĚJŠÍ&nbsp;</span>
-          <span className="font-black text-lg text-[#1e7e34] tracking-tight">ŠKODA.CZ</span>
+          <img src="/logo.png" alt="Nejlevnější Škoda" className="h-10 w-auto" />
         </a>
 
         {/* Desktop nav */}
