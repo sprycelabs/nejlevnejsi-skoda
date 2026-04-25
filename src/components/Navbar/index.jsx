@@ -23,7 +23,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-visible ${
         scrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'
       }`}
     >
@@ -47,10 +47,10 @@ export default function Navbar() {
       </div>
 
       {/* Main nav */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="select-none flex items-center">
-          <img src="/logo.png" alt="Nejlevnější Škoda" style={{ height: '68px', width: 'auto', objectFit: 'contain' }} />
+          <img src="/logo.png" alt="Nejlevnější Škoda" style={{ height: '80px', width: 'auto' }} />
         </a>
 
         {/* Desktop nav */}
