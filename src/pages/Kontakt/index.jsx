@@ -79,7 +79,7 @@ export default function Kontakt() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-[#0d1f10] overflow-hidden pt-40">
+      <section className="relative bg-[#0d1f10] overflow-hidden pt-24">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/4" />
 
