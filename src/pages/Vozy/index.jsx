@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cars, formatPrice } from '../../data/cars'
+import { useCart } from '../../context/CartContext'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
@@ -30,6 +31,7 @@ function FilterChip({ label, onRemove }) {
 }
 
 function CarCard({ car, index }) {
+  const { addToCart } = useCart()
   return (
     <Link to={`/vozy/${car.slug}`} className="block">
     <motion.div
@@ -84,7 +86,7 @@ function CarCard({ car, index }) {
 
         <div className="flex gap-2">
           <button
-            onClick={e => e.preventDefault()}
+            onClick={e => { e.preventDefault(); addToCart(car) }}
             className="flex-1 flex items-center justify-center gap-1.5 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-semibold py-3 px-4 rounded-md transition-colors"
           >
             <ShoppingCart size={15} />

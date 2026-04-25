@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
   Phone, Mail, MapPin, Clock, ChevronRight, Send,
   CheckCircle, Car, MessageSquare, User, AtSign,
@@ -51,6 +51,16 @@ const carModels = [
 ]
 
 export default function Kontakt() {
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (hash === '#kontakt-formular') {
+      setTimeout(() => {
+        document.getElementById('kontakt-formular')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
+    }
+  }, [hash])
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -207,7 +217,7 @@ export default function Kontakt() {
                     </button>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form id="kontakt-formular" onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
                       {/* Jméno */}
                       <div>
@@ -304,6 +314,30 @@ export default function Kontakt() {
                           className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-[#1e7e34] focus:ring-1 focus:ring-[#1e7e34] transition-colors resize-none"
                         />
                       </div>
+                    </div>
+
+                    {/* Přílohy */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                        Přílohy <span className="font-normal text-gray-400">(volitelné)</span>
+                      </label>
+                      <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#1e7e34] rounded-md py-5 px-4 cursor-pointer transition-colors group">
+                        <input
+                          type="file"
+                          name="attachments"
+                          multiple
+                          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
+                          className="hidden"
+                          onChange={e => {
+                            const names = Array.from(e.target.files).map(f => f.name)
+                            e.target.closest('label').querySelector('span.filenames').textContent =
+                              names.length ? names.join(', ') : 'Vyberte soubory'
+                          }}
+                        />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-gray-300 group-hover:text-[#1e7e34] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4" /></svg>
+                        <span className="filenames text-sm text-gray-400 text-center">Vyberte soubory</span>
+                        <span className="text-xs text-gray-300">PDF, Word, JPG, PNG — max. 10 MB</span>
+                      </label>
                     </div>
 
                     <button

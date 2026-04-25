@@ -115,10 +115,10 @@ export default function ProcessSection() {
 
             <div className="flex flex-wrap gap-3">
               <a
-                href="/vozy"
+                href="/kontakt#kontakt-formular"
                 className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3 rounded-md transition-colors text-sm"
               >
-                Vybrat vůz z nabídky
+                Poptat konfiguraci
               </a>
               <a
                 href="https://www.skoda-auto.cz/modely"

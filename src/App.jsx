@@ -13,7 +13,10 @@ import VozDetail from './pages/VozDetail'
 import ONas from './pages/ONas'
 import Kontakt from './pages/Kontakt'
 import FAQ from './pages/FAQ'
+import Pokladna from './pages/Pokladna'
 import ScrollToTop from './components/ScrollToTop'
+import Cart from './components/Cart'
+import { CartProvider } from './context/CartContext'
 
 function HomePage() {
   return (
@@ -36,15 +39,19 @@ function HomePage() {
 export default function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
+      <CartProvider>
+        <ScrollToTop />
+        <Cart />
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/vozy" element={<VozyPage />} />
         <Route path="/vozy/:slug" element={<VozDetail />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/faq" element={<FAQ />} />
-      </Routes>
+        <Route path="/pokladna" element={<Pokladna />} />
+        </Routes>
+      </CartProvider>
     </BrowserRouter>
   )
 }

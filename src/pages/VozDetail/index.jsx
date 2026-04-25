@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
 import { motion } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
@@ -11,6 +12,7 @@ import Footer from '../../components/Footer'
 
 export default function VozDetail() {
   const { slug } = useParams()
+  const { addToCart } = useCart()
   const car = cars.find(c => c.slug === slug)
   const related = cars.filter(c => c.slug !== slug).slice(0, 3)
 
@@ -295,7 +297,10 @@ export default function VozDetail() {
                     Skladem {car.inStock} {car.inStock === 1 ? 'kus' : car.inStock < 5 ? 'kusy' : 'kusů'}
                   </div>
 
-                  <button className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base">
+                  <button
+                    onClick={() => addToCart(car)}
+                    className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base"
+                  >
                     <ShoppingCart size={18} />
                     Přidat do košíku
                   </button>
