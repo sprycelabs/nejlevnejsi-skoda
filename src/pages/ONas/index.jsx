@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ShieldCheck, BadgePercent, Globe, HeartHandshake, Users, TrendingUp, ChevronRight, Phone, Mail, ArrowRight } from 'lucide-react'
 import Navbar from '../../components/Navbar'

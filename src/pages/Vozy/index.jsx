@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown } from 'lucide-react'
 import { Link } from 'react-router-dom'

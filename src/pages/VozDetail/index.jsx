@@ -1,4 +1,4 @@
-﻿import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
