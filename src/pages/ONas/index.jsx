@@ -5,55 +5,55 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 const stats = [
-  { value: '500+', label: 'spokojenĂ˝ch zĂˇkaznĂ­kĹŻ' },
-  { value: '20 %', label: 'prĹŻmÄ›rnĂˇ Ăşspora oproti ÄŚR' },
-  { value: '15+', label: 'let zkuĹˇenostĂ­' },
-  { value: '10+', label: 'zemĂ­ EU v sĂ­ti' },
+  { value: '500+', label: 'spokojených zákazníků' },
+  { value: '20 %', label: 'průměrná úspora oproti ČR' },
+  { value: '15+', label: 'let zkušeností' },
+  { value: '10+', label: 'zemí EU v síti' },
 ]
 
 const values = [
   {
     icon: ShieldCheck,
     title: 'Transparentnost',
-    desc: 'PĹ™edem vĂ­te pĹ™esnÄ› kolik zaplatĂ­te, odkud vĹŻz pochĂˇzĂ­ a co vĹˇe je zahrnuto. Ĺ˝ĂˇdnĂ© skrytĂ© poplatky ani pĹ™ekvapenĂ­ na konci.',
+    desc: 'Předem víte přesně kolik zaplatíte, odkud vůz pochází a co vše je zahrnuto. Žádné skryté poplatky ani překvapení na konci.',
   },
   {
     icon: BadgePercent,
-    title: 'Ăšspora',
-    desc: 'VyuĹľĂ­vĂˇme reĂˇlnĂ© cenovĂ© rozdĂ­ly mezi trhy EU. PrĹŻmÄ›rnĂˇ Ăşspora 20 % nenĂ­ marketingovĂ© ÄŤĂ­slo â€” je to prĹŻmÄ›r z reĂˇlnĂ˝ch obchodĹŻ.',
+    title: 'Úspora',
+    desc: 'Využíváme reálné cenové rozdíly mezi trhy EU. Průměrná úspora 20 % není marketingové číslo — je to průměr z reálných obchodů.',
   },
   {
     icon: HeartHandshake,
-    title: 'PĂ©ÄŤe o zĂˇkaznĂ­ka',
-    desc: 'ProvĂˇzĂ­me vĂˇs celĂ˝m procesem od prvnĂ­ konzultace aĹľ po pĹ™edĂˇnĂ­ klĂ­ÄŤkĹŻ. Jsme dosaĹľitelnĂ­ a odpovĂ­dĂˇme rychle.',
+    title: 'Péče o zákazníka',
+    desc: 'Provázíme vás celým procesem od první konzultace až po předání klíčků. Jsme dosažitelní a odpovídáme rychle.',
   },
   {
     icon: Globe,
     title: 'Znalost trhu',
-    desc: 'Sledujeme nabĂ­dky stovek dealerĹŻ po celĂ© EvropÄ›. VĂ­me, kde a kdy nakoupit, aby cena i podmĂ­nky byly pro vĂˇs co nejlepĹˇĂ­.',
+    desc: 'Sledujeme nabídky stovek dealerů po celé Evropě. Víme, kde a kdy nakoupit, aby cena i podmínky byly pro vás co nejlepší.',
   },
 ]
 
 const timeline = [
   {
     year: '2009',
-    title: 'ZaÄŤĂˇtky',
-    desc: 'Firma vznikla z osobnĂ­ zkuĹˇenosti zakladatele â€” kterĂ˝ sĂˇm koupil vĹŻz v NÄ›mecku za vĂ˝raznÄ› niĹľĹˇĂ­ cenu a uvÄ›domil si, Ĺľe tento pĹ™Ă­stup mĹŻĹľe nabĂ­dnout i ostatnĂ­m.',
+    title: 'Začátky',
+    desc: 'Firma vznikla z osobní zkušenosti zakladatele — který sám koupil vůz v Německu za výrazně nižší cenu a uvědomil si, že tento přístup může nabídnout i ostatním.',
   },
   {
     year: '2014',
-    title: 'Specializace na Ĺ koda',
-    desc: 'Po letech zkuĹˇenostĂ­ s rĹŻznĂ˝mi znaÄŤkami jsme se rozhodli specializovat vĂ˝hradnÄ› na vozy Ĺ koda Auto â€” brand s nejsilnÄ›jĹˇĂ­mi cenovĂ˝mi rozdĂ­ly v rĂˇmci EU.',
+    title: 'Specializace na Škoda',
+    desc: 'Po letech zkušeností s různými značkami jsme se rozhodli specializovat výhradně na vozy Škoda Auto — brand s nejsilnějšími cenovými rozdíly v rámci EU.',
   },
   {
     year: '2018',
-    title: 'SystĂ©m a ĹˇkĂˇlovĂˇnĂ­',
-    desc: 'Vybudovali jsme vlastnĂ­ systĂ©m sledovĂˇnĂ­ nabĂ­dek a sĂ­ĹĄ ovÄ›Ĺ™enĂ˝ch partnerĹŻ v klĂ­ÄŤovĂ˝ch zemĂ­ch EU. Objem obchodĹŻ pĹ™ekroÄŤil 100 vozĹŻ roÄŤnÄ›.',
+    title: 'Systém a škálování',
+    desc: 'Vybudovali jsme vlastní systém sledování nabídek a síť ověřených partnerů v klíčových zemích EU. Objem obchodů překročil 100 vozů ročně.',
   },
   {
     year: '2026',
     title: 'Dnes',
-    desc: 'Stovky spokojenĂ˝ch zĂˇkaznĂ­kĹŻ, od jednotlivcĹŻ po firemnĂ­ flotily. KaĹľdĂ˝ pĹ™Ă­pad Ĺ™eĹˇĂ­me individuĂˇlnÄ›, kaĹľdĂ˝ vĹŻz s plnou zĂˇrukou a bez kompromisĹŻ.',
+    desc: 'Stovky spokojených zákazníků, od jednotlivců po firemní flotily. Každý případ řešíme individuálně, každý vůz s plnou zárukou a bez kompromisů.',
   },
 ]
 
@@ -69,9 +69,9 @@ export default function ONas() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
-            <Link to="/" className="hover:text-white transition-colors">DomĹŻ</Link>
+            <Link to="/" className="hover:text-white transition-colors">Domů</Link>
             <ChevronRight size={13} />
-            <span className="text-gray-200">O nĂˇs</span>
+            <span className="text-gray-200">O nás</span>
           </div>
 
           <div className="max-w-3xl pb-16 pt-4">
@@ -88,9 +88,9 @@ export default function ONas() {
               transition={{ delay: 0.1 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-6"
             >
-              NeprodĂˇvĂˇme auta.<br />
+              Neprodáváme auta.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">
-                Optimalizujeme jejich poĹ™Ă­zenĂ­.
+                Optimalizujeme jejich pořízení.
               </span>
             </motion.h1>
             <motion.p
@@ -99,9 +99,9 @@ export default function ONas() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-lg leading-relaxed"
             >
-              Jsme nejlevnejsi-skoda.cz â€” specializovanĂ˝ partner pro nĂˇkup vozĹŻ Ĺ koda
-              z evropskĂ˝ch trhĹŻ. DĂ­ky pĹ™Ă­stupu k nabĂ­dkĂˇm stovek dealerĹŻ v celĂ© EU zajiĹˇĹĄujeme
-              identickĂ© vozy za ceny, kterĂ© ÄŤeĹˇtĂ­ prodejci nenabĂ­dnou.
+              Jsme nejlevnejsi-skoda.cz — specializovaný partner pro nákup vozů Škoda
+              z evropských trhů. Díky přístupu k nabídkám stovek dealerů v celé EU zajišťujeme
+              identické vozy za ceny, které čeští prodejci nenabídnou.
             </motion.p>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function ONas() {
         </div>
       </div>
 
-      {/* PĹ™Ă­bÄ›h */}
+      {/* Příběh */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -141,25 +141,25 @@ export default function ONas() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">NĂˇĹˇ pĹ™Ă­bÄ›h</p>
+              <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">Náš příběh</p>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-6">
-                Vznikli jsme z jednoduchĂ© myĹˇlenky
+                Vznikli jsme z jednoduché myšlenky
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  V rĂˇmci EU existujĂ­ vĂ˝raznĂ© cenovĂ© rozdĂ­ly u stejnĂ˝ch vozĹŻ â€” stejnĂˇ Ĺ koda Octavia
-                  stojĂ­ v NÄ›mecku, Belgii nebo Polsku o desĂ­tky tisĂ­c mĂ©nÄ› neĹľ v ÄŚeskĂ© republice.
-                  NenĂ­ to nĂˇhoda ani chyba, je to strukturĂˇlnĂ­ rozdĂ­l danĂ˝ lokĂˇlnĂ­mi dealerskĂ˝mi marĹľemi
-                  a poptĂˇvkou.
+                  V rámci EU existují výrazné cenové rozdíly u stejných vozů — stejná Škoda Octavia
+                  stojí v Německu, Belgii nebo Polsku o desítky tisíc méně než v České republice.
+                  Není to náhoda ani chyba, je to strukturální rozdíl daný lokálními dealerskými maržemi
+                  a poptávkou.
                 </p>
                 <p>
-                  NĂˇĹˇ zakladatel si toho vĹˇiml jako prvnĂ­ u svĂ©ho vlastnĂ­ho nĂˇkupu. MĂ­sto aby zaplatil
-                  pĹ™es 800 000 KÄŤ u ÄŤeskĂ©ho dealera, poĹ™Ă­dil identickĂ˝ vĹŻz v zahraniÄŤĂ­ za vĂ˝raznÄ› mĂ©nÄ›.
-                  CelĂ˝ proces byl ale sloĹľitĂ˝ â€” jazykovĂˇ bariĂ©ra, administrativa, logistika.
+                  Náš zakladatel si toho všiml jako první u svého vlastního nákupu. Místo aby zaplatil
+                  přes 800 000 Kč u českého dealera, pořídil identický vůz v zahraničí za výrazně méně.
+                  Celý proces byl ale složitý — jazyková bariéra, administrativa, logistika.
                 </p>
                 <p>
-                  Proto nejlevnejsi-skoda.cz vzniklo: aby tento proces zvlĂˇdl za vĂˇs
-                  kdokoliv, bez znalostĂ­ a bez starostĂ­. Za stejnou cenu, za jakou si sami nakoupĂ­me.
+                  Proto nejlevnejsi-skoda.cz vzniklo: aby tento proces zvládl za vás
+                  kdokoliv, bez znalostí a bez starostí. Za stejnou cenu, za jakou si sami nakoupíme.
                 </p>
               </div>
             </motion.div>
@@ -203,7 +203,7 @@ export default function ONas() {
               viewport={{ once: true }}
               className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-2"
             >
-              Co nĂˇs definuje
+              Co nás definuje
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 10 }}
@@ -212,7 +212,7 @@ export default function ONas() {
               transition={{ delay: 0.1 }}
               className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900"
             >
-              NaĹˇe hodnoty
+              Naše hodnoty
             </motion.h2>
           </div>
 
@@ -246,24 +246,24 @@ export default function ONas() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">NaĹˇi zĂˇkaznĂ­ci</p>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-6">Pro koho to dÄ›lĂˇme</h2>
+              <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">Naši zákazníci</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-6">Pro koho to děláme</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  NaĹˇe sluĹľby vyuĹľĂ­vajĂ­ jak soukromĂ­ zĂˇkaznĂ­ci, tak firmy, kterĂ© chtÄ›jĂ­ efektivnÄ›
-                  obnovovat vozovĂ˝ park bez zbyteÄŤnĂ˝ch nĂˇkladĹŻ.
+                  Naše služby využívají jak soukromí zákazníci, tak firmy, které chtějí efektivně
+                  obnovovat vozový park bez zbytečných nákladů.
                 </p>
                 <p>
-                  KaĹľdĂ˝ projekt Ĺ™eĹˇĂ­me individuĂˇlnÄ› â€” od jednoho vozu aĹľ po vÄ›tĹˇĂ­ flotily.
-                  PĹ™Ă­stup je vĹľdy stejnĂ˝: transparentnĂ­ cena, maximĂˇlnĂ­ Ăşspora, nulovĂ© kompromisy
-                  na zĂˇrukou ani kvalitou.
+                  Každý projekt řešíme individuálně — od jednoho vozu až po větší flotily.
+                  Přístup je vždy stejný: transparentní cena, maximální úspora, nulové kompromisy
+                  na zárukou ani kvalitou.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-8">
                 {[
-                  { icon: Users, title: 'SoukromĂ© osoby', desc: 'NovĂ˝ vĹŻz pro rodinu bez pĹ™eplatkĹŻ' },
-                  { icon: TrendingUp, title: 'Firmy & flotily', desc: 'EfektivnĂ­ obnova vozovĂ©ho parku' },
+                  { icon: Users, title: 'Soukromé osoby', desc: 'Nový vůz pro rodinu bez přeplatků' },
+                  { icon: TrendingUp, title: 'Firmy & flotily', desc: 'Efektivní obnova vozového parku' },
                 ].map(({ icon: Icon, title, desc }) => (
                   <div key={title} className="bg-white rounded-lg border border-gray-100 p-5 shadow-sm">
                     <div className="w-10 h-10 bg-[#f0faf2] rounded-md flex items-center justify-center mb-3">
@@ -283,10 +283,10 @@ export default function ONas() {
               viewport={{ once: true }}
               className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-6 sm:p-10 text-white"
             >
-              <h3 className="text-2xl font-black mb-3">PĹ™ipraveni zaÄŤĂ­t?</h3>
+              <h3 className="text-2xl font-black mb-3">Připraveni začít?</h3>
               <p className="text-gray-300 leading-relaxed mb-8">
-                NapiĹˇte nĂˇm nebo zavolejte. NezĂˇvaznÄ› vĂˇm pĹ™ipravĂ­me konkrĂ©tnĂ­ nabĂ­dku
-                na vĹŻz, kterĂ˝ chcete â€” s reĂˇlnou cenou z EU.
+                Napište nám nebo zavolejte. Nezávazně vám připravíme konkrétní nabídku
+                na vůz, který chcete — s reálnou cenou z EU.
               </p>
 
               <div className="space-y-3 mb-8">
@@ -305,13 +305,13 @@ export default function ONas() {
                   to="/vozy"
                   className="flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3 rounded-md transition-colors text-sm"
                 >
-                  ProhlĂ©dnout vozy <ArrowRight size={15} />
+                  Prohlédnout vozy <ArrowRight size={15} />
                 </Link>
                 <a
                   href="tel:+420733455966"
                   className="flex items-center justify-center gap-2 border border-white/20 hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-md transition-colors text-sm"
                 >
-                  Zavolat nynĂ­
+                  Zavolat nyní
                 </a>
               </div>
             </motion.div>

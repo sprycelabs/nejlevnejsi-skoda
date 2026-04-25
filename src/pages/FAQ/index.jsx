@@ -7,44 +7,44 @@ import Footer from '../../components/Footer'
 
 const faqs = [
   {
-    category: 'ObecnĂ©',
+    category: 'Obecné',
     items: [
       {
-        q: 'Jak je moĹľnĂ©, Ĺľe jsou vozy levnÄ›jĹˇĂ­ neĹľ v ÄŚR?',
-        a: 'V rĂˇmci EU existujĂ­ vĂ˝raznĂ© cenovĂ© rozdĂ­ly u identickĂ˝ch vozĹŻ. StejnĂˇ Ĺ koda Octavia stojĂ­ v nÄ›kterĂ©m jinĂ©m stĂˇtÄ› EU v danou chvĂ­li o desĂ­tky tisĂ­c korun mĂ©nÄ› neĹľ v ÄŚeskĂ© republice. Jde o strukturĂˇlnĂ­ rozdĂ­l danĂ˝ lokĂˇlnĂ­mi dealerskĂ˝mi marĹľemi, poptĂˇvkou a vĂ˝vojem kurzu koruny vĹŻÄŤi dolaru a euru â€” nenĂ­ to nĂˇhoda ani chyba.',
+        q: 'Jak je možné, že jsou vozy levnější než v ČR?',
+        a: 'V rámci EU existují výrazné cenové rozdíly u identických vozů. Stejná Škoda Octavia stojí v některém jiném státě EU v danou chvíli o desítky tisíc korun méně než v České republice. Jde o strukturální rozdíl daný lokálními dealerskými maržemi, poptávkou a vývojem kurzu koruny vůči dolaru a euru — není to náhoda ani chyba.',
       },
       {
-        q: 'Je nĂˇkup vozu ze zahraniÄŤĂ­ legĂˇlnĂ­?',
-        a: 'Ano, zcela legĂˇlnĂ­. NĂˇkup vozĹŻ v rĂˇmci EU je souÄŤĂˇstĂ­ volnĂ©ho pohybu zboĹľĂ­ â€” jednoho ze zĂˇkladnĂ­ch pilĂ­Ĺ™ĹŻ EvropskĂ© unie. Vozidlo je Ĺ™ĂˇdnÄ› pĹ™ihlĂˇĹˇeno v ÄŚR a splĹuje vĹˇechny zĂˇkonnĂ© poĹľadavky.',
+        q: 'Je nákup vozu ze zahraničí legální?',
+        a: 'Ano, zcela legální. Nákup vozů v rámci EU je součástí volného pohybu zboží — jednoho ze základních pilířů Evropské unie. Vozidlo je řádně přihlášeno v ČR a splňuje všechny zákonné požadavky.',
       },
       {
-        q: 'Jak dlouho celĂ˝ proces trvĂˇ?',
-        a: 'Od nezĂˇvaznĂ© poptĂˇvky po pĹ™edĂˇnĂ­ klĂ­ÄŤkĹŻ obvykle 3â€“6 tĂ˝dnĹŻ. ZĂˇleĹľĂ­ na dostupnosti konkrĂ©tnĂ­ho vozu a rychlosti administrace. U skladovĂ˝ch vozĹŻ mĹŻĹľe bĂ˝t dodĂˇnĂ­ rychlejĹˇĂ­.',
+        q: 'Jak dlouho celý proces trvá?',
+        a: 'Od nezávazné poptávky po předání klíčků obvykle 3–6 týdnů. Záleží na dostupnosti konkrétního vozu a rychlosti administrace. U skladových vozů může být dodání rychlejší.',
       },
       {
-        q: 'MusĂ­m jet do zahraniÄŤĂ­ nebo nÄ›co vyĹ™izovat osobnÄ›?',
-        a: 'Ne. CelĂ˝ proces, vÄŤetnÄ› komunikace s dealerem, pĹ™epravy, pĹ™ihlĂˇĹˇenĂ­ vozidla a pĹ™edĂˇnĂ­ v ÄŚR, zajiĹˇĹĄujeme za vĂˇs. Vy se nemusĂ­te starat o nic.',
+        q: 'Musím jet do zahraničí nebo něco vyřizovat osobně?',
+        a: 'Ne. Celý proces, včetně komunikace s dealerem, přepravy, přihlášení vozidla a předání v ČR, zajišťujeme za vás. Vy se nemusíte starat o nic.',
       },
     ],
   },
   {
-    category: 'Vozidlo a zĂˇruka',
+    category: 'Vozidlo a záruka',
     items: [
       {
-        q: 'Vztahuje se na vĹŻz tovĂˇrnĂ­ zĂˇruka?',
-        a: 'Ano. VĹˇechny vozy pochĂˇzejĂ­ z oficiĂˇlnĂ­ distribuÄŤnĂ­ sĂ­tÄ› Ĺ koda Auto. TovĂˇrnĂ­ zĂˇruka je stejnĂˇ jako pĹ™i nĂˇkupu u ÄŤeskĂ©ho dealera a platĂ­ v celĂ© EU. Servis mĹŻĹľete absolvovat u jakĂ©hokoli autorizovanĂ©ho Ĺ koda servisu v ÄŚR.',
+        q: 'Vztahuje se na vůz tovární záruka?',
+        a: 'Ano. Všechny vozy pocházejí z oficiální distribuční sítě Škoda Auto. Tovární záruka je stejná jako při nákupu u českého dealera a platí v celé EU. Servis můžete absolvovat u jakéhokoli autorizovaného Škoda servisu v ČR.',
       },
       {
-        q: 'Jsou vozy novĂ© nebo ojetĂ©?',
-        a: 'PrimĂˇrnÄ› dodĂˇvĂˇme novĂ© vozy. V nabĂ­dce jsou i vozy s velmi nĂ­zkĂ˝m nĂˇjezdem (pĹ™edvĂˇdÄ›cĂ­, skladovĂ©) â€” vĹľdy to jasnÄ› uvĂˇdĂ­me v detailu vozu.',
+        q: 'Jsou vozy nové nebo ojeté?',
+        a: 'Primárně dodáváme nové vozy. V nabídce jsou i vozy s velmi nízkým nájezdem (předváděcí, skladové) — vždy to jasně uvádíme v detailu vozu.',
       },
       {
-        q: 'Mohu si vybrat vĂ˝bavu, barvu a doplĹky pĹ™esnÄ› podle svĂ˝ch pĹ™ĂˇnĂ­?',
-        a: 'Ano. BuÄŹ si vyberete z naĹˇĂ­ aktuĂˇlnĂ­ nabĂ­dky nakonfigurovanĂ˝ch vozĹŻ, nebo si na webu skoda-auto.cz nakonfigurujete vĹŻz podle sebe a konfiguraci nĂˇm zaĹˇlete. My vĂˇm pĹ™ipravĂ­me nabĂ­dku na totoĹľnĂ© vozidlo.',
+        q: 'Mohu si vybrat výbavu, barvu a doplňky přesně podle svých přání?',
+        a: 'Ano. Buď si vyberete z naší aktuální nabídky nakonfigurovaných vozů, nebo si na webu skoda-auto.cz nakonfigurujete vůz podle sebe a konfiguraci nám zašlete. My vám připravíme nabídku na totožné vozidlo.',
       },
       {
-        q: 'JakĂˇ je prĹŻmÄ›rnĂˇ Ăşspora oproti ÄŤeskĂ©mu dealerovi?',
-        a: 'PrĹŻmÄ›rnĂˇ Ăşspora se pohybuje kolem 20 % oproti cenĂ­kovĂ˝m cenĂˇm u ÄŤeskĂ˝ch dealerĹŻ. U konkrĂ©tnĂ­ho vozu mĹŻĹľe bĂ˝t Ăşspora vyĹˇĹˇĂ­ nebo niĹľĹˇĂ­ â€” zĂˇleĹľĂ­ na modelu, vĂ˝bavÄ› a aktuĂˇlnĂ­ situaci na trhu.',
+        q: 'Jaká je průměrná úspora oproti českému dealerovi?',
+        a: 'Průměrná úspora se pohybuje kolem 20 % oproti ceníkovým cenám u českých dealerů. U konkrétního vozu může být úspora vyšší nebo nižší — záleží na modelu, výbavě a aktuální situaci na trhu.',
       },
     ],
   },
@@ -52,20 +52,20 @@ const faqs = [
     category: 'Platba a cena',
     items: [
       {
-        q: 'Co vĹˇe je zahrnuto v cenÄ›?',
-        a: 'V cenÄ› vozu je zahrnuta pĹ™eprava do ÄŚR (u vozĹŻ oznaÄŤenĂ˝ch "Doprava zdarma"), pĹ™ihlĂˇĹˇenĂ­ vozidla, technickĂˇ pĹ™ejĂ­mka, kompletnĂ­ dokumentace a pĹ™edĂˇvacĂ­ protokol. VĹˇe vĂˇm transparentnÄ› sdÄ›lĂ­me pĹ™edem.',
+        q: 'Co vše je zahrnuto v ceně?',
+        a: 'V ceně vozu je zahrnuta přeprava do ČR (u vozů označených "Doprava zdarma"), přihlášení vozidla, technická přejímka, kompletní dokumentace a předávací protokol. Vše vám transparentně sdělíme předem.',
       },
       {
-        q: 'JakĂ˝ je vĂˇĹˇ poplatek za zprostĹ™edkovĂˇnĂ­?',
-        a: 'NaĹˇi odmÄ›nu vĹľdy transparentnÄ› uvedeme v nabĂ­dce. Je souÄŤĂˇstĂ­ celkovĂ© ceny a neplatĂ­te ĹľĂˇdnĂ© skrytĂ© pĹ™Ă­platky.',
+        q: 'Jaký je váš poplatek za zprostředkování?',
+        a: 'Naši odměnu vždy transparentně uvedeme v nabídce. Je součástí celkové ceny a neplatíte žádné skryté příplatky.',
       },
       {
-        q: 'Mohu vĹŻz financovat â€” leasing nebo ĂşvÄ›r?',
-        a: 'Ano, financovĂˇnĂ­ je moĹľnĂ©. Kontaktujte nĂˇs a probereme moĹľnosti. Spolupracujeme s finanÄŤnĂ­mi partnery, kteĹ™Ă­ umĂ­ financovat i vozy nakoupenĂ© v zahraniÄŤĂ­.',
+        q: 'Mohu vůz financovat — leasing nebo úvěr?',
+        a: 'Ano, financování je možné. Kontaktujte nás a probereme možnosti. Spolupracujeme s finančními partnery, kteří umí financovat i vozy nakoupené v zahraničí.',
       },
       {
-        q: 'Kdy a jak se platĂ­?',
-        a: 'PlatebnĂ­ podmĂ­nky jsou souÄŤĂˇstĂ­ kaĹľdĂ© individuĂˇlnĂ­ nabĂ­dky. StandardnÄ› se platĂ­ ÄŤĂˇst pĹ™i objednĂˇvce a zbytek pĹ™ed pĹ™edĂˇnĂ­m vozu. VĹˇe je smluvnÄ› oĹˇetĹ™eno.',
+        q: 'Kdy a jak se platí?',
+        a: 'Platební podmínky jsou součástí každé individuální nabídky. Standardně se platí část při objednávce a zbytek před předáním vozu. Vše je smluvně ošetřeno.',
       },
     ],
   },
@@ -73,16 +73,16 @@ const faqs = [
     category: 'Proces a logistika',
     items: [
       {
-        q: 'Jak probĂ­hĂˇ pĹ™ihlĂˇĹˇenĂ­ vozu v ÄŚR?',
-        a: 'VĹˇe vyĹ™Ă­dĂ­me za vĂˇs. ZajistĂ­me COC dokument (osvÄ›dÄŤenĂ­ o shodÄ›), technickou pĹ™ejĂ­mku, pĹ™ihlĂˇĹˇenĂ­ na pĹ™Ă­sluĹˇnĂ©m ĂşĹ™adÄ› a vydĂˇnĂ­ ÄŤeskĂ˝ch SPZ. Vy pouze dodĂˇte potĹ™ebnĂ© doklady.',
+        q: 'Jak probíhá přihlášení vozu v ČR?',
+        a: 'Vše vyřídíme za vás. Zajistíme COC dokument (osvědčení o shodě), technickou přejímku, přihlášení na příslušném úřadě a vydání českých SPZ. Vy pouze dodáte potřebné doklady.',
       },
       {
-        q: 'Co kdyĹľ vĹŻz pĹ™i pĹ™evzetĂ­ nesplĹuje oÄŤekĂˇvĂˇnĂ­?',
-        a: 'PĹ™ed pĹ™edĂˇnĂ­m vĹŻz dĹŻkladnÄ› zkontrolujeme. Postupujeme transparentnÄ› â€” fotodokumentace, pĹ™edĂˇvacĂ­ protokol. V pĹ™Ă­padÄ› jakĂ˝chkoli nesrovnalostĂ­ vÄ›c okamĹľitÄ› Ĺ™eĹˇĂ­me.',
+        q: 'Co když vůz při převzetí nesplňuje očekávání?',
+        a: 'Před předáním vůz důkladně zkontrolujeme. Postupujeme transparentně — fotodokumentace, předávací protokol. V případě jakýchkoli nesrovnalostí věc okamžitě řešíme.',
       },
       {
-        q: 'NabĂ­zĂ­te sluĹľby i pro firemnĂ­ zĂˇkaznĂ­ky?',
-        a: 'Ano. Pracujeme jak se soukromĂ˝mi zĂˇkaznĂ­ky, tak s firmami pĹ™i obnovÄ› vozovĂ©ho parku. Objem od jednoho vozu po vÄ›tĹˇĂ­ flotily â€” pĹ™Ă­stup je vĹľdy individuĂˇlnĂ­.',
+        q: 'Nabízíte služby i pro firemní zákazníky?',
+        a: 'Ano. Pracujeme jak se soukromými zákazníky, tak s firmami při obnově vozového parku. Objem od jednoho vozu po větší flotily — přístup je vždy individuální.',
       },
     ],
   },
@@ -127,15 +127,15 @@ export default function FAQ() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-[#0d1f10] overflow-hidden pt-24">
+      <section className="relative bg-[#0d1f10] overflow-hidden pt-40">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
-            <Link to="/" className="hover:text-white transition-colors">DomĹŻ</Link>
+            <Link to="/" className="hover:text-white transition-colors">Domů</Link>
             <ChevronRight size={13} />
-            <span className="text-gray-200">ÄŚastĂ© dotazy</span>
+            <span className="text-gray-200">Časté dotazy</span>
           </div>
 
           <div className="max-w-3xl pb-16 pt-4">
@@ -144,7 +144,7 @@ export default function FAQ() {
               animate={{ opacity: 1, y: 0 }}
               className="text-[#28a745] font-semibold text-sm uppercase tracking-wider mb-3"
             >
-              MĂˇte otĂˇzky?
+              Máte otázky?
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -152,7 +152,7 @@ export default function FAQ() {
               transition={{ delay: 0.1 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-6"
             >
-              ÄŚastĂ© dotazy
+              Časté dotazy
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -160,7 +160,7 @@ export default function FAQ() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-lg leading-relaxed"
             >
-              OdpovÄ›di na nejÄŤastÄ›jĹˇĂ­ otĂˇzky o nĂˇkupu vozĹŻ Ĺ koda z EU. NenaĹˇli jste co hledĂˇte? NapiĹˇte nĂˇm.
+              Odpovědi na nejčastější otázky o nákupu vozů Škoda z EU. Nenašli jste co hledáte? Napište nám.
             </motion.p>
           </div>
         </div>
@@ -203,8 +203,8 @@ export default function FAQ() {
             viewport={{ once: true }}
             className="mt-12 bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-8 text-white text-center"
           >
-            <h3 className="text-xl font-black mb-2">NenaĹˇli jste odpovÄ›ÄŹ?</h3>
-            <p className="text-gray-300 text-sm mb-6">NevĂˇhejte nĂˇs kontaktovat â€” rĂˇdi vĂˇm odpovĂ­me na jakĂ˝koli dotaz.</p>
+            <h3 className="text-xl font-black mb-2">Nenašli jste odpověď?</h3>
+            <p className="text-gray-300 text-sm mb-6">Neváhejte nás kontaktovat — rádi vám odpovíme na jakýkoli dotaz.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="tel:+420733455966"
