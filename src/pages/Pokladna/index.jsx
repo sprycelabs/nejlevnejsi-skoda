@@ -58,7 +58,7 @@ function Field({ label, name, type = 'text', value, onChange, error, placeholder
 }
 
 export default function Pokladna() {
-  const { items, removeFromCart, updateQty, cartTotal } = useCart()
+  const { items, removeFromCart, updateQty, clearCart, cartTotal } = useCart()
   const [type, setType] = useState('fyzicka') // 'fyzicka' | 'firma'
   const [form, setForm] = useState(EMPTY_FYZICKA)
   const [errors, setErrors] = useState({})
@@ -123,6 +123,7 @@ export default function Pokladna() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Chyba serveru')
       setOrderNumber(data.orderNumber)
+      clearCart()
       setSubmitted(true)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {

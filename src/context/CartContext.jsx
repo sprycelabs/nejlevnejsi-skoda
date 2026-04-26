@@ -39,11 +39,16 @@ export function CartProvider({ children }) {
     setItems(prev => prev.map(i => i.car.id === carId ? { ...i, qty } : i))
   }
 
+  function clearCart() {
+    setItems([])
+    localStorage.removeItem('cart')
+  }
+
   const cartCount = items.reduce((sum, i) => sum + i.qty, 0)
   const cartTotal = items.reduce((sum, i) => sum + i.car.salePrice * i.qty, 0)
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQty, cartCount, cartTotal, isOpen, setIsOpen }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQty, clearCart, cartCount, cartTotal, isOpen, setIsOpen }}>
       {children}
     </CartContext.Provider>
   )

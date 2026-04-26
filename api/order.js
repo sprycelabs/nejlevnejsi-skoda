@@ -26,11 +26,36 @@ function formatPrice(price) {
   }).format(price)
 }
 
-function generateOrderNumber() {
-  const date = new Date()
-  const year = date.getFullYear()
-  const rand = Math.floor(1000 + Math.random() * 9000)
-  return `OBJ-${year}-${rand}`
+async function generateOrderNumber() {
+  const year = new Date().getFullYear()
+  const counterKey = `invoices/counter-${year}.json`
+
+  let count = 1
+  try {
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      // Načti aktuální counter
+      const { list } = await import('@vercel/blob')
+      const { blobs } = await list({ prefix: `invoices/counter-${year}`, token: process.env.BLOB_READ_WRITE_TOKEN })
+      if (blobs.length > 0) {
+        const res = await fetch(blobs[0].url)
+        const data = await res.json()
+        count = (data.count || 0) + 1
+      }
+      // Ulož nový counter
+      await put(counterKey, JSON.stringify({ count }), {
+        access: 'public',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+      })
+    }
+  } catch (e) {
+    console.error('Counter error:', e)
+    // Fallback na náhodné číslo
+    count = Math.floor(100 + Math.random() * 900)
+  }
+
+  return `OBJ-${year}-${String(count).padStart(3, '0')}`
 }
 
 function customerEmail(form, items, total, orderNumber) {
@@ -69,9 +94,13 @@ function customerEmail(form, items, total, orderNumber) {
           </p>
 
           <!-- Order number -->
-          <div style="background:#f0faf2;border:1px solid #d4edda;border-radius:8px;padding:16px 20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;">
-            <span style="color:#6b7280;font-size:13px;">Číslo objednávky</span>
-            <span style="color:#1e7e34;font-size:16px;font-weight:900;">${orderNumber}</span>
+          <div style="background:#f0faf2;border:1px solid #d4edda;border-radius:8px;padding:16px 20px;margin-bottom:28px;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="color:#6b7280;font-size:13px;">Číslo objednávky:</td>
+                <td style="color:#1e7e34;font-size:16px;font-weight:900;text-align:right;">${orderNumber}</td>
+              </tr>
+            </table>
           </div>
 
           <!-- Items -->
@@ -202,7 +231,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing data' })
   }
 
-  const orderNumber = generateOrderNumber()
+  const orderNumber = await generateOrderNumber()
 
   try {
     // Vygeneruj PDF fakturu
