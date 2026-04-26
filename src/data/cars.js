@@ -376,7 +376,7 @@ export const cars = [
     isSale: true,
     freeDelivery: true,
     color: 'Bílá Purity',
-    image: '/cars/superb-02.webp',
+    image: '/cars/superb-03.webp',
     slug: 'superb-selection-purity',
   },
     {
