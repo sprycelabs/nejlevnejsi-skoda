@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
 
 const clients = [
-  { name: 'Bayer', logo: '/logo/bayer.svg', url: 'https://www.bayer.com' },
-  { name: 'Ahold Delhaize', logo: '/logo/ahold.svg', url: 'https://www.aholddelhaize.com' },
-  { name: 'Borgesius', logo: '/logo/borgesius.svg', url: 'https://www.borgesius.nl' },
+  { name: 'Bayer', logo: '/logo/bayer.webp', url: 'https://www.bayer.com' },
+  { name: 'Ahold Delhaize', logo: '/logo/ahold.webp', url: 'https://www.aholddelhaize.com' },
+  { name: 'Borgesius', logo: '/logo/borgesius.webp', url: 'https://www.borgesius.nl' },
   { name: 'ADAC', logo: '/logo/adac.webp', url: 'https://www.adac.de' },
   { name: 'Amazon', logo: '/logo/amazon.webp', url: 'https://www.amazon.de' },
-  { name: 'Bolt', logo: '/logo/bolt.svg', url: 'https://bolt.eu' },
+  { name: 'Bolt', logo: '/logo/bolt.webp', url: 'https://bolt.eu' },
 ]
 
 export default function ClientsBar() {
