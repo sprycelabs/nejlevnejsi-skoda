@@ -1,6 +1,7 @@
 import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
+import { put } from '@vercel/blob'
 import { generateInvoicePDF } from './generateInvoice.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -213,6 +214,20 @@ export default async function handler(req, res) {
     const attachment = {
       filename: invoiceFilename,
       content: pdfBase64,
+    }
+
+    // Ulož fakturu do Vercel Blob (pokud je token k dispozici)
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      try {
+        await put(`invoices/${invoiceFilename}`, pdfBuffer, {
+          access: 'public',
+          addRandomSuffix: false,
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        })
+      } catch (blobErr) {
+        console.error('Blob upload failed:', blobErr)
+        // Pokračuj i bez uložení — email se pošle tak jako tak
+      }
     }
 
     // Email zákazníkovi

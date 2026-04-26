@@ -12,7 +12,7 @@
   ],
   "functions": {
     "api/order.js": {
-      "includeFiles": "public/logo.png"
+      "includeFiles": "public/logo.png|api/fonts/**"
     }
   }
 }
