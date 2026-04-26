@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -14,11 +14,11 @@ const MAX_PRICE = Math.max(...cars.map(c => c.salePrice))
 const MIN_PRICE = Math.min(...cars.map(c => c.salePrice))
 
 const SORT_OPTIONS = [
-  { value: 'default', label: 'Výchozí řazení' },
-  { value: 'price-asc', label: 'Cena: od nejnižší' },
-  { value: 'price-desc', label: 'Cena: od nejvyšší' },
-  { value: 'discount', label: 'Největší sleva' },
-  { value: 'name', label: 'Název A–Z' },
+  { value: 'default', label: 'VĂ˝chozĂ­ Ĺ™azenĂ­' },
+  { value: 'price-asc', label: 'Cena: od nejniĹľĹˇĂ­' },
+  { value: 'price-desc', label: 'Cena: od nejvyĹˇĹˇĂ­' },
+  { value: 'discount', label: 'NejvÄ›tĹˇĂ­ sleva' },
+  { value: 'name', label: 'NĂˇzev Aâ€“Z' },
 ]
 
 function FilterChip({ label, onRemove }) {
@@ -35,11 +35,10 @@ function CarCard({ car, index }) {
   return (
     <Link to={`/vozy/${car.slug}`} className="block">
     <motion.div
-      layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3, delay: index * 0.05 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group flex flex-col h-full"
     >
       <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 h-48 flex items-center justify-center overflow-hidden">
@@ -61,7 +60,7 @@ function CarCard({ car, index }) {
       <div className="p-5 flex flex-col flex-1">
         <div className="mb-3">
           <h3 className="font-black text-lg text-gray-900">{car.name}</h3>
-          <p className="text-gray-500 text-sm">{car.variant} · {car.power}</p>
+          <p className="text-gray-500 text-sm">{car.variant} Â· {car.power}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-2 mb-4">
@@ -81,7 +80,7 @@ function CarCard({ car, index }) {
             )}
           </div>
           <div className="text-2xl font-black text-[#1e7e34]">{formatPrice(car.salePrice)}</div>
-          <div className="text-xs text-gray-400">vč. DPH · ušetříte {formatPrice(car.originalPrice - car.salePrice)}</div>
+          <div className="text-xs text-gray-400">vÄŤ. DPH Â· uĹˇetĹ™Ă­te {formatPrice(car.originalPrice - car.salePrice)}</div>
         </div>
 
         <div className="flex gap-2">
@@ -90,7 +89,7 @@ function CarCard({ car, index }) {
             className="flex-1 flex items-center justify-center gap-1.5 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-semibold py-3 px-4 rounded-md transition-colors"
           >
             <ShoppingCart size={15} />
-            Do košíku
+            Do koĹˇĂ­ku
           </button>
           <span className="flex items-center gap-1 border border-gray-200 hover:border-[#1e7e34] text-gray-600 hover:text-[#1e7e34] text-sm font-medium py-3 px-4 rounded-md transition-colors">
             Detail <ArrowRight size={14} />
@@ -159,12 +158,12 @@ export default function VozyPage() {
         <h3 className="font-bold text-gray-900 text-sm mb-3">Model</h3>
         <div className="space-y-2">
           {MODELS.map(model => (
-            <label key={model} className="flex items-center gap-2.5 cursor-pointer group">
+            <label key={model} className="flex items-start gap-2.5 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={selectedModels.includes(model)}
                 onChange={() => toggleItem(selectedModels, setSelectedModels, model)}
-                className="w-4 h-4 accent-[#1e7e34] cursor-pointer"
+                className="w-4 h-4 accent-[#1e7e34] cursor-pointer shrink-0 mt-0.5"
               />
               <span className="text-sm text-gray-700 group-hover:text-gray-900">{model}</span>
             </label>
@@ -179,12 +178,12 @@ export default function VozyPage() {
         <h3 className="font-bold text-gray-900 text-sm mb-3">Palivo</h3>
         <div className="space-y-2">
           {FUELS.map(fuel => (
-            <label key={fuel} className="flex items-center gap-2.5 cursor-pointer group">
+            <label key={fuel} className="flex items-start gap-2.5 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={selectedFuels.includes(fuel)}
                 onChange={() => toggleItem(selectedFuels, setSelectedFuels, fuel)}
-                className="w-4 h-4 accent-[#1e7e34] cursor-pointer"
+                className="w-4 h-4 accent-[#1e7e34] cursor-pointer shrink-0 mt-0.5"
               />
               <span className="text-sm text-gray-700 group-hover:text-gray-900">{fuel}</span>
             </label>
@@ -194,17 +193,17 @@ export default function VozyPage() {
 
       <div className="border-t border-gray-100" />
 
-      {/* Převodovka */}
+      {/* PĹ™evodovka */}
       <div>
-        <h3 className="font-bold text-gray-900 text-sm mb-3">Převodovka</h3>
+        <h3 className="font-bold text-gray-900 text-sm mb-3">PĹ™evodovka</h3>
         <div className="space-y-2">
           {TRANSMISSIONS.map(t => (
-            <label key={t} className="flex items-center gap-2.5 cursor-pointer group">
+            <label key={t} className="flex items-start gap-2.5 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={selectedTransmissions.includes(t)}
                 onChange={() => toggleItem(selectedTransmissions, setSelectedTransmissions, t)}
-                className="w-4 h-4 accent-[#1e7e34] cursor-pointer"
+                className="w-4 h-4 accent-[#1e7e34] cursor-pointer shrink-0 mt-0.5"
               />
               <span className="text-sm text-gray-700 group-hover:text-gray-900">{t}</span>
             </label>
@@ -236,15 +235,15 @@ export default function VozyPage() {
 
       <div className="border-t border-gray-100" />
 
-      {/* Ostatní */}
+      {/* OstatnĂ­ */}
       <div>
-        <h3 className="font-bold text-gray-900 text-sm mb-3">Ostatní</h3>
+        <h3 className="font-bold text-gray-900 text-sm mb-3">OstatnĂ­</h3>
         <div className="space-y-2">
-          <label className="flex items-center gap-2.5 cursor-pointer group">
+          <label className="flex items-start gap-2.5 cursor-pointer group">
             <input type="checkbox" checked={onlyFreeDelivery} onChange={e => setOnlyFreeDelivery(e.target.checked)} className="w-4 h-4 accent-[#1e7e34]" />
             <span className="text-sm text-gray-700 group-hover:text-gray-900">Doprava zdarma</span>
           </label>
-          <label className="flex items-center gap-2.5 cursor-pointer group">
+          <label className="flex items-start gap-2.5 cursor-pointer group">
             <input type="checkbox" checked={onlyNew} onChange={e => setOnlyNew(e.target.checked)} className="w-4 h-4 accent-[#1e7e34]" />
             <span className="text-sm text-gray-700 group-hover:text-gray-900">Pouze novinky</span>
           </label>
@@ -255,7 +254,7 @@ export default function VozyPage() {
         <>
           <div className="border-t border-gray-100" />
           <button onClick={resetAll} className="w-full text-sm text-red-500 hover:text-red-700 font-medium flex items-center gap-1.5 justify-center py-2 border border-red-200 hover:border-red-300 rounded-md transition-colors">
-            <X size={14} /> Zrušit filtry ({activeFiltersCount})
+            <X size={14} /> ZruĹˇit filtry ({activeFiltersCount})
           </button>
         </>
       )}
@@ -270,14 +269,14 @@ export default function VozyPage() {
       <div className="bg-[#0d1f10] pt-24 sm:pt-28 pb-8 sm:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-[#86efac] text-sm font-semibold uppercase tracking-wider mb-2">Katalog</p>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white">Nové vozy Škoda</h1>
-          <p className="text-gray-400 mt-2">Vozy z EU za výhodné ceny · plná tovární záruka</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white">NovĂ© vozy Ĺ koda</h1>
+          <p className="text-gray-400 mt-2">Vozy z EU za vĂ˝hodnĂ© ceny Â· plnĂˇ tovĂˇrnĂ­ zĂˇruka</p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex gap-0 lg:gap-8">
-          {/* Sidebar filtry — desktop */}
+          {/* Sidebar filtry â€” desktop */}
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="bg-white rounded-lg border border-gray-100 p-6 sticky top-24">
               <div className="flex items-center justify-between mb-5">
@@ -292,7 +291,7 @@ export default function VozyPage() {
             </div>
           </aside>
 
-          {/* Hlavní obsah */}
+          {/* HlavnĂ­ obsah */}
           <div className="flex-1 min-w-0">
             {/* Toolbar */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
@@ -301,7 +300,7 @@ export default function VozyPage() {
                 <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Hledat vůz…"
+                  placeholder="Hledat vĹŻzâ€¦"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   className="w-full bg-white border border-gray-200 rounded-md pl-10 pr-4 py-2.5 text-sm outline-none focus:border-[#1e7e34] transition-colors"
@@ -337,11 +336,11 @@ export default function VozyPage() {
               </div>
 
               <span className="text-sm text-gray-400 ml-auto">
-                {filtered.length} {filtered.length === 1 ? 'vůz' : filtered.length < 5 ? 'vozy' : 'vozů'}
+                {filtered.length} {filtered.length === 1 ? 'vĹŻz' : filtered.length < 5 ? 'vozy' : 'vozĹŻ'}
               </span>
             </div>
 
-            {/* Aktivní filtry chips */}
+            {/* AktivnĂ­ filtry chips */}
             {activeFiltersCount > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {selectedModels.map(m => <FilterChip key={m} label={m} onRemove={() => toggleItem(selectedModels, setSelectedModels, m)} />)}
@@ -353,9 +352,9 @@ export default function VozyPage() {
             )}
 
             {/* Grid */}
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence mode="wait">
               {filtered.length > 0 ? (
-                <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-5">
+                <motion.div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-5">
                   {filtered.map((car, i) => <CarCard key={car.id} car={car} index={i} />)}
                 </motion.div>
               ) : (
@@ -365,10 +364,10 @@ export default function VozyPage() {
                   className="text-center py-20 text-gray-400"
                 >
                   <Search size={40} className="mx-auto mb-4 opacity-30" />
-                  <p className="font-semibold text-lg text-gray-600">Žádné vozy nenalezeny</p>
-                  <p className="text-sm mt-1">Zkuste upravit nebo zrušit filtry</p>
+                  <p className="font-semibold text-lg text-gray-600">Ĺ˝ĂˇdnĂ© vozy nenalezeny</p>
+                  <p className="text-sm mt-1">Zkuste upravit nebo zruĹˇit filtry</p>
                   <button onClick={resetAll} className="mt-4 text-[#1e7e34] font-semibold hover:underline text-sm">
-                    Zrušit všechny filtry
+                    ZruĹˇit vĹˇechny filtry
                   </button>
                 </motion.div>
               )}
@@ -409,7 +408,7 @@ export default function VozyPage() {
                   onClick={() => setMobileFiltersOpen(false)}
                   className="w-full bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-3 rounded-md transition-colors"
                 >
-                  Zobrazit výsledky ({filtered.length})
+                  Zobrazit vĂ˝sledky ({filtered.length})
                 </button>
               </div>
             </motion.div>
