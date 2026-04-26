@@ -7,6 +7,7 @@ const steps = [
   { icon: FileCheck, text: 'Zajistíme objednávku i komunikaci s dodavatelem' },
   { icon: Truck, text: 'Organizujeme logistiku a přepravu vozu do ČR' },
   { icon: FileCheck, text: 'Vyřídíme kompletní přihlášení vozidla' },
+  { icon: Truck, text: 'Auto vám dovezeme až domů' },
 ]
 
 export default function ProcessSection() {
@@ -113,12 +114,12 @@ export default function ProcessSection() {
               Vyhnete se složité administrativě, jazykovým bariérám i časově náročnému porovnávání nabídek.
             </p>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap lg:flex-nowrap gap-3 items-center">
               <a
-                href="/kontakt#kontakt-formular"
-                className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3 rounded-md transition-colors text-sm"
+                href="/vozy"
+                className="flex items-center gap-2 bg-[#145523] hover:bg-[#1e7e34] text-white font-bold px-6 py-3 rounded-md transition-colors text-sm"
               >
-                Poptat konfiguraci
+                Koupit hned
               </a>
               <a
                 href="https://www.skoda-auto.cz/modely"
