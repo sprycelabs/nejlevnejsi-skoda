@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
-import { put } from '@vercel/blob'
+import { put, head } from '@vercel/blob'
 import { generateInvoicePDF } from './generateInvoice.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -27,32 +27,30 @@ function formatPrice(price) {
 }
 
 async function generateOrderNumber() {
-  const year = new Date().getFullYear()
-  const counterKey = `invoices/counter-${year}.json`
-
+  const year  = new Date().getFullYear()
+  const token = process.env.BLOB_READ_WRITE_TOKEN
+  const counterPath = `counter-${year}.json`
   let count = 1
-  try {
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
-      // Načti aktuální counter
-      const { list } = await import('@vercel/blob')
-      const { blobs } = await list({ prefix: `invoices/counter-${year}`, token: process.env.BLOB_READ_WRITE_TOKEN })
-      if (blobs.length > 0) {
-        const res = await fetch(blobs[0].url)
-        const data = await res.json()
-        count = (data.count || 0) + 1
-      }
-      // Ulož nový counter
-      await put(counterKey, JSON.stringify({ count }), {
-        access: 'public',
-        addRandomSuffix: false,
-        allowOverwrite: true,
-        token: process.env.BLOB_READ_WRITE_TOKEN,
-      })
+
+  if (token) {
+    try {
+      // Přečti existující counter
+      const blob = await head(counterPath, { token })
+      const res  = await fetch(`${blob.url}?t=${Date.now()}`, { cache: 'no-store' })
+      const data = await res.json()
+      count = (data.count || 0) + 1
+    } catch {
+      // Soubor ještě neexistuje — začínáme od 1
+      count = 1
     }
-  } catch (e) {
-    console.error('Counter error:', e)
-    // Fallback na náhodné číslo
-    count = Math.floor(100 + Math.random() * 900)
+
+    // Ulož aktualizovaný counter
+    await put(counterPath, JSON.stringify({ count }), {
+      access: 'public',
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      token,
+    })
   }
 
   return `OBJ-${year}-${String(count).padStart(3, '0')}`
