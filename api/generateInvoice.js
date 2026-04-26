@@ -1,9 +1,5 @@
-import React from 'react'
-import {
-  Document, Page, Text, View, Image, StyleSheet, renderToBuffer, Font,
-} from '@react-pdf/renderer'
+import PDFDocument from 'pdfkit'
 
-// ── Colours & constants ───────────────────────────────────────────────────────
 const GREEN  = '#1e7e34'
 const DARK   = '#0d1f10'
 const GRAY   = '#6b7280'
@@ -16,26 +12,18 @@ const SELLER = {
   address: 'Gladstonos 83, 3032, Limassol, Kypr',
 }
 
-// Placeholder — nahradit reálným účtem
 const BANK = {
-  iban:   'CZ00 0000 0000 0000 0000 0000',
-  swift:  'XXXXXXXX',
-  bank:   'Placeholder Bank',
+  iban:  'CZ00 0000 0000 0000 0000 0000',
+  swift: 'XXXXXXXX',
+  bank:  'Placeholder Bank',
 }
 
 const VAT_RATE = 0.21
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
 function formatCZK(amount) {
   return new Intl.NumberFormat('cs-CZ', {
     style: 'currency', currency: 'CZK', maximumFractionDigits: 0,
   }).format(amount)
-}
-
-function addDays(date, days) {
-  const d = new Date(date)
-  d.setDate(d.getDate() + days)
-  return d
 }
 
 function formatDate(date) {
@@ -44,254 +32,223 @@ function formatDate(date) {
   })
 }
 
-// ── Styles ────────────────────────────────────────────────────────────────────
-const s = StyleSheet.create({
-  page:         { fontFamily: 'Helvetica', fontSize: 9, color: BLACK, padding: '32pt 40pt' },
-  // Header
-  header:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 },
-  logo:         { width: 120, objectFit: 'contain' },
-  invoiceLabel: { fontSize: 22, fontFamily: 'Helvetica-Bold', color: GREEN, textAlign: 'right' },
-  invoiceNum:   { fontSize: 10, color: GRAY, textAlign: 'right', marginTop: 2 },
-  // Divider
-  divider:      { height: 1.5, backgroundColor: GREEN, marginBottom: 18 },
-  // Two-column info
-  twoCol:       { flexDirection: 'row', gap: 24, marginBottom: 20 },
-  col:          { flex: 1 },
-  colLabel:     { fontSize: 7, fontFamily: 'Helvetica-Bold', color: GREEN, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 6 },
-  infoLine:     { fontSize: 9, color: BLACK, marginBottom: 3, lineHeight: 1.4 },
-  infoLineSm:   { fontSize: 8, color: GRAY, marginBottom: 2, lineHeight: 1.4 },
-  bold:         { fontFamily: 'Helvetica-Bold' },
-  // Meta strip (dates, VS)
-  metaStrip:    { flexDirection: 'row', backgroundColor: LGRAY, borderRadius: 4, padding: '8pt 12pt', marginBottom: 20, gap: 0 },
-  metaItem:     { flex: 1, alignItems: 'center' },
-  metaLabel:    { fontSize: 7, color: GRAY, marginBottom: 3, textTransform: 'uppercase', letterSpacing: 0.6 },
-  metaValue:    { fontSize: 9, fontFamily: 'Helvetica-Bold', color: BLACK },
-  metaDivider:  { width: 1, backgroundColor: '#e5e7eb', marginHorizontal: 4 },
-  // Table
-  tableHead:    { flexDirection: 'row', backgroundColor: DARK, borderRadius: '3pt 3pt 0 0', padding: '7pt 8pt' },
-  thText:       { fontSize: 8, fontFamily: 'Helvetica-Bold', color: '#ffffff' },
-  tableRow:     { flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#f0f0f0', padding: '7pt 8pt', alignItems: 'center' },
-  tableRowAlt:  { backgroundColor: '#f9fafb' },
-  tableRowFree: { backgroundColor: '#f0faf2' },
-  tdText:       { fontSize: 9, color: BLACK },
-  tdTextSm:     { fontSize: 7.5, color: GRAY, marginTop: 1 },
-  tdGreen:      { fontSize: 9, fontFamily: 'Helvetica-Bold', color: GREEN },
-  // Column widths
-  colDesc:      { flex: 1 },
-  colQty:       { width: 28, textAlign: 'center' },
-  colBase:      { width: 68, textAlign: 'right' },
-  colVat:       { width: 52, textAlign: 'right' },
-  colTotal:     { width: 68, textAlign: 'right' },
-  // Totals
-  totalsWrap:   { flexDirection: 'row', justifyContent: 'flex-end', marginTop: 4, marginBottom: 20 },
-  totalsBox:    { width: 220 },
-  totalRow:     { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-  totalRowFinal:{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: GREEN, borderRadius: 4, padding: '8pt 10pt', marginTop: 6 },
-  totalLabel:   { fontSize: 9, color: GRAY },
-  totalValue:   { fontSize: 9, fontFamily: 'Helvetica-Bold', color: BLACK },
-  totalLabelFin:{ fontSize: 10, fontFamily: 'Helvetica-Bold', color: '#ffffff' },
-  totalValueFin:{ fontSize: 10, fontFamily: 'Helvetica-Bold', color: '#ffffff' },
-  // Payment
-  payBox:       { backgroundColor: '#f0faf2', borderWidth: 1, borderColor: '#d4edda', borderRadius: 4, padding: '12pt 14pt', marginBottom: 16 },
-  payTitle:     { fontSize: 9, fontFamily: 'Helvetica-Bold', color: GREEN, marginBottom: 8 },
-  payRow:       { flexDirection: 'row', marginBottom: 4 },
-  payLabel:     { fontSize: 8, color: GRAY, width: 90 },
-  payValue:     { fontSize: 8, fontFamily: 'Helvetica-Bold', color: BLACK, flex: 1 },
-  // Footer
-  footer:       { position: 'absolute', bottom: 24, left: 40, right: 40, borderTopWidth: 1, borderTopColor: '#e5e7eb', paddingTop: 8, flexDirection: 'row', justifyContent: 'space-between' },
-  footerText:   { fontSize: 7.5, color: GRAY },
-})
-
-// ── Invoice Document ──────────────────────────────────────────────────────────
-function InvoiceDoc({ form, items, total, orderNumber, logoBase64, issueDate, dueDate }) {
-  const isCompany = !!form.companyName
-  const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
-
-  // Car items with VAT breakdown
-  const carItems = items.map(({ car, qty }) => {
-    const lineTotal = car.salePrice * qty
-    const base = Math.round(lineTotal / (1 + VAT_RATE))
-    const vat  = lineTotal - base
-    return { name: `${car.name} ${car.variant}`, qty, base, vat, total: lineTotal }
-  })
-
-  const totalBase = carItems.reduce((s, i) => s + i.base, 0)
-  const totalVat  = carItems.reduce((s, i) => s + i.vat,  0)
-
-  const freeItems = [
-    'Prodloužená záruka 3 roky / 150 000 km',
-    'Doprava',
-    'Zápis do registru motorových vozidel',
-  ]
-
-  return (
-    <Document>
-      <Page size="A4" style={s.page}>
-
-        {/* ── HEADER ── */}
-        <View style={s.header}>
-          {logoBase64
-            ? <Image src={`data:image/png;base64,${logoBase64}`} style={s.logo} />
-            : <Text style={{ fontSize: 14, fontFamily: 'Helvetica-Bold', color: GREEN }}>Nejlevnější-Škoda.cz</Text>
-          }
-          <View>
-            <Text style={s.invoiceLabel}>FAKTURA</Text>
-            <Text style={s.invoiceNum}>{orderNumber}</Text>
-          </View>
-        </View>
-
-        <View style={s.divider} />
-
-        {/* ── SELLER / BUYER ── */}
-        <View style={s.twoCol}>
-          <View style={s.col}>
-            <Text style={s.colLabel}>Prodávající</Text>
-            <Text style={[s.infoLine, s.bold]}>{SELLER.name}</Text>
-            <Text style={s.infoLineSm}>Reg. číslo: {SELLER.reg}</Text>
-            <Text style={s.infoLineSm}>{SELLER.address}</Text>
-          </View>
-          <View style={s.col}>
-            <Text style={s.colLabel}>Kupující</Text>
-            <Text style={[s.infoLine, s.bold]}>{buyerName}</Text>
-            {isCompany && form.ico && <Text style={s.infoLineSm}>IČO: {form.ico}</Text>}
-            {isCompany && form.dic && <Text style={s.infoLineSm}>DIČ: {form.dic}</Text>}
-            <Text style={s.infoLineSm}>{form.street}</Text>
-            <Text style={s.infoLineSm}>{form.zip} {form.city}</Text>
-            <Text style={s.infoLineSm}>{form.email}</Text>
-            <Text style={s.infoLineSm}>{form.phone}</Text>
-          </View>
-        </View>
-
-        {/* ── META STRIP ── */}
-        <View style={s.metaStrip}>
-          <View style={s.metaItem}>
-            <Text style={s.metaLabel}>Datum vystavení</Text>
-            <Text style={s.metaValue}>{formatDate(issueDate)}</Text>
-          </View>
-          <View style={s.metaDivider} />
-          <View style={s.metaItem}>
-            <Text style={s.metaLabel}>Datum splatnosti</Text>
-            <Text style={s.metaValue}>{formatDate(dueDate)}</Text>
-          </View>
-          <View style={s.metaDivider} />
-          <View style={s.metaItem}>
-            <Text style={s.metaLabel}>Variabilní symbol</Text>
-            <Text style={s.metaValue}>{orderNumber}</Text>
-          </View>
-          <View style={s.metaDivider} />
-          <View style={s.metaItem}>
-            <Text style={s.metaLabel}>Způsob platby</Text>
-            <Text style={s.metaValue}>Bankovní převod</Text>
-          </View>
-        </View>
-
-        {/* ── ITEMS TABLE ── */}
-        {/* Head */}
-        <View style={s.tableHead}>
-          <Text style={[s.thText, s.colDesc]}>Popis</Text>
-          <Text style={[s.thText, s.colQty]}>Ks</Text>
-          <Text style={[s.thText, s.colBase]}>Základ DPH</Text>
-          <Text style={[s.thText, s.colVat]}>DPH 21%</Text>
-          <Text style={[s.thText, s.colTotal]}>Celkem vč. DPH</Text>
-        </View>
-
-        {/* Car rows */}
-        {carItems.map((item, i) => (
-          <View key={i} style={[s.tableRow, i % 2 === 1 && s.tableRowAlt]}>
-            <View style={s.colDesc}>
-              <Text style={s.tdText}>{item.name}</Text>
-              <Text style={s.tdTextSm}>Nový osobní automobil</Text>
-            </View>
-            <Text style={[s.tdText, s.colQty]}>{item.qty}</Text>
-            <Text style={[s.tdText, s.colBase]}>{formatCZK(item.base)}</Text>
-            <Text style={[s.tdText, s.colVat]}>{formatCZK(item.vat)}</Text>
-            <Text style={[s.tdGreen, s.colTotal]}>{formatCZK(item.total)}</Text>
-          </View>
-        ))}
-
-        {/* Free items */}
-        {freeItems.map((name, i) => (
-          <View key={`free-${i}`} style={[s.tableRow, s.tableRowFree]}>
-            <View style={s.colDesc}>
-              <Text style={s.tdText}>{name}</Text>
-            </View>
-            <Text style={[s.tdText, s.colQty]}>1</Text>
-            <Text style={[s.tdText, s.colBase]}>{formatCZK(0)}</Text>
-            <Text style={[s.tdText, s.colVat]}>{formatCZK(0)}</Text>
-            <Text style={[s.tdGreen, s.colTotal]}>{formatCZK(0)}</Text>
-          </View>
-        ))}
-
-        {/* ── TOTALS ── */}
-        <View style={s.totalsWrap}>
-          <View style={s.totalsBox}>
-            <View style={s.totalRow}>
-              <Text style={s.totalLabel}>Základ DPH (21%)</Text>
-              <Text style={s.totalValue}>{formatCZK(totalBase)}</Text>
-            </View>
-            <View style={s.totalRow}>
-              <Text style={s.totalLabel}>DPH 21%</Text>
-              <Text style={s.totalValue}>{formatCZK(totalVat)}</Text>
-            </View>
-            <View style={s.totalRowFinal}>
-              <Text style={s.totalLabelFin}>Celkem k úhradě</Text>
-              <Text style={s.totalValueFin}>{formatCZK(total)}</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* ── PAYMENT DETAILS ── */}
-        <View style={s.payBox}>
-          <Text style={s.payTitle}>Platební údaje</Text>
-          <View style={s.payRow}>
-            <Text style={s.payLabel}>IBAN:</Text>
-            <Text style={s.payValue}>{BANK.iban}</Text>
-          </View>
-          <View style={s.payRow}>
-            <Text style={s.payLabel}>SWIFT/BIC:</Text>
-            <Text style={s.payValue}>{BANK.swift}</Text>
-          </View>
-          <View style={s.payRow}>
-            <Text style={s.payLabel}>Banka:</Text>
-            <Text style={s.payValue}>{BANK.bank}</Text>
-          </View>
-          <View style={s.payRow}>
-            <Text style={s.payLabel}>Variabilní symbol:</Text>
-            <Text style={s.payValue}>{orderNumber}</Text>
-          </View>
-          <View style={s.payRow}>
-            <Text style={s.payLabel}>Částka:</Text>
-            <Text style={s.payValue}>{formatCZK(total)}</Text>
-          </View>
-        </View>
-
-        {/* ── FOOTER ── */}
-        <View style={s.footer} fixed>
-          <Text style={s.footerText}>{SELLER.name} · Reg. {SELLER.reg} · {SELLER.address}</Text>
-          <Text style={s.footerText}>nejlevnejsi-skoda.cz</Text>
-        </View>
-
-      </Page>
-    </Document>
-  )
+function addDays(date, days) {
+  const d = new Date(date)
+  d.setDate(d.getDate() + days)
+  return d
 }
 
-// ── Export ────────────────────────────────────────────────────────────────────
+function hex(color) {
+  // pdfkit fillColor accepts hex strings directly
+  return color
+}
+
 export async function generateInvoicePDF({ form, items, total, orderNumber, logoBase64 }) {
-  const issueDate = new Date()
-  const dueDate   = addDays(issueDate, 3)
+  return new Promise((resolve, reject) => {
+    const doc = new PDFDocument({ size: 'A4', margin: 40, info: { Title: `Faktura ${orderNumber}` } })
+    const chunks = []
+    doc.on('data', chunk => chunks.push(chunk))
+    doc.on('end', () => resolve(Buffer.concat(chunks)))
+    doc.on('error', reject)
 
-  const doc = (
-    <InvoiceDoc
-      form={form}
-      items={items}
-      total={total}
-      orderNumber={orderNumber}
-      logoBase64={logoBase64}
-      issueDate={issueDate}
-      dueDate={dueDate}
-    />
-  )
+    const W = 515 // usable width (595 - 2*40)
+    const isCompany = !!form.companyName
+    const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
+    const issueDate = new Date()
+    const dueDate   = addDays(issueDate, 3)
 
-  return renderToBuffer(doc)
+    const carItems = items.map(({ car, qty }) => {
+      const lineTotal = car.salePrice * qty
+      const base = Math.round(lineTotal / (1 + VAT_RATE))
+      const vat  = lineTotal - base
+      return { name: `${car.name} ${car.variant}`, qty, base, vat, total: lineTotal }
+    })
+    const totalBase = carItems.reduce((s, i) => s + i.base, 0)
+    const totalVat  = carItems.reduce((s, i) => s + i.vat,  0)
+
+    const freeItems = [
+      'Prodloužená záruka 3 roky / 150 000 km',
+      'Doprava',
+      'Zápis do registru motorových vozidel',
+    ]
+
+    // ── HEADER ───────────────────────────────────────────────────────────────
+    if (logoBase64) {
+      const logoBuf = Buffer.from(logoBase64, 'base64')
+      doc.image(logoBuf, 40, 40, { height: 36, fit: [160, 36] })
+    } else {
+      doc.fontSize(14).fillColor(GREEN).font('Helvetica-Bold').text('Nejlevnější-Škoda.cz', 40, 48)
+    }
+
+    // "FAKTURA" label top right
+    doc.fontSize(24).fillColor(GREEN).font('Helvetica-Bold')
+       .text('FAKTURA', 0, 40, { align: 'right' })
+    doc.fontSize(10).fillColor(GRAY).font('Helvetica')
+       .text(orderNumber, 0, 68, { align: 'right' })
+
+    // Green divider
+    doc.y = 88
+    doc.moveTo(40, doc.y).lineTo(555, doc.y).lineWidth(2).strokeColor(GREEN).stroke()
+    doc.y += 14
+
+    // ── SELLER / BUYER columns ────────────────────────────────────────────────
+    const colY = doc.y
+    const colW = (W - 20) / 2
+
+    // Prodávající
+    doc.fontSize(7).fillColor(GREEN).font('Helvetica-Bold')
+       .text('PRODÁVAJÍCÍ', 40, colY, { width: colW })
+    doc.fontSize(9).fillColor(BLACK).font('Helvetica-Bold')
+       .text(SELLER.name, 40, colY + 14, { width: colW })
+    doc.fontSize(8).fillColor(GRAY).font('Helvetica')
+       .text(`Reg. číslo: ${SELLER.reg}`, 40, doc.y + 2, { width: colW })
+       .text(SELLER.address, 40, doc.y + 2, { width: colW })
+
+    const sellerBottom = doc.y
+
+    // Kupující
+    doc.fontSize(7).fillColor(GREEN).font('Helvetica-Bold')
+       .text('KUPUJÍCÍ', 40 + colW + 20, colY, { width: colW })
+    doc.fontSize(9).fillColor(BLACK).font('Helvetica-Bold')
+       .text(buyerName, 40 + colW + 20, colY + 14, { width: colW })
+    doc.fontSize(8).fillColor(GRAY).font('Helvetica')
+    if (isCompany && form.ico) doc.text(`IČO: ${form.ico}`, 40 + colW + 20, doc.y + 2, { width: colW })
+    if (isCompany && form.dic) doc.text(`DIČ: ${form.dic}`, 40 + colW + 20, doc.y + 2, { width: colW })
+    doc.text(form.street, 40 + colW + 20, doc.y + 2, { width: colW })
+       .text(`${form.zip} ${form.city}`, 40 + colW + 20, doc.y + 2, { width: colW })
+       .text(form.email, 40 + colW + 20, doc.y + 2, { width: colW })
+       .text(form.phone, 40 + colW + 20, doc.y + 2, { width: colW })
+
+    doc.y = Math.max(sellerBottom, doc.y) + 16
+
+    // ── META STRIP ────────────────────────────────────────────────────────────
+    const stripY = doc.y
+    const stripH = 38
+    doc.roundedRect(40, stripY, W, stripH, 4).fill(LGRAY)
+
+    const metaCols = [
+      { label: 'Datum vystavení', value: formatDate(issueDate) },
+      { label: 'Datum splatnosti', value: formatDate(dueDate) },
+      { label: 'Variabilní symbol', value: orderNumber },
+      { label: 'Způsob platby', value: 'Bankovní převod' },
+    ]
+    const metaW = W / metaCols.length
+    metaCols.forEach((m, i) => {
+      const x = 40 + i * metaW
+      doc.fontSize(7).fillColor(GRAY).font('Helvetica')
+         .text(m.label.toUpperCase(), x + 6, stripY + 7, { width: metaW - 12, align: 'center' })
+      doc.fontSize(9).fillColor(BLACK).font('Helvetica-Bold')
+         .text(m.value, x + 6, stripY + 20, { width: metaW - 12, align: 'center' })
+    })
+    doc.y = stripY + stripH + 16
+
+    // ── TABLE ─────────────────────────────────────────────────────────────────
+    // Column widths
+    const cDesc  = 220
+    const cQty   = 30
+    const cBase  = 80
+    const cVat   = 60
+    const cTotal = W - cDesc - cQty - cBase - cVat
+    const xQty   = 40 + cDesc
+    const xBase  = xQty + cQty
+    const xVat   = xBase + cBase
+    const xTotal = xVat + cVat
+
+    // Header row
+    const thY = doc.y
+    doc.roundedRect(40, thY, W, 22, 3).fill(DARK)
+    doc.fontSize(8).fillColor('#ffffff').font('Helvetica-Bold')
+    doc.text('Popis',           44,      thY + 7, { width: cDesc - 4 })
+    doc.text('Ks',              xQty,    thY + 7, { width: cQty,  align: 'center' })
+    doc.text('Základ DPH',      xBase,   thY + 7, { width: cBase, align: 'right' })
+    doc.text('DPH 21%',         xVat,    thY + 7, { width: cVat,  align: 'right' })
+    doc.text('Celkem vč. DPH',  xTotal,  thY + 7, { width: cTotal, align: 'right' })
+    doc.y = thY + 22
+
+    function tableRow(name, subtext, qty, base, vat, rowTotal, bgColor) {
+      const rY = doc.y
+      const rowH = subtext ? 28 : 20
+      if (bgColor) doc.rect(40, rY, W, rowH).fill(bgColor)
+      doc.moveTo(40, rY + rowH).lineTo(555, rY + rowH).lineWidth(0.5).strokeColor('#e5e7eb').stroke()
+
+      doc.fontSize(9).fillColor(BLACK).font('Helvetica')
+         .text(name, 44, rY + 6, { width: cDesc - 8 })
+      if (subtext) {
+        doc.fontSize(7).fillColor(GRAY)
+           .text(subtext, 44, rY + 17, { width: cDesc - 8 })
+      }
+      doc.fontSize(9).fillColor(BLACK).font('Helvetica')
+         .text(String(qty),       xQty,   rY + 6, { width: cQty,   align: 'center' })
+         .text(formatCZK(base),   xBase,  rY + 6, { width: cBase,  align: 'right' })
+         .text(formatCZK(vat),    xVat,   rY + 6, { width: cVat,   align: 'right' })
+      doc.fillColor(GREEN).font('Helvetica-Bold')
+         .text(formatCZK(rowTotal), xTotal, rY + 6, { width: cTotal, align: 'right' })
+      doc.y = rY + rowH
+    }
+
+    carItems.forEach((item, i) => {
+      tableRow(item.name, 'Nový osobní automobil', item.qty, item.base, item.vat, item.total, i % 2 === 1 ? '#f9fafb' : null)
+    })
+    freeItems.forEach(name => {
+      tableRow(name, null, 1, 0, 0, 0, '#f0faf2')
+    })
+
+    doc.y += 10
+
+    // ── TOTALS ────────────────────────────────────────────────────────────────
+    const totW = 210
+    const totX = 555 - totW
+
+    function totRow(label, value, isFinal) {
+      const rY = doc.y
+      if (isFinal) {
+        doc.roundedRect(totX, rY, totW, 26, 4).fill(GREEN)
+        doc.fontSize(10).fillColor('#ffffff').font('Helvetica-Bold')
+           .text(label, totX + 8, rY + 8, { width: totW - 70 })
+           .text(value, totX,     rY + 8, { width: totW - 8, align: 'right' })
+        doc.y = rY + 26 + 4
+      } else {
+        doc.moveTo(totX, rY + 18).lineTo(555, rY + 18).lineWidth(0.5).strokeColor('#e5e7eb').stroke()
+        doc.fontSize(9).fillColor(GRAY).font('Helvetica')
+           .text(label, totX + 4, rY + 4, { width: totW - 70 })
+        doc.fillColor(BLACK).font('Helvetica-Bold')
+           .text(value, totX,     rY + 4, { width: totW - 8, align: 'right' })
+        doc.y = rY + 20
+      }
+    }
+
+    totRow('Základ DPH (21%)', formatCZK(totalBase))
+    totRow('DPH 21%', formatCZK(totalVat))
+    totRow('Celkem k úhradě', formatCZK(total), true)
+
+    doc.y += 16
+
+    // ── PAYMENT BOX ───────────────────────────────────────────────────────────
+    const payY = doc.y
+    doc.roundedRect(40, payY, W, 90, 4).fill('#f0faf2').stroke('#d4edda')
+    doc.fontSize(9).fillColor(GREEN).font('Helvetica-Bold')
+       .text('Platební údaje', 52, payY + 10)
+
+    const payData = [
+      ['IBAN:', BANK.iban],
+      ['SWIFT/BIC:', BANK.swift],
+      ['Banka:', BANK.bank],
+      ['Variabilní symbol:', orderNumber],
+      ['Částka k úhradě:', formatCZK(total)],
+    ]
+    payData.forEach(([label, value], i) => {
+      const pY = payY + 24 + i * 13
+      doc.fontSize(8).fillColor(GRAY).font('Helvetica').text(label, 52, pY, { width: 110 })
+      doc.fillColor(BLACK).font('Helvetica-Bold').text(value, 165, pY, { width: 360 })
+    })
+
+    // ── FOOTER ────────────────────────────────────────────────────────────────
+    const footY = 800
+    doc.moveTo(40, footY).lineTo(555, footY).lineWidth(0.5).strokeColor('#e5e7eb').stroke()
+    doc.fontSize(7.5).fillColor(GRAY).font('Helvetica')
+       .text(`${SELLER.name} · Reg. ${SELLER.reg} · ${SELLER.address}`, 40, footY + 6, { width: W - 80 })
+       .text('nejlevnejsi-skoda.cz', 40, footY + 6, { width: W, align: 'right' })
+
+    doc.end()
+  })
 }
