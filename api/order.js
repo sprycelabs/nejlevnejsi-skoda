@@ -1,6 +1,18 @@
 import { Resend } from 'resend'
+import fs from 'fs'
+import path from 'path'
+import { generateInvoicePDF } from './generateInvoice.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+function loadLogoBase64() {
+  try {
+    const logoPath = path.join(process.cwd(), 'public', 'logo.png')
+    return fs.readFileSync(logoPath).toString('base64')
+  } catch {
+    return null
+  }
+}
 
 const FROM = 'platby@nejlevnejsi-skoda.cz'
 const CLIENT_EMAIL = 'platby@nejlevnejsi-skoda.cz'
@@ -192,12 +204,24 @@ export default async function handler(req, res) {
   const orderNumber = generateOrderNumber()
 
   try {
+    // Vygeneruj PDF fakturu
+    const logoBase64 = loadLogoBase64()
+    const pdfBuffer = await generateInvoicePDF({ form, items, total, orderNumber, logoBase64 })
+    const pdfBase64 = pdfBuffer.toString('base64')
+    const invoiceFilename = `faktura-${orderNumber}.pdf`
+
+    const attachment = {
+      filename: invoiceFilename,
+      content: pdfBase64,
+    }
+
     // Email zákazníkovi
     await resend.emails.send({
       from: `Nejlevnější Škoda <${FROM}>`,
       to: form.email,
       subject: `Potvrzení objednávky ${orderNumber} — Nejlevnější-Škoda.cz`,
       html: customerEmail(form, items, total, orderNumber),
+      attachments: [attachment],
     })
 
     // Notifikace klientovi
@@ -206,6 +230,7 @@ export default async function handler(req, res) {
       to: CLIENT_EMAIL,
       subject: `Nová objednávka ${orderNumber} — ${form.companyName || `${form.firstName} ${form.lastName}`}`,
       html: clientNotificationEmail(form, items, total, orderNumber),
+      attachments: [attachment],
     })
 
     return res.status(200).json({ success: true, orderNumber })
