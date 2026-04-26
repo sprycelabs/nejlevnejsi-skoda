@@ -26,7 +26,7 @@ const contactItems = [
   {
     icon: MapPin,
     label: 'Sídlo',
-    value: 'Praha, Česká republika',
+    value: 'Gladstonos 83, 3032, Limassol, Kypr',
     sub: 'Schůzky po domluvě',
     href: null,
   },

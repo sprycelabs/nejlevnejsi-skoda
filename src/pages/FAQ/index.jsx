@@ -19,7 +19,7 @@ const faqs = [
       },
       {
         q: 'Jak dlouho celý proces trvá?',
-        a: 'Od nezávazné poptávky po předání klíčků obvykle 3–6 týdnů. Záleží na dostupnosti konkrétního vozu a rychlosti administrace. U skladových vozů může být dodání rychlejší.',
+        a: 'Od závazné objednávky skladového vozu 1-3 týdny včetně registrace a dodání až před dům. U modelů na objednávku záleží na dostupnosti konkrétního vozu a rychlosti výroby.',
       },
       {
         q: 'Musím jet do zahraničí nebo něco vyřizovat osobně?',
@@ -36,7 +36,7 @@ const faqs = [
       },
       {
         q: 'Jsou vozy nové nebo ojeté?',
-        a: 'Primárně dodáváme nové vozy. V nabídce jsou i vozy s velmi nízkým nájezdem (předváděcí, skladové) — vždy to jasně uvádíme v detailu vozu.',
+        a: 'Vždy se jedná o nové vozy do 3 měsíců od výroby s 0 najetými km. Žádné předváděčky a dealerské „uloženky“.',
       },
       {
         q: 'Mohu si vybrat výbavu, barvu a doplňky přesně podle svých přání?',
@@ -53,11 +53,11 @@ const faqs = [
     items: [
       {
         q: 'Co vše je zahrnuto v ceně?',
-        a: 'V ceně vozu je zahrnuta přeprava do ČR (u vozů označených "Doprava zdarma"), přihlášení vozidla, technická přejímka, kompletní dokumentace a předávací protokol. Vše vám transparentně sdělíme předem.',
+        a: 'V ceně všech vozů je zahrnuta přeprava do ČR až k vám domů, přihlášení vozidla, technická přejímka, kompletní dokumentace a předávací protokol. Vše vám transparentně sdělíme předem.',
       },
       {
         q: 'Jaký je váš poplatek za zprostředkování?',
-        a: 'Naši odměnu vždy transparentně uvedeme v nabídce. Je součástí celkové ceny a neplatíte žádné skryté příplatky.',
+        a: 'Žádný. Je součástí celkové ceny a neplatíte žádné skryté příplatky.',
       },
       {
         q: 'Mohu vůz financovat — leasing nebo úvěr?',
@@ -65,7 +65,7 @@ const faqs = [
       },
       {
         q: 'Kdy a jak se platí?',
-        a: 'Platební podmínky jsou součástí každé individuální nabídky. Standardně se platí část při objednávce a zbytek před předáním vozu. Vše je smluvně ošetřeno.',
+        a: 'Platební podmínky jsou stejné jako při koupi vozu u kteréhokoliv dealera škoda.',
       },
     ],
   },
@@ -78,7 +78,7 @@ const faqs = [
       },
       {
         q: 'Co když vůz při převzetí nesplňuje očekávání?',
-        a: 'Před předáním vůz důkladně zkontrolujeme. Postupujeme transparentně — fotodokumentace, předávací protokol. V případě jakýchkoli nesrovnalostí věc okamžitě řešíme.',
+        a: 'Před předáním vůz důkladně zkontrolujeme. Postupujeme transparentně — fotodokumentace, předávací protokol. V případě jakýchkoli nesrovnalostí věc okamžitě řešíme. Koupě přes internet vám dává jedinečnou možnost, kterou u klasických dealerů nenajdete, a to odstoupit od kupní smlouvy do 14dnů bez udání důvodu.',
       },
       {
         q: 'Nabízíte služby i pro firemní zákazníky?',

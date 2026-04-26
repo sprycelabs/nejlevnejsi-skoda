@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Car, Tag, Banknote, Wrench } from 'lucide-react'
+import { Car, Accessibility, Banknote, Wrench } from 'lucide-react'
 
 const links = [
   {
@@ -10,10 +10,10 @@ const links = [
     bg: 'bg-[#1e7e34]',
   },
   {
-    icon: Tag,
-    title: 'Akční nabídky',
-    desc: 'Slevy až 20 %',
-    href: '#vozy',
+    icon: Accessibility,
+    title: 'Slevy pro držitele ZTP',
+    desc: 'Individuální nabídka',
+    href: '/kontakt',
     bg: 'bg-[#145523]',
   },
   {

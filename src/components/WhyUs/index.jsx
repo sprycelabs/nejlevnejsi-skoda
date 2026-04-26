@@ -9,8 +9,8 @@ const benefits = [
   },
   {
     icon: ShieldCheck,
-    title: 'Plná tovární záruka',
-    desc: 'Každý vůz pochází z oficiální distribuční sítě. Záruka je stejná jako při koupi v ČR, servis zajistíte u každého autorizovaného Škoda servisu.',
+    title: 'Prodloužená záruka v ceně',
+    desc: 'Každý vůz dodáváme s prodlouženou zárukou 3 roky / 150 000 km. Servis zajistíte u každého autorizovaného Škoda servisu v ČR i v EU.',
   },
   {
     icon: Globe,

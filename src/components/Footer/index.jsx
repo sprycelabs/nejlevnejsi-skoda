@@ -24,8 +24,8 @@ const footerLinks = {
   'Společnost': [
     { label: 'O nás', href: '/o-nas' },
     { label: 'Kontakt', href: '/kontakt' },
-    { label: 'Obchodní podmínky', href: '/kontakt' },
-    { label: 'GDPR', href: '/kontakt' },
+    { label: 'Obchodní podmínky', href: '/doc/terms.docx', download: true },
+    { label: 'GDPR', href: '/doc/gdpr.docx', download: true },
     { label: 'Cookies', href: '/kontakt' },
   ],
 }
@@ -39,7 +39,7 @@ export default function Footer() {
           {/* Brand col */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <a href="/" className="flex items-center mb-5">
-              <img src="/logo.png" alt="Nejlevnější Škoda" style={{ height: '36px', width: 'auto', filter: 'brightness(0) invert(1)' }} />
+              <img src="/logo.png" alt="Nejlevnější Škoda" className="h-6 sm:h-8 lg:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
             </a>
             <p className="text-gray-400 text-sm leading-relaxed mb-5">
               Váš partner pro nákup vozů Škoda z EU za výhodné ceny. Průměrná úspora 20 %.
@@ -83,7 +83,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="text-sm text-gray-400 hover:text-[#28a745] transition-colors">
+                    <a href={link.href} {...(link.download ? { download: true } : {})} className="text-sm text-gray-400 hover:text-[#28a745] transition-colors">
                       {link.label}
                     </a>
                   </li>
@@ -97,10 +97,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <span>© {new Date().getFullYear()} NEJLEVNĚJŠÍ ŠKODA s.r.o. Všechna práva vyhrazena.</span>
+          <span>© {new Date().getFullYear()} TOP GLOBAL STRATEGIC MANAGEMENT LTD,Reg. číslo: 490247, Všechna práva vyhrazena.</span>
           <div className="flex gap-4">
-            <a href="/kontakt" className="hover:text-gray-300 transition-colors">GDPR</a>
-            <a href="/kontakt" className="hover:text-gray-300 transition-colors">Obchodní podmínky</a>
+            <a href="/doc/gdpr.docx" download className="hover:text-gray-300 transition-colors">GDPR</a>
+            <a href="/doc/terms.docx" download className="hover:text-gray-300 transition-colors">Obchodní podmínky</a>
             <a href="/kontakt" className="hover:text-gray-300 transition-colors">Cookies</a>
           </div>
         </div>

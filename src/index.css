@@ -27,3 +27,25 @@ body {
   background: #fff;
   overflow-x: hidden;
 }
+
+.client-logo {
+  height: 44px !important;
+  width: auto !important;
+  max-width: unset !important;
+  object-fit: contain;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .client-logo {
+    height: 48px !important;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

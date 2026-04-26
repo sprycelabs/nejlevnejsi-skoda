@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import QuickLinks from './components/QuickLinks'
+import ClientsBar from './components/ClientsBar'
 import CarListing from './components/CarListing'
 import HowItWorks from './components/HowItWorks'
 import WhyUs from './components/WhyUs'
@@ -24,6 +25,7 @@ function HomePage() {
       <Navbar />
       <main>
         <Hero />
+        <ClientsBar />
         <QuickLinks />
         <CarListing />
         <HowItWorks />

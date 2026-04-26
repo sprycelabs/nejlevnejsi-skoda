@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
-  Star, CheckCircle2, ArrowRight
+  Star, CheckCircle2, ArrowRight, Accessibility
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -152,7 +152,7 @@ export default function VozDetail() {
               className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4"
             >
               {[
-                { icon: ShieldCheck, title: 'Tovární záruka', sub: 'Platí v celé EU' },
+                { icon: ShieldCheck, title: 'Záruka v ceně', sub: '3 roky / 150 000 km' },
                 { icon: Truck, title: 'Dovoz do ČR', sub: car.freeDelivery ? 'Zdarma' : 'Na dotaz' },
                 { icon: BadgePercent, title: 'Ušetříte', sub: formatPrice(savings) },
               ].map(({ icon: Icon, title, sub }) => (
@@ -221,7 +221,7 @@ export default function VozDetail() {
                 <h3 className="font-black text-gray-900 mb-4">Co je zahrnuto v ceně</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   {[
-                    'Plná tovární záruka Škoda',
+                    'Prodloužená záruka 3 roky / 150 000 km',
                     'Technická přejímka v ČR',
                     'Registrace vozu v ČR',
                     'Předávací protokol',
@@ -318,6 +318,23 @@ export default function VozDetail() {
                   >
                     <Mail size={15} /> Napsat e-mail
                   </a>
+                </div>
+              </motion.div>
+
+              {/* ZTP sleva */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="bg-[#f0faf2] border border-green-200 rounded-lg p-4 flex items-start gap-3"
+              >
+                <div className="w-9 h-9 bg-[#1e7e34] rounded-md flex items-center justify-center shrink-0">
+                  <Accessibility size={18} className="text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900 text-sm">Sleva pro držitele ZTP</div>
+                  <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">Jste držitelem průkazu ZTP? Kontaktujte nás pro individuální nabídku.</div>
+                  <a href="/kontakt" className="inline-block mt-2 text-xs font-semibold text-[#1e7e34] hover:underline">Zjistit více →</a>
                 </div>
               </motion.div>
 
