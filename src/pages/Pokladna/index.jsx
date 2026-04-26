@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2 } from 'lucide-react'
+import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2 } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import { useCart } from '../../context/CartContext'
@@ -63,6 +63,9 @@ export default function Pokladna() {
   const [form, setForm] = useState(EMPTY_FYZICKA)
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [orderNumber, setOrderNumber] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [invoiceChecked, setInvoiceChecked] = useState(false)
   const [deliveryChecked, setDeliveryChecked] = useState(false)
   const [sidebarErrors, setSidebarErrors] = useState({})
@@ -97,7 +100,7 @@ export default function Pokladna() {
     return e
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const errs = validate()
     const sErrs = {}
@@ -109,8 +112,25 @@ export default function Pokladna() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
-    setSubmitted(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setLoading(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ form, items, total: cartTotal }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Chyba serveru')
+      setOrderNumber(data.orderNumber)
+      setSubmitted(true)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (err) {
+      setSubmitError('Nepodařilo se odeslat objednávku. Zkuste to prosím znovu nebo nás kontaktujte.')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -123,8 +143,14 @@ export default function Pokladna() {
               <CheckCircle2 size={40} className="text-[#1e7e34]" />
             </div>
             <h1 className="text-3xl font-black text-gray-900 mb-3">Objednávka odeslána!</h1>
+            {orderNumber && (
+              <div className="inline-block bg-green-50 border border-green-200 rounded-lg px-5 py-2 mb-4">
+                <span className="text-sm text-gray-500">Číslo objednávky: </span>
+                <span className="font-black text-[#1e7e34] text-base">{orderNumber}</span>
+              </div>
+            )}
             <p className="text-gray-500 leading-relaxed mb-8">
-              Děkujeme za vaši objednávku. Brzy vás budeme kontaktovat na <strong>{form.email}</strong> s dalšími informacemi.
+              Děkujeme za vaši objednávku. Potvrzení jsme zaslali na <strong>{form.email}</strong>. Fakturu s platebními údaji obdržíte do 24 hodin.
             </p>
             <Link to="/" className="inline-flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-8 py-3 rounded-md transition-colors">
               Zpět na hlavní stránku
@@ -405,11 +431,17 @@ export default function Pokladna() {
                     </span>
                   </div>
 
-                  <button type="submit"
-                    className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-black py-4 rounded-md transition-colors text-base"
+                  {submitError && (
+                    <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-md p-3 mb-4 text-xs text-red-700">
+                      <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                      {submitError}
+                    </div>
+                  )}
+                  <button type="submit" disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] disabled:opacity-60 disabled:cursor-not-allowed text-white font-black py-4 rounded-md transition-colors text-base"
                   >
-                    <ShieldCheck size={18} />
-                    Odeslat objednávku
+                    {loading ? <Loader2 size={18} className="animate-spin" /> : <ShieldCheck size={18} />}
+                    {loading ? 'Odesílám...' : 'Odeslat objednávku'}
                   </button>
                   <p className="text-center text-xs text-gray-400 mt-3">
                     Závazná objednávka · Vyžaduje souhlas s podmínkami
