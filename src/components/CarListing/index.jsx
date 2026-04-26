@@ -147,7 +147,7 @@ export default function CarListing() {
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-          {cars.map((car, i) => (
+          {cars.slice(0, 6).map((car, i) => (
             <CarCard key={car.id} car={car} index={i} />
           ))}
         </div>
