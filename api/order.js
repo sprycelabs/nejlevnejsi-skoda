@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const FROM = 'platby@nejlevnejsi-skoda.cz'
-const CLIENT_EMAIL = 'info@nejlevnejsi-skoda.cz'
+const CLIENT_EMAIL = 'platby@nejlevnejsi-skoda.cz'
 
 function formatPrice(price) {
   return new Intl.NumberFormat('cs-CZ', {
