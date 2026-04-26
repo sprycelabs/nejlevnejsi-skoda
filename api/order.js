@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
-import { put, list, getDownloadUrl, BlobNotFoundError } from '@vercel/blob'
+import { put, list } from '@vercel/blob'
 import { generateInvoicePDF } from './generateInvoice.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -29,32 +29,17 @@ function formatPrice(price) {
 async function generateOrderNumber() {
   const year  = new Date().getFullYear()
   const token = process.env.BLOB_READ_WRITE_TOKEN
-  const counterPath = `counter-${year}.json`
   let count = 1
 
   if (token) {
     try {
-      // Přečti existující counter
-      const { blobs } = await list({ prefix: counterPath, token })
-      if (blobs.length > 0) {
-        const signedUrl = await getDownloadUrl(blobs[0].url, { token })
-        const res  = await fetch(signedUrl)
-        const data = await res.json()
-        count = (data.count || 0) + 1
-      } else {
-        count = 1 // první objednávka roku
-      }
-
-      // Ulož aktualizovaný counter
-      await put(counterPath, JSON.stringify({ count }), {
-        access: 'private',
-        addRandomSuffix: false,
-        allowOverwrite: true,
+      const { blobs } = await list({
+        prefix: `invoices/faktura-OBJ-${year}-`,
         token,
       })
+      count = blobs.length + 1
     } catch (e) {
       console.error('Counter error, using fallback:', e.message)
-      // Fallback — číslo bude fungovat i bez counteru
       count = Date.now() % 10000
     }
   }
