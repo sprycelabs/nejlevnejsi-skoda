@@ -25,17 +25,17 @@ const contactItems = [
   },
   {
     icon: MapPin,
-    label: 'Sídlo',
+    label: 'Sídlo společnosti',
     value: 'Gladstonos 83, 3032, Limassol, Kypr',
     sub: 'Schůzky po domluvě',
     href: null,
   },
   {
-    icon: Clock,
-    label: 'Provozní doba',
-    value: 'Po–Pá 8:00–18:00',
-    sub: 'So 9:00–13:00',
-    href: null,
+    icon: MapPin,
+    label: 'Kancelář ČR',
+    value: 'Rybná 716, 110 00 Praha 1',
+    sub: 'Česká kancelář',
+    href: 'https://maps.google.com/?q=Rybná+716,+110+00+Praha+1',
   },
 ]
 

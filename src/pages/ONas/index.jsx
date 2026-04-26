@@ -5,7 +5,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 const stats = [
-  { value: '500+', label: 'spokojených zákazníků' },
+  { value: '500+', label: 'spokojených zákazníků v Evropě' },
   { value: '20 %', label: 'průměrná úspora oproti ČR' },
   { value: '15+', label: 'let zkušeností' },
   { value: '10+', label: 'zemí EU v síti' },
@@ -38,22 +38,22 @@ const timeline = [
   {
     year: '2009',
     title: 'Začátky',
-    desc: 'Firma vznikla z osobní zkušenosti zakladatele — který sám koupil vůz v Německu za výrazně nižší cenu a uvědomil si, že tento přístup může nabídnout i ostatním.',
+    desc: 'Zakladatel pořídil identický vůz v zahraničí místo zaplacení přes 800 000 Kč u českého dealera. Celý proces byl ale složitý — jazyková bariéra, administrativa, logistika.',
   },
   {
     year: '2014',
     title: 'Specializace na Škoda',
-    desc: 'Po letech zkušeností s různými značkami jsme se rozhodli specializovat výhradně na vozy Škoda Auto — brand s nejsilnějšími cenovými rozdíly v rámci EU.',
+    desc: 'Po zjištění, že strukturální cenové rozdíly jsou u vozů Škoda v rámci EU nejsilnější, jsme se na tuto značku specializovali výhradně.',
   },
   {
     year: '2018',
-    title: 'Systém a škálování',
-    desc: 'Vybudovali jsme vlastní systém sledování nabídek a síť ověřených partnerů v klíčových zemích EU. Objem obchodů překročil 100 vozů ročně.',
+    title: 'Vznik nejlevnejsi-skoda.cz',
+    desc: 'Spustili jsme platformu, aby tento proces zvládl kdokoliv — bez znalostí a bez starostí. Za cenu, kterou v danou chvíli v ČR nenajdete.',
   },
   {
     year: '2026',
     title: 'Dnes',
-    desc: 'Stovky spokojených zákazníků, od jednotlivců po firemní flotily. Každý případ řešíme individuálně, každý vůz s plnou zárukou a bez kompromisů.',
+    desc: '500+ spokojených zákazníků v Evropě, od jednotlivců po firemní flotily. Každý případ řešíme individuálně, každý vůz s plnou zárukou a bez kompromisů.',
   },
 ]
 
@@ -147,19 +147,19 @@ export default function ONas() {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  V rámci EU existují výrazné cenové rozdíly u stejných vozů — stejná Škoda Octavia
-                  stojí v Německu, Belgii nebo Polsku o desítky tisíc méně než v České republice.
-                  Není to náhoda ani chyba, je to strukturální rozdíl daný lokálními dealerskými maržemi
-                  a poptávkou.
+                  V rámci EU existují výrazné cenové rozdíly u stejných vozů — např. stejná Škoda
+                  Octavia stojí v některé jiné zemi EU až o desítky i stovky tisíc Kč méně než v České
+                  republice. Není to náhoda ani chyba, je to strukturální rozdíl daný lokálními
+                  dealerskými maržemi, vývojem kurzu CZK vůči ostatním měnám a poptávkou.
                 </p>
                 <p>
                   Náš zakladatel si toho všiml jako první u svého vlastního nákupu. Místo aby zaplatil
-                  přes 800 000 Kč u českého dealera, pořídil identický vůz v zahraničí za výrazně méně.
-                  Celý proces byl ale složitý — jazyková bariéra, administrativa, logistika.
+                  přes 800 000 Kč u českého dealera, pořídil identický vůz v zahraničí za výrazně
+                  méně. Celý proces byl ale složitý — jazyková bariéra, administrativa, logistika.
                 </p>
                 <p>
-                  Proto nejlevnejsi-skoda.cz vzniklo: aby tento proces zvládl za vás
-                  kdokoliv, bez znalostí a bez starostí. Za stejnou cenu, za jakou si sami nakoupíme.
+                  Proto <a href="/" className="text-[#1e7e34] font-semibold hover:underline">nejlevnejsi-skoda.cz</a> vzniklo: aby tento proces zvládl kdokoliv, bez znalostí a
+                  bez starostí. Za cenu, kterou v danou chvíli v ČR nenajdete.
                 </p>
               </div>
             </motion.div>
@@ -305,7 +305,7 @@ export default function ONas() {
                   to="/vozy"
                   className="flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3 rounded-md transition-colors text-sm"
                 >
-                  Prohlédnout vozy <ArrowRight size={15} />
+                  Koupit ihned<ArrowRight size={15} />
                 </Link>
                 <a
                   href="tel:+420733455966"

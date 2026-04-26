@@ -63,6 +63,9 @@ export default function Pokladna() {
   const [form, setForm] = useState(EMPTY_FYZICKA)
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [invoiceChecked, setInvoiceChecked] = useState(false)
+  const [deliveryChecked, setDeliveryChecked] = useState(false)
+  const [sidebarErrors, setSidebarErrors] = useState({})
 
   function switchType(t) {
     setType(t)
@@ -97,8 +100,12 @@ export default function Pokladna() {
   function handleSubmit(e) {
     e.preventDefault()
     const errs = validate()
-    if (Object.keys(errs).length > 0) {
+    const sErrs = {}
+    if (!invoiceChecked) sErrs.invoice = 'Povinné'
+    if (!deliveryChecked) sErrs.delivery = 'Povinné'
+    if (Object.keys(errs).length > 0 || Object.keys(sErrs).length > 0) {
       setErrors(errs)
+      setSidebarErrors(sErrs)
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
@@ -347,6 +354,42 @@ export default function Pokladna() {
                       </li>
                     ))}
                   </ul>
+
+                  {/* Platba */}
+                  <div className="border-t border-gray-100 pt-4 mb-3">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Platba</p>
+                    <label className={`flex items-start gap-2.5 p-3 rounded-md border cursor-pointer transition-colors ${sidebarErrors.invoice ? 'border-red-300 bg-red-50' : 'border-gray-100 bg-gray-50 hover:border-[#1e7e34]/30'}`}>
+                      <input
+                        type="checkbox"
+                        checked={invoiceChecked}
+                        onChange={e => { setInvoiceChecked(e.target.checked); setSidebarErrors(s => ({ ...s, invoice: '' })) }}
+                        className="w-4 h-4 accent-[#1e7e34] shrink-0 mt-0.5 cursor-pointer"
+                      />
+                      <div>
+                        <span className="text-sm font-semibold text-gray-800">Faktura</span>
+                        <p className="text-xs text-gray-400">Platba na základě faktury</p>
+                      </div>
+                    </label>
+                    {sidebarErrors.invoice && <p className="text-red-500 text-xs mt-1 flex items-center gap-1"><AlertCircle size={11} /> Vyberte způsob platby</p>}
+                  </div>
+
+                  {/* Doprava */}
+                  <div className="mb-4">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Doprava</p>
+                    <label className={`flex items-start gap-2.5 p-3 rounded-md border cursor-pointer transition-colors ${sidebarErrors.delivery ? 'border-red-300 bg-red-50' : 'border-gray-100 bg-gray-50 hover:border-[#1e7e34]/30'}`}>
+                      <input
+                        type="checkbox"
+                        checked={deliveryChecked}
+                        onChange={e => { setDeliveryChecked(e.target.checked); setSidebarErrors(s => ({ ...s, delivery: '' })) }}
+                        className="w-4 h-4 accent-[#1e7e34] shrink-0 mt-0.5 cursor-pointer"
+                      />
+                      <div>
+                        <span className="text-sm font-semibold text-gray-800">Zdarma na adresu</span>
+                        <p className="text-xs text-gray-400">Dovoz až ke dveřím</p>
+                      </div>
+                    </label>
+                    {sidebarErrors.delivery && <p className="text-red-500 text-xs mt-1 flex items-center gap-1"><AlertCircle size={11} /> Vyberte způsob dopravy</p>}
+                  </div>
 
                   <div className="border-t border-gray-100 pt-4 mb-6">
                     <div className="flex justify-between items-center">

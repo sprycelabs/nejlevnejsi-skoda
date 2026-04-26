@@ -26,7 +26,7 @@ const links = [
   {
     icon: Wrench,
     title: 'Servis & záruka',
-    desc: 'Plná tovární záruka',
+    desc: 'Záruka 3 roky / 150 tis. km',
     href: '#jak-to-funguje',
     bg: 'bg-[#145523]',
   },

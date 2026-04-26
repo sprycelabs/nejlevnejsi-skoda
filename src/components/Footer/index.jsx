@@ -11,15 +11,14 @@ const footerLinks = {
   ],
   'Pro zákazníky': [
     { label: 'Jak to funguje', href: '/#jak-to-funguje' },
-    { label: 'Financování', href: '/kontakt' },
-    { label: 'Ceník dopravy', href: '/kontakt' },
+    { label: 'Financování', href: '/#jak-to-funguje' },
     { label: 'FAQ', href: '/faq' },
   ],
   'Servis': [
     { label: 'Tovární záruka', href: '/o-nas' },
-    { label: 'Autorizovaný servis', href: '/kontakt' },
-    { label: 'Pojištění', href: '/kontakt' },
-    { label: 'Registrace vozu', href: '/kontakt' },
+    { label: 'Autorizovaný servis', href: '/o-nas' },
+    { label: 'Pojištění', href: '/o-nas' },
+    { label: 'Registrace vozu', href: '/o-nas' },
   ],
   'Společnost': [
     { label: 'O nás', href: '/o-nas' },
