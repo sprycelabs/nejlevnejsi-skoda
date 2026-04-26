@@ -51,7 +51,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="select-none flex items-center">
-          <img src="/logo.png" alt="Nejlevnější Škoda" style={{ height: '52px', width: 'auto' }} />
+          <img src="/logo.png" alt="Nejlevnější Škoda" style={{ height: '36px', width: 'auto' }} />
         </a>
 
         {/* Desktop nav */}
