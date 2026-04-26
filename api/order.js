@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
-import { put, head } from '@vercel/blob'
+import { put, head, BlobNotFoundError } from '@vercel/blob'
 import { generateInvoicePDF } from './generateInvoice.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -35,22 +35,31 @@ async function generateOrderNumber() {
   if (token) {
     try {
       // Přečti existující counter
-      const blob = await head(counterPath, { token })
-      const res  = await fetch(`${blob.url}?t=${Date.now()}`, { cache: 'no-store' })
-      const data = await res.json()
-      count = (data.count || 0) + 1
-    } catch {
-      // Soubor ještě neexistuje — začínáme od 1
-      count = 1
-    }
+      try {
+        const blob = await head(counterPath, { token })
+        const res  = await fetch(`${blob.url}?t=${Date.now()}`)
+        const data = await res.json()
+        count = (data.count || 0) + 1
+      } catch (e) {
+        if (e instanceof BlobNotFoundError) {
+          count = 1 // první objednávka roku
+        } else {
+          throw e
+        }
+      }
 
-    // Ulož aktualizovaný counter
-    await put(counterPath, JSON.stringify({ count }), {
-      access: 'public',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      token,
-    })
+      // Ulož aktualizovaný counter
+      await put(counterPath, JSON.stringify({ count }), {
+        access: 'public',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+        token,
+      })
+    } catch (e) {
+      console.error('Counter error, using fallback:', e.message)
+      // Fallback — číslo bude fungovat i bez counteru
+      count = Date.now() % 10000
+    }
   }
 
   return `OBJ-${year}-${String(count).padStart(3, '0')}`
@@ -277,7 +286,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ success: true, orderNumber })
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ error: 'Email se nepodařilo odeslat' })
+    console.error('ORDER ERROR:', err)
+    return res.status(500).json({ error: 'Email se nepodařilo odeslat', detail: err.message, stack: err.stack?.split('\n')[0] })
   }
 }
