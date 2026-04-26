@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import fs from 'fs'
 import path from 'path'
-import { put, head, BlobNotFoundError } from '@vercel/blob'
+import { put, head, getDownloadUrl, BlobNotFoundError } from '@vercel/blob'
 import { generateInvoicePDF } from './generateInvoice.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -36,8 +36,9 @@ async function generateOrderNumber() {
     try {
       // Přečti existující counter
       try {
-        const blob = await head(counterPath, { token })
-        const res  = await fetch(`${blob.url}?t=${Date.now()}`)
+        await head(counterPath, { token })
+        const signedUrl = await getDownloadUrl(counterPath, { token })
+        const res  = await fetch(signedUrl)
         const data = await res.json()
         count = (data.count || 0) + 1
       } catch (e) {
@@ -50,7 +51,7 @@ async function generateOrderNumber() {
 
       // Ulož aktualizovaný counter
       await put(counterPath, JSON.stringify({ count }), {
-        access: 'public',
+        access: 'private',
         addRandomSuffix: false,
         allowOverwrite: true,
         token,
@@ -256,7 +257,7 @@ export default async function handler(req, res) {
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       try {
         await put(`invoices/${invoiceFilename}`, pdfBuffer, {
-          access: 'public',
+          access: 'private',
           addRandomSuffix: false,
           token: process.env.BLOB_READ_WRITE_TOKEN,
         })
