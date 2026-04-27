@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import QuickLinks from './components/QuickLinks'
 import ClientsBar from './components/ClientsBar'
 import CarListing from './components/CarListing'
+import BombDeal from './components/BombDeal'
 import HowItWorks from './components/HowItWorks'
 import WhyUs from './components/WhyUs'
 import ProcessSection from './components/ProcessSection'
@@ -28,6 +29,7 @@ function HomePage() {
         <ClientsBar />
         <QuickLinks />
         <CarListing />
+        <BombDeal />
         <HowItWorks />
         <ProcessSection />
         <WhyUs />
