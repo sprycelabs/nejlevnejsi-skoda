@@ -55,21 +55,21 @@ export default function VozDetail() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          {/* CENOVÁ BOMBA banner */}
-          {car.isBomb && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-black tracking-widest uppercase py-2.5 -mx-4 sm:-mx-6 px-4 mb-2"
-            >
-              <Flame size={15} />
-              Cenová bomba — Limitovaná akce
-              <Flame size={15} />
-            </motion.div>
-          )}
+        {/* CENOVÁ BOMBA banner — full width */}
+        {car.isBomb && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 w-full flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-black tracking-widest uppercase py-2.5"
+          >
+            <Flame size={15} />
+            Cenová bomba — Limitovaná akce
+            <Flame size={15} />
+          </motion.div>
+        )}
 
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           {/* breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
             <Link to="/" className="hover:text-white transition-colors">Domů</Link>
