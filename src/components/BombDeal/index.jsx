@@ -10,9 +10,9 @@ export default function BombDeal() {
   const savings = car.originalPrice - car.salePrice
 
   return (
-    <section className="py-16 sm:py-20 bg-[#0d1f10] overflow-hidden relative">
+    <section className="py-16 sm:py-20 bg-[#1a0a00] overflow-hidden relative">
       {/* bg glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-orange-500/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -37,7 +37,7 @@ export default function BombDeal() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="rounded-2xl border-2 border-orange-400/60 overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #1a2e1c 0%, #0f1f11 60%, #1a1200 100%)' }}
+          style={{ background: 'linear-gradient(135deg, #2d1200 0%, #1a0a00 60%, #2a0e00 100%)' }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
