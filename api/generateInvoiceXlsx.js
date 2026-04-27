@@ -266,7 +266,7 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   freeItems.forEach(name => {
     rowHeight(ws, r, 16)
     setCell(ws, r, 2, name,      { size: 9, color: GRAY, bg: GREEN_LIGHT, border: bottomBorder(GREEN_BORDER) })
-    setCell(ws, r, 3, 1,         { size: 9, color: GRAY, bg: GREEN_LIGHT, align: 'center', border: bottomBorder(GREEN_BORDER) })
+    setCell(ws, r, 3, totalQty,  { size: 9, color: GRAY, bg: GREEN_LIGHT, align: 'center', border: bottomBorder(GREEN_BORDER) })
     ws.mergeCells(r, 4, r, 5)
     setCell(ws, r, 4, 'ZDARMA',  { size: 9, color: GRAY, bg: GREEN_LIGHT, align: 'right', border: bottomBorder(GREEN_BORDER) })
     r++

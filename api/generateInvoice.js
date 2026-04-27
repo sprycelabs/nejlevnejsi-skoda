@@ -230,7 +230,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
       drawRow(item.name, 'Nový osobní automobil', item.qty, item.total, i % 2 ? LGRAY : null)
     })
     freeItems.forEach(name => {
-      drawRow(name, null, 1, 0, '#f0faf2')
+      drawRow(name, null, totalQty, 0, '#f0faf2')
     })
 
     y += 18
