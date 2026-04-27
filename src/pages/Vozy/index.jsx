@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown } from 'lucide-react'
+import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown, Flame } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cars, formatPrice } from '../../data/cars'
 import { useCart } from '../../context/CartContext'
@@ -39,8 +39,20 @@ function CarCard({ car, index }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group flex flex-col h-full"
+      className={`bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group flex flex-col h-full ${
+        car.isBomb
+          ? 'border-2 border-orange-400 ring-2 ring-orange-200'
+          : 'border border-gray-100'
+      }`}
     >
+      {car.isBomb && (
+        <div className="bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center gap-1.5 py-1.5">
+          <Flame size={13} className="text-white" />
+          <span className="text-white text-xs font-black tracking-widest uppercase">Cenová bomba</span>
+          <Flame size={13} className="text-white" />
+        </div>
+      )}
+
       <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 h-48 flex items-center justify-center overflow-hidden">
         <img
           src={car.image}
