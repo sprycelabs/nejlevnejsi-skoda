@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
-  Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock
+  Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
+  AlertCircle, Scissors, Banknote
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -187,40 +188,81 @@ export default function VozDetail() {
               ))}
             </motion.div>
 
-            {/* CENOVÁ BOMBA — extra bonusy */}
+            {/* CENOVÁ BOMBA — hlavní sekce */}
             {car.isBomb && (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.25 }}
-                className="rounded-lg overflow-hidden border-2 border-orange-400"
+                className="rounded-xl overflow-hidden border-2 border-orange-400 shadow-lg"
               >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-orange-500 to-red-500 px-6 py-4 flex items-center gap-3">
-                  <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
-                    <Flame size={18} className="text-white" />
+                <div className="bg-gradient-to-r from-orange-500 to-red-500 px-6 py-5 flex items-center gap-4">
+                  <div className="w-11 h-11 bg-white/20 rounded-lg flex items-center justify-center shrink-0">
+                    <Flame size={22} className="text-white" />
                   </div>
                   <div>
-                    <div className="text-white font-black text-base leading-tight">Cenová bomba — exkluzivní bonusy</div>
-                    <div className="text-orange-100 text-xs mt-0.5">Jen u tohoto vozu, do vyprodání zásob</div>
+                    <div className="text-white font-black text-lg leading-tight">{car.bombTagline}</div>
+                    <div className="text-orange-100 text-sm mt-0.5">Cenová bomba — limitovaná nabídka</div>
                   </div>
                 </div>
 
-                {/* Note */}
-                <div className="bg-orange-50 px-6 py-4 border-b border-orange-100">
+                {/* Popis konceptu */}
+                <div className="bg-orange-50 px-6 py-5 border-b border-orange-100">
                   <p className="text-sm text-orange-900 leading-relaxed">{car.bombNote}</p>
                 </div>
 
-                {/* Perks */}
-                <div className="bg-white px-6 py-5">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Co dostanete navíc</p>
-                  <div className="space-y-3">
-                    {car.bombPerks.map(perk => (
-                      <div key={perk} className="flex items-start gap-3">
-                        <div className="w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                          <Gift size={11} className="text-orange-500" />
+                {/* Jak to funguje — 3 kroky */}
+                <div className="bg-white px-6 py-5 border-b border-gray-100">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Jak to funguje</p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    {[
+                      { step: '1', title: 'Koupíte auto', desc: 'Za výjimečnou cenu s reklamním polepem naší značky.' },
+                      { step: '2', title: '18 měsíců jedete', desc: 'S polepem, najedete min. 20 000 km — jako každé jiné auto.' },
+                      { step: '3', title: 'Vy rozhodujete', desc: 'Polep sundáme zdarma, nebo ho necháte a dostáváte paušál.' },
+                    ].map(({ step, title, desc }) => (
+                      <div key={step} className="flex-1 flex items-start gap-3">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white text-xs font-black shrink-0 mt-0.5">
+                          {step}
                         </div>
-                        <span className="text-sm text-gray-800 font-medium">{perk}</span>
+                        <div>
+                          <div className="font-bold text-gray-900 text-sm">{title}</div>
+                          <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">{desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Podmínky */}
+                <div className="bg-white px-6 py-5 border-b border-gray-100">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Podmínky nabídky</p>
+                  <div className="space-y-2.5">
+                    {car.bombConditions.map(cond => (
+                      <div key={cond} className="flex items-start gap-3">
+                        <div className="w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                          <AlertCircle size={11} className="text-orange-500" />
+                        </div>
+                        <span className="text-sm text-gray-700">{cond}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Po 18 měsících — 2 možnosti */}
+                <div className="bg-white px-6 py-5">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Po uplynutí 18 měsíců si vyberete</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {car.bombAfterOptions.map(({ title, desc }, i) => (
+                      <div key={title} className={`rounded-lg border-2 p-4 ${i === 0 ? 'border-gray-200 bg-gray-50' : 'border-orange-200 bg-orange-50'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          {i === 0
+                            ? <Scissors size={15} className="text-gray-500 shrink-0" />
+                            : <Banknote size={15} className="text-orange-500 shrink-0" />
+                          }
+                          <span className={`font-black text-sm ${i === 0 ? 'text-gray-800' : 'text-orange-700'}`}>{title}</span>
+                        </div>
+                        <p className={`text-xs leading-relaxed ${i === 0 ? 'text-gray-500' : 'text-orange-700'}`}>{desc}</p>
                       </div>
                     ))}
                   </div>
@@ -414,13 +456,19 @@ export default function VozDetail() {
                     <div className="flex items-start gap-2.5">
                       <Clock size={15} className="text-orange-500 shrink-0 mt-0.5" />
                       <p className="text-xs text-orange-900 leading-relaxed font-medium">
-                        Tato cena platí do vyprodání posledních <strong>{car.inStock} kusů</strong> na skladě.
+                        Dostupné pouze <strong>do vyprodání {car.inStock} kusů</strong> na skladě.
                       </p>
                     </div>
                     <div className="flex items-start gap-2.5">
-                      <Gift size={15} className="text-orange-500 shrink-0 mt-0.5" />
+                      <Flame size={15} className="text-orange-500 shrink-0 mt-0.5" />
                       <p className="text-xs text-orange-900 leading-relaxed font-medium">
-                        Zahrnuje <strong>{car.bombPerks.length} exkluzivní bonusy</strong> zdarma.
+                        Auto s reklamním polepem — <strong>ihned vaše</strong>, podmínky na 18 měsíců.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <Banknote size={15} className="text-orange-500 shrink-0 mt-0.5" />
+                      <p className="text-xs text-orange-900 leading-relaxed font-medium">
+                        Po 18 měsících možnost <strong>měsíčního paušálu</strong> za reklamu.
                       </p>
                     </div>
                   </div>

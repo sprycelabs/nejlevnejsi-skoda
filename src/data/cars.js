@@ -479,13 +479,16 @@ export const cars = [
     image: '/cars/fabia-05.webp',
     slug: 'fabia-classic-bomb',
     isBomb: true,
-    bombPerks: [
-      'Zimní sada pneumatik ZDARMA (hodnota 18 000 Kč)',
-      'Tónování oken přední + zadní ZDARMA',
-      'Koberečky a ochranné lišty dveří ZDARMA',
-      'Předání vozu přímo na Vaší adrese ZDARMA',
+    bombTagline: 'Auto s naším Brandem za skvělou cenu',
+    bombNote: 'Získáte nové auto za výjimečnou cenu výměnou za to, že vozidlo ponese reklamní polep značky Nejlevnější-Škoda.cz po dobu 18 měsíců. Auto je ihned vaše — bez čekání, bez komplikací.',
+    bombConditions: [
+      'Zachování celopolep po celou dobu min. 18 měsíců',
+      'Ujetí min. 20 000 km za 18 měsíců',
     ],
-    bombNote: 'Výjimečná nabídka platná do vyprodání posledních skladových kusů. Cena 449 000 Kč vč. DPH zahrnuje kompletní výbavu a všechny níže uvedené bonusy — bez skrytých poplatků.',
+    bombAfterOptions: [
+      { title: 'Polep sundáte', desc: 'Zdarma zajistíme odborné profesionální odstranění polep a jedete dál bez jakýchkoli závazků.' },
+      { title: 'Polep necháte', desc: 'Polep ponecháte na voze a my vám začneme platit měsíční paušál za reklamu.' },
+    ],
   },
 ]
 
