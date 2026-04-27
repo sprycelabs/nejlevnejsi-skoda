@@ -56,9 +56,13 @@ async function generateOrderNumber() {
   return `OBJ-${year}-${String(count).padStart(3, '0')}`
 }
 
+const PROFORMA_DEPOSIT = 200000
+
 function customerEmail(form, items, total, orderNumber) {
-  const isCompany = !!form.companyName
-  const name = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
+  const isCompany   = !!form.companyName
+  const name        = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
+  const totalQty    = items.reduce((sum, { qty }) => sum + qty, 0)
+  const proformaAmt = PROFORMA_DEPOSIT * totalQty
 
   const itemsRows = items.map(({ car, qty }) => `
     <tr>
@@ -88,7 +92,7 @@ function customerEmail(form, items, total, orderNumber) {
 
           <p style="margin:0 0 8px;font-size:22px;font-weight:900;color:#111827;">Dobrý den, ${name},</p>
           <p style="margin:0 0 24px;color:#6b7280;font-size:15px;line-height:1.6;">
-            děkujeme za Vaši objednávku. V příloze tohoto emailu najdete proforma fakturu na zálohu <strong style="color:#111827;">200 000 Kč</strong>. Po jejím přijetí objednávku u dealera zpracujeme.
+            děkujeme za Vaši objednávku. V příloze tohoto emailu najdete proforma fakturu na zálohu <strong style="color:#111827;">${formatPrice(proformaAmt)}</strong>. Po jejím přijetí objednávku u dealera zpracujeme.
           </p>
 
           <!-- Order number -->
@@ -122,7 +126,7 @@ function customerEmail(form, items, total, orderNumber) {
 
           <!-- Info box -->
           <div style="background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:16px 20px;margin-bottom:28px;">
-            <p style="margin:0 0 6px;font-weight:700;color:#92400e;font-size:14px;">Proforma faktura v příloze · záloha 200 000 Kč</p>
+            <p style="margin:0 0 6px;font-weight:700;color:#92400e;font-size:14px;">Proforma faktura v příloze · záloha ${formatPrice(proformaAmt)}</p>
             <p style="margin:0;color:#92400e;font-size:13px;line-height:1.6;">
               Proforma fakturu s platebními údaji a variabilním symbolem najdete v příloze. Prosím uhraďte zálohu do data splatnosti uvedeného na proformě. Tato proforma není daňovým dokladem.
             </p>
@@ -133,7 +137,7 @@ function customerEmail(form, items, total, orderNumber) {
           <table width="100%" cellpadding="0" cellspacing="0">
             ${[
               'Proforma faktura je v příloze tohoto emailu',
-              'Uhraďte zálohu 200 000 Kč dle platebních údajů na proformě',
+              `Uhraďte zálohu ${formatPrice(proformaAmt)} dle platebních údajů na proformě`,
               'Po přijetí zálohy objednáme vůz u evropského dealera',
               'Na zbývající částku obdržíte samostatnou fakturu',
             ].map((step, i) => `

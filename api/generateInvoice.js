@@ -12,7 +12,7 @@ const LGRAY = '#f5f5f5'
 const MGRAY = '#e5e7eb'
 const BLACK = '#111827'
 
-const PROFORMA_AMOUNT = 200000
+const PROFORMA_DEPOSIT = 200000
 
 const SELLER = {
   name:    'TOP GLOBAL STRATEGIC MANAGEMENT LTD',
@@ -76,6 +76,9 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
 
     const isCompany = !!form.companyName
     const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
+
+    const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
+    const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
 
     const carItems = items.map(({ car, qty }) => ({
       name:  `${car.name} ${car.variant}`,

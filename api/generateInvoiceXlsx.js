@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const PROFORMA_AMOUNT = 200000
+const PROFORMA_DEPOSIT = 200000
 
 const GREEN       = 'FF1e7e34'
 const GREEN_LIGHT = 'FFf0faf2'
@@ -113,6 +113,9 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   const vs        = variableSymbol || orderNumber
   const isCompany = !!form.companyName
   const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
+
+  const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
+  const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
 
   const carItems = items.map(({ car, qty }) => ({
     name:  `${car.name} ${car.variant}`,
