@@ -12,6 +12,8 @@ const LGRAY = '#f5f5f5'
 const MGRAY = '#e5e7eb'
 const BLACK = '#111827'
 
+const PROFORMA_AMOUNT = 200000
+
 const SELLER = {
   name:    'TOP GLOBAL STRATEGIC MANAGEMENT LTD',
   reg:     '490247',
@@ -24,8 +26,6 @@ const BANK = {
   swift:   'XXXXXXXX',
   bank:    'Banka',
 }
-
-const VAT_RATE = 0.21
 
 function czk(amount) {
   return new Intl.NumberFormat('cs-CZ', {
@@ -45,7 +45,7 @@ function addDays(date, n) {
   return d
 }
 
-export async function generateInvoicePDF({ form, items, total, orderNumber, logoBase64 }) {
+export async function generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol }) {
   return new Promise((resolve, reject) => {
     const fontRegular = path.join(__dirname, 'fonts', 'Calibri-Regular.ttf')
     const fontBold    = path.join(__dirname, 'fonts', 'Calibri-Bold.ttf')
@@ -53,7 +53,7 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
     const doc = new PDFDocument({
       size: 'A4',
       margin: 0,
-      info: { Title: `Faktura ${orderNumber}` },
+      info: { Title: `Proforma faktura ${orderNumber}` },
     })
 
     const chunks = []
@@ -64,26 +64,24 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
     doc.registerFont('Regular', fontRegular)
     doc.registerFont('Bold',    fontBold)
 
-    const ML  = 40   // margin left
-    const MR  = 55   // margin right
-    const PW  = 595  // page width
-    const PH  = 842  // page height
-    const CW  = PW - ML - MR  // content width = 507
+    const ML  = 40
+    const MR  = 55
+    const PW  = 595
+    const PH  = 842
+    const CW  = PW - ML - MR   // 500
 
     const issueDate = new Date()
     const dueDate   = addDays(issueDate, 3)
+    const vs        = variableSymbol || orderNumber
 
-    const isCompany  = !!form.companyName
-    const buyerName  = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
+    const isCompany = !!form.companyName
+    const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
 
-    const carItems = items.map(({ car, qty }) => {
-      const lineTotal = car.salePrice * qty
-      const base      = Math.round(lineTotal / (1 + VAT_RATE))
-      const vat       = lineTotal - base
-      return { name: `${car.name} ${car.variant}`, qty, base, vat, total: lineTotal }
-    })
-    const totalBase = carItems.reduce((s, i) => s + i.base, 0)
-    const totalVat  = carItems.reduce((s, i) => s + i.vat,  0)
+    const carItems = items.map(({ car, qty }) => ({
+      name:  `${car.name} ${car.variant}`,
+      qty,
+      total: car.salePrice * qty,
+    }))
 
     const freeItems = [
       'Prodloužená záruka 3 roky / 150 000 km',
@@ -94,26 +92,13 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
     let y = 0
 
     // ── helpers ──────────────────────────────────────────────────────────────
-    function R(size, color = BLACK) {
-      doc.font('Regular').fontSize(size).fillColor(color)
-      return doc
-    }
-    function B(size, color = BLACK) {
-      doc.font('Bold').fontSize(size).fillColor(color)
-      return doc
-    }
+    function R(size, color = BLACK) { doc.font('Regular').fontSize(size).fillColor(color); return doc }
+    function B(size, color = BLACK) { doc.font('Bold').fontSize(size).fillColor(color);    return doc }
     function hline(yy, x1 = ML, x2 = PW - MR, color = MGRAY, w = 0.5) {
       doc.moveTo(x1, yy).lineTo(x2, yy).lineWidth(w).strokeColor(color).stroke()
     }
-    function vline(x, y1, y2, color = MGRAY, w = 0.5) {
-      doc.moveTo(x, y1).lineTo(x, y2).lineWidth(w).strokeColor(color).stroke()
-    }
-    function rect(x, yy, w, h, color) {
-      doc.rect(x, yy, w, h).fill(color)
-    }
-    function roundRect(x, yy, w, h, r, color) {
-      doc.roundedRect(x, yy, w, h, r).fill(color)
-    }
+    function rect(x, yy, w, h, color) { doc.rect(x, yy, w, h).fill(color) }
+    function roundRect(x, yy, w, h, r, color) { doc.roundedRect(x, yy, w, h, r).fill(color) }
 
     // ── GREEN HEADER BAR ─────────────────────────────────────────────────────
     rect(0, 0, PW, 6, GREEN)
@@ -128,11 +113,10 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
       B(13, GREEN).text('Nejlevnější-Škoda.cz', ML, y + 8)
     }
 
-    // "Faktura č." right side — v pravé polovině stránky
     const titleX = ML + Math.floor(CW / 2)
     const titleW = PW - MR - titleX
-    B(17, DARK).text(`Faktura č. ${orderNumber}`, titleX, y + 4, { align: 'right', width: titleW, lineBreak: false })
-    R(8.5, GRAY).text('Daňový doklad', titleX, y + 24, { align: 'right', width: titleW, lineBreak: false })
+    B(15, DARK).text(`Proforma faktura č. ${orderNumber}`, titleX, y + 4, { align: 'right', width: titleW, lineBreak: false })
+    R(8.5, '#dc6803').text('Není daňovým dokladem', titleX, y + 24, { align: 'right', width: titleW, lineBreak: false })
 
     y += 60
     hline(y, 0, PW, GREEN, 1)
@@ -142,12 +126,10 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
     const colW  = Math.floor(CW / 2) - 10
     const col2X = ML + colW + 20
 
-    // Labels
     B(7.5, GREEN).text('Dodavatel:', ML, y)
     B(7.5, GREEN).text('Odběratel:', col2X, y)
     y += 14
 
-    // Seller
     B(9.5, DARK).text(SELLER.name, ML, y, { width: colW })
     y += 13
     R(9, GRAY).text(SELLER.address, ML, y, { width: colW })
@@ -158,7 +140,6 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
 
     const sellerEndY = y + 12
 
-    // Buyer (same starting y as seller name)
     let byY = y - 37
     B(9.5, DARK).text(buyerName, col2X, byY, { width: colW })
     byY += 13
@@ -176,119 +157,106 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
     hline(y, ML, PW - MR)
     y += 16
 
-    // Dates (right-aligned under seller)
-    R(8, GRAY).text(`Datum vystavení:  `, ML, y, { continued: true })
+    // Datum vystavení pouze (bez zdanitelného plnění)
+    R(8, GRAY).text('Datum vystavení:  ', ML, y, { continued: true })
     B(8, DARK).text(formatDate(issueDate))
-    y += 13
-    R(8, GRAY).text(`Datum zdan. plnění:  `, ML, y, { continued: true })
-    B(8, DARK).text(formatDate(issueDate))
-
     y += 24
 
     // ── PAYMENT STRIP (3 boxes) ───────────────────────────────────────────────
     const stripH = 42
     const boxW   = Math.floor(CW / 3)
 
-    // Draw 3 bordered boxes
     for (let i = 0; i < 3; i++) {
       const bx = ML + i * boxW
       doc.roundedRect(bx, y, boxW, stripH, 3).lineWidth(0.8).strokeColor(MGRAY).fillAndStroke(LGRAY, MGRAY)
     }
 
-    // Content: Číslo účtu | Datum splatnosti | Variabilní symbol
     const boxes = [
-      { label: 'Číslo účtu:', value: BANK.account },
-      { label: 'Datum splatnosti:', value: formatDate(dueDate) },
-      { label: 'Variabilní symbol:', value: orderNumber },
+      { label: 'Číslo účtu:',        value: BANK.account },
+      { label: 'Datum splatnosti:',  value: formatDate(dueDate) },
+      { label: 'Variabilní symbol:', value: vs },
     ]
     boxes.forEach((b, i) => {
       const bx = ML + i * boxW + 10
-      R(7.5, GRAY).text(b.label, bx, y + 8, { width: boxW - 20 })
+      R(7.5, GRAY).text(b.label, bx, y + 8,  { width: boxW - 20 })
       B(10.5, DARK).text(b.value, bx, y + 20, { width: boxW - 20 })
     })
 
     y += stripH + 22
 
-    // ── ITEMS TABLE ───────────────────────────────────────────────────────────
-    // Column layout
-    const cDesc  = 205
-    const cQty   = 28
-    const cBase  = 88
-    const cVat   = 66
-    const cTotal = CW - cDesc - cQty - cBase - cVat  // ~132
+    // ── ITEMS TABLE (bez DPH sloupců) ─────────────────────────────────────────
+    const cDesc  = 330
+    const cQty   = 35
+    const cPrice = CW - cDesc - cQty   // ~135
     const xQty   = ML + cDesc
-    const xBase  = xQty + cQty
-    const xVat   = xBase + cBase
-    const xTot   = xVat + cVat
+    const xPrice = xQty + cQty
+
+    const RPAD    = 12
+    const pRight  = PW - MR - RPAD
+    const pWeff   = pRight - xPrice
 
     // Table header
     const thH = 24
     roundRect(ML, y, CW, thH, 3, DARK)
     doc.font('Bold').fontSize(8).fillColor('#ffffff')
-    doc.text('Popis položky', ML + 8, y + 8, { width: cDesc - 8,   lineBreak: false })
-    doc.text('Ks',            xQty,   y + 8, { width: cQty,        align: 'center', lineBreak: false })
-    doc.text('Základ DPH',   xBase,  y + 8, { width: cBase - 4,  align: 'right',  lineBreak: false })
-    doc.text('DPH 21%',      xVat,   y + 8, { width: cVat - 4,   align: 'right',  lineBreak: false })
-    doc.text('Celkem s DPH', xTot,   y + 8, { width: cTotal - 8,  align: 'right',  lineBreak: false })
+    doc.text('Popis položky',  ML + 8, y + 8, { width: cDesc - 8,  lineBreak: false })
+    doc.text('Ks',             xQty,   y + 8, { width: cQty,       align: 'center', lineBreak: false })
+    doc.text('Cena vč. DPH',  xPrice, y + 8, { width: pWeff,      align: 'right',  lineBreak: false })
     y += thH
 
-    function drawRow(name, sub, qty, base, vat, rowTotal, bg) {
+    function drawRow(name, sub, qty, price, bg) {
       const rowH = sub ? 29 : 22
       if (bg) rect(ML, y, CW, rowH, bg)
       hline(y + rowH, ML, PW - MR, MGRAY, 0.4)
 
       R(9, DARK).text(name, ML + 8, y + (sub ? 6 : 7), { width: cDesc - 16, lineBreak: false })
-      if (sub) R(7.5, GRAY).text(sub, ML + 8, y + 18, { width: cDesc - 16, lineBreak: false })
+      if (sub) R(7.5, GRAY).text(sub, ML + 8, y + 18,  { width: cDesc - 16, lineBreak: false })
 
-      R(9, DARK).text(String(qty),    xQty,  y + (sub ? 10 : 7), { width: cQty,       align: 'center', lineBreak: false })
-      R(9, DARK).text(czk(base),      xBase, y + (sub ? 10 : 7), { width: cBase - 4,  align: 'right',  lineBreak: false })
-      R(9, DARK).text(czk(vat),       xVat,  y + (sub ? 10 : 7), { width: cVat - 4,   align: 'right',  lineBreak: false })
-      B(9, GREEN).text(czk(rowTotal), xTot,  y + (sub ? 10 : 7), { width: cTotal - 8, align: 'right',  lineBreak: false })
+      R(9, DARK).text(String(qty), xQty, y + (sub ? 10 : 7), { width: cQty, align: 'center', lineBreak: false })
+
+      if (price > 0) {
+        B(9, GREEN).text(czk(price), xPrice, y + (sub ? 10 : 7), { width: pWeff, align: 'right', lineBreak: false })
+      } else {
+        R(9, GRAY).text('ZDARMA', xPrice, y + (sub ? 10 : 7), { width: pWeff, align: 'right', lineBreak: false })
+      }
 
       y += rowH
     }
 
     carItems.forEach((item, i) => {
-      drawRow(item.name, 'Nový osobní automobil', item.qty, item.base, item.vat, item.total, i % 2 ? LGRAY : null)
+      drawRow(item.name, 'Nový osobní automobil', item.qty, item.total, i % 2 ? LGRAY : null)
     })
-    freeItems.forEach((name, i) => {
-      drawRow(name, null, 1, 0, 0, 0, '#f0faf2')
+    freeItems.forEach(name => {
+      drawRow(name, null, 1, 0, '#f0faf2')
     })
 
-    y += 14
+    y += 18
 
-    // ── TOTALS ────────────────────────────────────────────────────────────────
-    const totW   = 230
-    const totX   = PW - MR - totW          // left edge of totals box
-    const lblW   = 120                      // label column width
-    const valW   = totW - lblW              // value column width = 110
-    const totX2  = totX + lblW             // start of value column
+    // ── PŘEDMĚT PLNĚNÍ ────────────────────────────────────────────────────────
+    const predmetH = 56
+    doc.roundedRect(ML, y, CW, predmetH, 4).lineWidth(1).strokeColor(GREEN).fillAndStroke('#f0faf2', GREEN)
 
-    // right edge of totals = same as table (PW - MR)
-    // values end 12px before that edge
-    const RPAD     = 12
-    const valRight = PW - MR - RPAD   // text right edge
-    const valWeff  = valRight - totX2  // effective value width
+    B(8, GREEN).text('PŘEDMĚT PLNĚNÍ:', ML + 14, y + 10, { lineBreak: false })
+    R(9, DARK).text('Záloha na vozidlo dle výše uvedené objednávky', ML + 14, y + 24, { width: CW - 180, lineBreak: false })
+    B(13, DARK).text(czk(PROFORMA_AMOUNT), ML + 14, y + 22, { width: CW - 28, align: 'right', lineBreak: false })
 
-    function totRow(label, value) {
-      R(9, GRAY).text(label, totX,  y, { width: lblW, lineBreak: false })
-      R(9, DARK).text(value, totX2, y, { width: valWeff, align: 'right', lineBreak: false })
-      hline(y + 14, totX, PW - MR, MGRAY, 0.4)
-      y += 16
-    }
+    y += predmetH + 16
 
-    totRow('Celkem bez DPH:', czk(totalBase))
-    totRow('DPH 21%:',        czk(totalVat))
-    y += 4
+    // ── CELKEM K ÚHRADĚ ───────────────────────────────────────────────────────
+    const totW    = 240
+    const totX    = PW - MR - totW
+    const lblW    = 130
+    const totX2   = totX + lblW
+    const valWeff = PW - MR - RPAD - totX2
 
-    // Final "Celkem k úhradě" box — same right edge as table
-    const fboxH = 32
+    const fboxH = 34
     roundRect(totX - 5, y, (PW - MR) - (totX - 5), fboxH, 4, GREEN)
-    B(10, '#ffffff').text('Celkem k úhradě:', totX, y + 10, { width: lblW, lineBreak: false })
-    B(11, '#ffffff').text(czk(total), totX2, y + 9, { width: valWeff, align: 'right', lineBreak: false })
-    y += fboxH + 24
+    B(10, '#ffffff').text('Celkem k úhradě:', totX, y + 11, { width: lblW, lineBreak: false })
+    B(12, '#ffffff').text(czk(PROFORMA_AMOUNT), totX2, y + 10, { width: valWeff, align: 'right', lineBreak: false })
 
-    // ── PAYMENT DETAILS ───────────────────────────────────────────────────────
+    y += fboxH + 20
+
+    // ── PLATEBNÍ ÚDAJE ────────────────────────────────────────────────────────
     const payH = 72
     doc.roundedRect(ML, y, CW, payH, 4).lineWidth(0.8).strokeColor('#c6e6cc').fillAndStroke('#f0faf2', '#c6e6cc')
 
@@ -298,7 +266,7 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
       ['IBAN:',               BANK.account],
       ['SWIFT/BIC:',          BANK.swift],
       ['Banka:',              BANK.bank],
-      ['Variabilní symbol:',  orderNumber],
+      ['Variabilní symbol:',  vs],
     ]
     const halfW = Math.floor(CW / 2) - 12
     payData.forEach((row, i) => {
@@ -309,7 +277,22 @@ export async function generateInvoicePDF({ form, items, total, orderNumber, logo
       B(8, DARK).text(row[1], px + 92, py, { width: halfW - 92, lineBreak: false })
     })
 
-    y += payH + 20
+    y += payH + 18
+
+    // ── PRÁVNÍ TEXTY ─────────────────────────────────────────────────────────
+    const legalH = 54
+    doc.roundedRect(ML, y, CW, legalH, 4).lineWidth(0.5).strokeColor(MGRAY).fillAndStroke('#fffbeb', MGRAY)
+
+    R(7.5, '#92400e').text(
+      'Tato proforma faktura není daňovým dokladem. DPH bude vyčísleno na daňovém dokladu (faktuře) vystavené při dodání zboží.',
+      ML + 12, y + 10, { width: CW - 24, lineBreak: true }
+    )
+    R(7.5, GRAY).text(
+      `Společnost ${SELLER.name}, se sídlem v Kyperské republice, je registrována k dani z přidané hodnoty v České republice dle příslušných právních předpisů.`,
+      ML + 12, y + 32, { width: CW - 24, lineBreak: false }
+    )
+
+    y += legalH + 10
 
     // ── FOOTER ───────────────────────────────────────────────────────────────
     const footY = PH - 28

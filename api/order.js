@@ -26,6 +26,15 @@ function formatPrice(price) {
   }).format(price)
 }
 
+function generateVariableSymbol(orderNumber) {
+  // OBJ-2026-001 → 2026 + 001 + 4 náhodné číslice
+  const parts  = orderNumber.split('-')   // ['OBJ', '2026', '001']
+  const year   = parts[1] || new Date().getFullYear()
+  const seq    = parts[2] || '001'
+  const rand   = String(Math.floor(1000 + Math.random() * 9000))
+  return `${year}${seq}${rand}`
+}
+
 async function generateOrderNumber() {
   const year  = new Date().getFullYear()
   const token = process.env.BLOB_READ_WRITE_TOKEN
@@ -69,7 +78,7 @@ function customerEmail(form, items, total, orderNumber) {
 
         <!-- Header -->
         <tr><td style="background:#0d1f10;border-radius:12px 12px 0 0;padding:36px 40px;text-align:center;">
-          <div style="color:#28a745;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Potvrzení objednávky</div>
+          <div style="color:#28a745;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Přijali jsme Vaši objednávku</div>
           <div style="color:#ffffff;font-size:28px;font-weight:900;margin-bottom:4px;">Nejlevnější-Škoda.cz</div>
           <div style="color:#6b7280;font-size:14px;">Vozy z EU levněji než v ČR</div>
         </td></tr>
@@ -79,7 +88,7 @@ function customerEmail(form, items, total, orderNumber) {
 
           <p style="margin:0 0 8px;font-size:22px;font-weight:900;color:#111827;">Dobrý den, ${name},</p>
           <p style="margin:0 0 24px;color:#6b7280;font-size:15px;line-height:1.6;">
-            děkujeme za Vaši objednávku. Přijali jsme ji a brzy Vás budeme kontaktovat s dalšími informacemi a platebními údaji.
+            děkujeme za Vaši objednávku. V příloze tohoto emailu najdete proforma fakturu na zálohu <strong style="color:#111827;">200 000 Kč</strong>. Po jejím přijetí objednávku u dealera zpracujeme.
           </p>
 
           <!-- Order number -->
@@ -99,7 +108,7 @@ function customerEmail(form, items, total, orderNumber) {
               <tr style="background:#f9fafb;">
                 <th style="padding:10px 16px;text-align:left;font-size:12px;color:#9ca3af;font-weight:600;">Vůz</th>
                 <th style="padding:10px 16px;text-align:center;font-size:12px;color:#9ca3af;font-weight:600;">Ks</th>
-                <th style="padding:10px 16px;text-align:right;font-size:12px;color:#9ca3af;font-weight:600;">Cena</th>
+                <th style="padding:10px 16px;text-align:right;font-size:12px;color:#9ca3af;font-weight:600;">Cena vč. DPH</th>
               </tr>
             </thead>
             <tbody>${itemsRows}</tbody>
@@ -113,16 +122,21 @@ function customerEmail(form, items, total, orderNumber) {
 
           <!-- Info box -->
           <div style="background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:16px 20px;margin-bottom:28px;">
-            <p style="margin:0 0 6px;font-weight:700;color:#92400e;font-size:14px;">Faktura v příloze</p>
+            <p style="margin:0 0 6px;font-weight:700;color:#92400e;font-size:14px;">Proforma faktura v příloze · záloha 200 000 Kč</p>
             <p style="margin:0;color:#92400e;font-size:13px;line-height:1.6;">
-              Fakturu s platebními údaji a variabilním symbolem najdete v příloze tohoto emailu. Prosím proveďte platbu do data splatnosti uvedeného na faktuře.
+              Proforma fakturu s platebními údaji a variabilním symbolem najdete v příloze. Prosím uhraďte zálohu do data splatnosti uvedeného na proformě. Tato proforma není daňovým dokladem.
             </p>
           </div>
 
           <!-- Next steps -->
           <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#111827;text-transform:uppercase;letter-spacing:1px;">Co se děje dál?</p>
           <table width="100%" cellpadding="0" cellspacing="0">
-            ${['Fakturu najdete v příloze tohoto emailu', 'Proveďte platbu dle pokynů na faktuře', 'Po přijetí platby zajistíme objednávku u evropského dealera', 'Vůz dovezeme až k Vám domů'].map((step, i) => `
+            ${[
+              'Proforma faktura je v příloze tohoto emailu',
+              'Uhraďte zálohu 200 000 Kč dle platebních údajů na proformě',
+              'Po přijetí zálohy objednáme vůz u evropského dealera',
+              'Na zbývající částku obdržíte samostatnou fakturu',
+            ].map((step, i) => `
             <tr>
               <td style="padding:8px 0;vertical-align:top;">
                 <span style="display:inline-block;width:24px;height:24px;background:#1e7e34;color:#fff;border-radius:50%;font-size:12px;font-weight:700;text-align:center;line-height:24px;margin-right:12px;">${i + 1}</span>
@@ -224,8 +238,9 @@ export default async function handler(req, res) {
 
   try {
     // Vygeneruj PDF fakturu
-    const logoBase64 = loadLogoBase64()
-    const pdfBuffer = await generateInvoicePDF({ form, items, total, orderNumber, logoBase64 })
+    const logoBase64     = loadLogoBase64()
+    const variableSymbol = generateVariableSymbol(orderNumber)
+    const pdfBuffer = await generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol })
     const pdfBase64 = pdfBuffer.toString('base64')
     const invoiceFilename = `faktura-${orderNumber}.pdf`
 
@@ -252,7 +267,7 @@ export default async function handler(req, res) {
     await resend.emails.send({
       from: `Nejlevnější Škoda <${FROM}>`,
       to: form.email,
-      subject: `Potvrzení objednávky ${orderNumber} — Nejlevnější-Škoda.cz`,
+      subject: `Vaše objednávka ${orderNumber} — proforma faktura v příloze`,
       html: customerEmail(form, items, total, orderNumber),
       attachments: [attachment],
     })
