@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
-  Star, CheckCircle2, ArrowRight, Accessibility
+  Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -55,6 +55,20 @@ export default function VozDetail() {
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          {/* CENOVÁ BOMBA banner */}
+          {car.isBomb && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-black tracking-widest uppercase py-2.5 -mx-4 sm:-mx-6 px-4 mb-2"
+            >
+              <Flame size={15} />
+              Cenová bomba — Limitovaná akce
+              <Flame size={15} />
+            </motion.div>
+          )}
+
           {/* breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
             <Link to="/" className="hover:text-white transition-colors">Domů</Link>
@@ -74,6 +88,11 @@ export default function VozDetail() {
             >
               {/* badges */}
               <div className="flex flex-wrap gap-2 mb-5">
+                {car.isBomb && (
+                  <span className="flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-black px-3 py-1.5 rounded-full">
+                    <Flame size={12} /> Cenová bomba
+                  </span>
+                )}
                 {car.isNew && <span className="bg-[#0d6efd] text-white text-xs font-bold px-3 py-1.5 rounded-full">Novinka</span>}
                 {car.isSale && <span className="bg-[#1e7e34] text-white text-xs font-bold px-3 py-1.5 rounded-full">Akce</span>}
                 {car.freeDelivery && <span className="bg-[#fd7e14] text-white text-xs font-bold px-3 py-1.5 rounded-full">Doprava ZDARMA</span>}
@@ -167,6 +186,47 @@ export default function VozDetail() {
                 </div>
               ))}
             </motion.div>
+
+            {/* CENOVÁ BOMBA — extra bonusy */}
+            {car.isBomb && (
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.25 }}
+                className="rounded-lg overflow-hidden border-2 border-orange-400"
+              >
+                {/* Header */}
+                <div className="bg-gradient-to-r from-orange-500 to-red-500 px-6 py-4 flex items-center gap-3">
+                  <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
+                    <Flame size={18} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="text-white font-black text-base leading-tight">Cenová bomba — exkluzivní bonusy</div>
+                    <div className="text-orange-100 text-xs mt-0.5">Jen u tohoto vozu, do vyprodání zásob</div>
+                  </div>
+                </div>
+
+                {/* Note */}
+                <div className="bg-orange-50 px-6 py-4 border-b border-orange-100">
+                  <p className="text-sm text-orange-900 leading-relaxed">{car.bombNote}</p>
+                </div>
+
+                {/* Perks */}
+                <div className="bg-white px-6 py-5">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Co dostanete navíc</p>
+                  <div className="space-y-3">
+                    {car.bombPerks.map(perk => (
+                      <div key={perk} className="flex items-start gap-3">
+                        <div className="w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                          <Gift size={11} className="text-orange-500" />
+                        </div>
+                        <span className="text-sm text-gray-800 font-medium">{perk}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
             {/* Specifikace */}
             <motion.div
@@ -337,6 +397,35 @@ export default function VozDetail() {
                   <a href="/kontakt" className="inline-block mt-2 text-xs font-semibold text-[#1e7e34] hover:underline">Zjistit více →</a>
                 </div>
               </motion.div>
+
+              {/* CENOVÁ BOMBA — sidebar urgency */}
+              {car.isBomb && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.35 }}
+                  className="border-2 border-orange-400 rounded-lg overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2.5 flex items-center gap-2">
+                    <Flame size={14} className="text-white" />
+                    <span className="text-white text-xs font-black uppercase tracking-wider">Cenová bomba</span>
+                  </div>
+                  <div className="bg-orange-50 p-4 space-y-3">
+                    <div className="flex items-start gap-2.5">
+                      <Clock size={15} className="text-orange-500 shrink-0 mt-0.5" />
+                      <p className="text-xs text-orange-900 leading-relaxed font-medium">
+                        Tato cena platí do vyprodání posledních <strong>{car.inStock} kusů</strong> na skladě.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <Gift size={15} className="text-orange-500 shrink-0 mt-0.5" />
+                      <p className="text-xs text-orange-900 leading-relaxed font-medium">
+                        Zahrnuje <strong>{car.bombPerks.length} exkluzivní bonusy</strong> zdarma.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
 
               {/* Quick info */}
               <motion.div
