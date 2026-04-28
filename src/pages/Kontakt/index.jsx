@@ -9,6 +9,13 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 
+const WhatsAppIcon = ({ size = 18, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.122 1.529 5.858L.057 23.57a.75.75 0 00.918.919l5.84-1.485A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.523-5.204-1.432l-.373-.22-3.865.984.992-3.757-.243-.386A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+  </svg>
+)
+
 const contactItems = [
   {
     icon: Phone,
@@ -16,6 +23,13 @@ const contactItems = [
     value: '+420 733 455 966',
     sub: 'Po–Pá 8:00–18:00',
     href: 'tel:+420733455966',
+  },
+  {
+    icon: WhatsAppIcon,
+    label: 'WhatsApp',
+    value: '+420 733 455 966',
+    sub: 'Napište nám kdykoliv',
+    href: 'https://wa.me/420733455966',
   },
   {
     icon: Mail,
@@ -423,13 +437,24 @@ export default function Kontakt() {
                 <p className="text-gray-300 text-sm leading-relaxed mb-6">
                   Zavolejte nám přímo — rádi vám zodpovíme jakékoli otázky a domluvíme se na dalším postupu.
                 </p>
-                <a
-                  href="tel:+420733455966"
-                  className="flex items-center gap-3 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-5 py-3 rounded-md transition-colors text-sm w-full justify-center"
-                >
-                  <Phone size={16} />
-                  +420 733 455 966
-                </a>
+                <div className="flex flex-col gap-3">
+                  <a
+                    href="tel:+420733455966"
+                    className="flex items-center gap-3 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-5 py-3 rounded-md transition-colors text-sm w-full justify-center"
+                  >
+                    <Phone size={16} />
+                    +420 733 455 966
+                  </a>
+                  <a
+                    href="https://wa.me/420733455966"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 bg-[#25D366] hover:bg-[#1ebe5c] text-white font-bold px-5 py-3 rounded-md transition-colors text-sm w-full justify-center"
+                  >
+                    <WhatsAppIcon size={16} />
+                    Napsat na WhatsApp
+                  </a>
+                </div>
                 <div className="mt-4 pt-4 border-t border-white/10 text-xs text-gray-400">
                   Dostupní Po–Pá 8:00–18:00 a So 9:00–13:00
                 </div>
