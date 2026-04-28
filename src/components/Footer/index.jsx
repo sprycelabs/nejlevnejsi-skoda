@@ -23,7 +23,7 @@ const footerLinks = {
   'Společnost': [
     { label: 'O nás', href: '/o-nas' },
     { label: 'Kontakt', href: '/kontakt' },
-    { label: 'Obchodní podmínky', href: '/doc/terms.docx', download: true },
+    { label: 'Obchodní podmínky', href: '/doc/term.docx', download: true },
     { label: 'GDPR', href: '/doc/gdpr.docx', download: true },
     { label: 'Cookies', href: '/kontakt' },
   ],
@@ -107,7 +107,7 @@ export default function Footer() {
           <span>© {new Date().getFullYear()} TOP GLOBAL STRATEGIC MANAGEMENT LTD,Reg. číslo: 490247, Všechna práva vyhrazena.</span>
           <div className="flex gap-4">
             <a href="/doc/gdpr.docx" download className="hover:text-gray-300 transition-colors">GDPR</a>
-            <a href="/doc/terms.docx" download className="hover:text-gray-300 transition-colors">Obchodní podmínky</a>
+            <a href="/doc/term.docx" download className="hover:text-gray-300 transition-colors">Obchodní podmínky</a>
             <a href="/kontakt" className="hover:text-gray-300 transition-colors">Cookies</a>
           </div>
         </div>
