@@ -87,7 +87,7 @@ export default function Hero() {
               ))}
               <div className="flex items-center gap-2 border-l border-white/10 pl-4 sm:pl-6">
                 <span className="text-gray-500 text-xs">Spolupracujeme s autorizovanými partnery</span>
-                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-8 w-auto opacity-80" />
+                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-11 w-auto opacity-80" />
               </div>
             </motion.div>
           </div>

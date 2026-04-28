@@ -199,7 +199,7 @@ export default function VozDetail() {
               className="bg-white rounded-lg border border-gray-100 shadow-sm px-5 py-3 flex items-center gap-4"
             >
               <span className="text-xs text-gray-400">Spolupracujeme s autorizovanými partnery</span>
-              <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-7 w-auto" />
+              <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-9 w-auto" />
             </motion.div>
 
             {/* CENOVÁ BOMBA — hlavní sekce */}
