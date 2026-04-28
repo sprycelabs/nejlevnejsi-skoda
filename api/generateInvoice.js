@@ -22,9 +22,10 @@ const SELLER = {
 }
 
 const BANK = {
-  account: 'CZ00 0000 0000 0000 0000 0000',
-  swift:   'XXXXXXXX',
-  bank:    'Banka',
+  account:      'LT51 3250 0426 4014 3306',
+  swift:        'REVOLT21',
+  owner:        'TGSM',
+  ownerAddress: 'Náměstí Republiky 1081/7, Praha 1, Česká Republika',
 }
 
 function czk(amount) {
@@ -264,7 +265,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     y += fboxH + 20
 
     // ── PLATEBNÍ ÚDAJE ────────────────────────────────────────────────────────
-    const payH = 72
+    const payH = 104
     doc.roundedRect(ML, y, CW, payH, 4).lineWidth(0.8).strokeColor('#c6e6cc').fillAndStroke('#f0faf2', '#c6e6cc')
 
     B(9, GREEN).text('Platební údaje', ML + 12, y + 10)
@@ -272,7 +273,6 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const payData = [
       ['IBAN:',               BANK.account],
       ['SWIFT/BIC:',          BANK.swift],
-      ['Banka:',              BANK.bank],
       ['Variabilní symbol:',  vs],
     ]
     const halfW = Math.floor(CW / 2) - 12
@@ -283,6 +283,18 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
       R(8, GRAY).text(row[0], px, py, { width: 90, lineBreak: false })
       B(8, DARK).text(row[1], px + 92, py, { width: halfW - 92, lineBreak: false })
     })
+
+    // Doplňující údaje pro banky které je vyžadují
+    const noteY = y + 62
+    doc.moveTo(ML + 12, noteY - 6).lineTo(ML + CW - 12, noteY - 6).lineWidth(0.5).strokeColor('#c6e6cc').stroke()
+    R(7, GRAY).text(
+      'Dodatečné údaje vyžadované některými bankami:',
+      ML + 12, noteY, { width: CW - 24, lineBreak: false }
+    )
+    R(7.5, DARK).text(
+      `Majitel účtu: ${BANK.owner}  ·  Adresa: ${BANK.ownerAddress}`,
+      ML + 12, noteY + 11, { width: CW - 24, lineBreak: false }
+    )
 
     y += payH + 18
 

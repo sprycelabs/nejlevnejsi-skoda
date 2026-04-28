@@ -27,9 +27,10 @@ const SELLER = {
 }
 
 const BANK = {
-  account: 'CZ00 0000 0000 0000 0000 0000',
-  swift:   'XXXXXXXX',
-  bank:    'Banka',
+  account:      'LT51 3250 0426 4014 3306',
+  swift:        'REVOLT21',
+  owner:        'TGSM',
+  ownerAddress: 'Náměstí Republiky 1081/7, Praha 1, Česká Republika',
 }
 
 function czk(amount) {
@@ -325,7 +326,6 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   const payRows = [
     ['IBAN:',              BANK.account],
     ['SWIFT/BIC:',         BANK.swift],
-    ['Banka:',             BANK.bank],
     ['Variabilní symbol:', vs],
   ]
   payRows.forEach(([label, value], i) => {
@@ -347,6 +347,26 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
     })
     r++
   })
+
+  // Doplňující údaje pro banky které je vyžadují
+  rowHeight(ws, r, 14)
+  ws.mergeCells(r, 2, r, 5)
+  setCell(ws, r, 2, 'Dodatečné údaje vyžadované některými bankami:', {
+    size: 7.5, color: GRAY, bg: GREEN_LIGHT,
+    border: { left: { style: 'thin', color: { argb: GREEN_BORDER } }, right: { style: 'thin', color: { argb: GREEN_BORDER } } },
+  })
+  r++
+  rowHeight(ws, r, 14)
+  ws.mergeCells(r, 2, r, 5)
+  setCell(ws, r, 2, `Majitel účtu: ${BANK.owner}  ·  Adresa: ${BANK.ownerAddress}`, {
+    size: 7.5, color: DARK, bg: GREEN_LIGHT,
+    border: {
+      bottom: { style: 'thin', color: { argb: GREEN_BORDER } },
+      left:   { style: 'thin', color: { argb: GREEN_BORDER } },
+      right:  { style: 'thin', color: { argb: GREEN_BORDER } },
+    },
+  })
+  r++
   r++ // mezera
 
   // ── PRÁVNÍ TEXTY ─────────────────────────────────────────────────────────
