@@ -152,23 +152,24 @@ export default function ONas() {
             >
               <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">Náš příběh</p>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-6">
-                Vznikli jsme z jednoduché myšlenky
+                Vznikli jsme z jedné jednoduché myšlenky
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  V rámci EU existují výrazné cenové rozdíly u stejných vozů — např. stejná Škoda
-                  Octavia stojí v některé jiné zemi EU až o desítky i stovky tisíc Kč méně než v České
-                  republice. Není to náhoda ani chyba, je to strukturální rozdíl daný lokálními
-                  dealerskými maržemi, vývojem kurzu CZK vůči ostatním měnám a poptávkou.
+V rámci EU existují výrazné cenové rozdíly u stejných vozů — např. stejná
+Škoda Octavia stojí v jiné zemi EU až o desítky i stovky tisíc Kč méně než v
+České republice. Není to náhoda ani chyba, ale strukturální rozdíl daný
+lokálními dealerskými maržemi, vývojem kurzu CZK vůči ostatním měnám a
+poptávkou.
                 </p>
                 <p>
-                  Náš zakladatel si toho všiml jako první u svého vlastního nákupu. Místo aby zaplatil
-                  přes 800 000 Kč u českého dealera, pořídil identický vůz v zahraničí za výrazně
-                  méně. Celý proces byl ale složitý — jazyková bariéra, administrativa, logistika.
+                  Náš zakladatel si toho všiml při vlastním nákupu. Místo aby zaplatil přes 800
+000 Kč u českého dealera, pořídil identický vůz v zahraničí za výrazně méně.
+Celý proces byl ale složitý — jazyková bariéra, administrativa i logistika.
                 </p>
                 <p>
-                  Proto <a href="/" className="text-[#1e7e34] font-semibold hover:underline">nejlevnejsi-skoda.cz</a> vzniklo: aby tento proces zvládl kdokoliv, bez znalostí a
-                  bez starostí. Za cenu, kterou v danou chvíli v ČR nenajdete.
+                  Proto jsme vytvořili <a href="/" className="text-[#1e7e34] font-semibold hover:underline">nejlevnejsi-skoda.cz</a> — aby tento proces zvládl kdokoliv,
+bez znalostí a bez starostí. Za cenu, kterou v danou chvíli v ČR nenajdete.
                 </p>
               </div>
             </motion.div>

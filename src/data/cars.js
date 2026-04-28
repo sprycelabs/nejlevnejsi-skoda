@@ -506,7 +506,7 @@ export const cars = [
     bombTagline: 'Auto s naším Brandem za skvělou cenu',
     bombNote: 'Získáte nové auto za výjimečnou cenu výměnou za to, že vozidlo ponese reklamní polep značky Nejlevnější-Škoda.cz po dobu 18 měsíců. Auto je ihned vaše — bez čekání, bez komplikací.',
     bombConditions: [
-      'Zachování celopolep po celou dobu min. 18 měsíců',
+      'Zachování celopolepu po celou dobu min. 18 měsíců',
       'Ujetí min. 20 000 km za 18 měsíců',
     ],
     bombAfterOptions: [
