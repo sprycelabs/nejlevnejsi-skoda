@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ChevronRight, ChevronDown, Phone, Mail } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 
 const faqs = [
   {
@@ -124,6 +125,11 @@ function FAQItem({ q, a }) {
 export default function FAQ() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Časté dotazy (FAQ) | Škoda z EU"
+        description="Odpovědi na nejčastější otázky o dovozu nové Škody z EU. Jak dlouho trvá dodání? Platí tovární záruka? Kolik ušetřím? Vše srozumitelně vysvětleno."
+        canonical="/faq"
+      />
       <Navbar />
 
       {/* Hero */}

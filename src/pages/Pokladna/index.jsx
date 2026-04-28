@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2 } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 import { useCart } from '../../context/CartContext'
 import { formatPrice } from '../../data/cars'
 
@@ -200,6 +201,7 @@ export default function Pokladna() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO title="Pokladna" description="Dokončení objednávky." noindex />
       <Navbar />
 
       {/* Hero */}

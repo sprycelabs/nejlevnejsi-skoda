@@ -6,6 +6,7 @@ import { cars, formatPrice } from '../../data/cars'
 import { useCart } from '../../context/CartContext'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 
 const MODELS = [...new Set(cars.map(c => c.name))]
 const FUELS = [...new Set(cars.map(c => c.fuel))]
@@ -275,6 +276,11 @@ export default function VozyPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Aktuální nabídka vozů Škoda z EU"
+        description="Prohlédněte si aktuální nabídku nových vozů Škoda dovezených z EU. Ceny až o 20 % nižší než u českých dealerů. Octavia, Fabia, Kodiaq, Superb — tovární záruka, doprava zdarma."
+        canonical="/vozy"
+      />
       <Navbar />
 
       {/* Page header */}

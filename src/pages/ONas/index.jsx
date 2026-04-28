@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ShieldCheck, BadgePercent, Globe, HeartHandshake, Users, TrendingUp, ChevronRight, Phone, Mail, ArrowRight } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 
 const stats = [
   { value: '500+', label: 'spokojených zákazníků v Evropě' },
@@ -60,6 +61,11 @@ const timeline = [
 export default function ONas() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="O nás | Specialisté na dovoz Škody z EU"
+        description="Jsme tým specialistů na dovoz nových vozů Škoda z EU. Přes 500 spokojených zákazníků, průměrná úspora 20 %. Zjistěte, jak vám pomůžeme ušetřit na nové Škodě."
+        canonical="/o-nas"
+      />
       <Navbar />
 
       {/* Hero */}

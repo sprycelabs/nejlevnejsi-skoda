@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
+import SEO from './components/SEO'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import QuickLinks from './components/QuickLinks'
@@ -24,6 +26,11 @@ import { CartProvider } from './context/CartContext'
 function HomePage() {
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Vozy Škoda z EU levněji než v ČR | Ušetřete až 20 %"
+        description="Kupte novou Škodu z EU až o 20 % levněji než u českých dealerů. Tovární záruka zachována, dovoz do ČR zajištěn. Octavia, Fabia, Kodiaq, Superb a další modely."
+        canonical="/"
+      />
       <Navbar />
       <main>
         <Hero />
@@ -43,6 +50,7 @@ function HomePage() {
 
 export default function App() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
       <CartProvider>
         <ScrollToTop />
@@ -59,5 +67,6 @@ export default function App() {
         </Routes>
       </CartProvider>
     </BrowserRouter>
+    </HelmetProvider>
   )
 }

@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 
 const contactItems = [
   {
@@ -118,6 +119,11 @@ export default function Kontakt() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Kontakt | Nezávazná poptávka zdarma"
+        description="Poptejte novou Škodu z EU zdarma a bez závazků. Odpovídáme do 24 hodin. Tel: +420 733 455 966 | info@nejlevnejsi-skoda.cz"
+        canonical="/kontakt"
+      />
       <Navbar />
 
       {/* Hero */}

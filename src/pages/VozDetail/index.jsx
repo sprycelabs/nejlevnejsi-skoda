@@ -10,6 +10,8 @@ import {
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
+import { Helmet } from 'react-helmet-async'
 
 export default function VozDetail() {
   const { slug } = useParams()
@@ -45,8 +47,37 @@ export default function VozDetail() {
     { label: 'Stav', value: 'Nové' },
   ]
 
+  const carTitle = `${car.name} ${car.variant}`
+  const siteUrl  = 'https://nejlevnejsi-skoda.cz'
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: carTitle,
+    description: `Nový ${carTitle} dovezený z EU. Ušetřete ${car.discount} % oproti české ceně. Tovární záruka zachována, dovoz do ČR zajištěn.`,
+    brand: { '@type': 'Brand', name: 'Škoda' },
+    offers: {
+      '@type': 'Offer',
+      url: `${siteUrl}/vozy/${car.slug}`,
+      priceCurrency: 'CZK',
+      price: car.salePrice,
+      availability: 'https://schema.org/InStock',
+      seller: { '@type': 'Organization', name: 'Nejlevnější Škoda' },
+    },
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title={`${carTitle} z EU | Ušetřete ${car.discount} %`}
+        description={`Kupte ${carTitle} z EU za ${formatPrice(car.salePrice)}. Ušetříte ${formatPrice(savings)} oproti české ceně. Tovární záruka, dovoz do ČR, bez starostí.`}
+        canonical={`/vozy/${car.slug}`}
+        image={`${siteUrl}${car.image}`}
+        type="product"
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
       <Navbar />
 
       {/* ── HERO ── */}
