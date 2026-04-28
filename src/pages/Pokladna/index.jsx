@@ -17,7 +17,7 @@ const EMPTY_FIRMA = {
   contactPerson: '', street: '', city: '', zip: '', note: '', terms: false,
 }
 
-function FileUpload() {
+function FileUpload({ onFileChange }) {
   const [fileNames, setFileNames] = useState([])
   return (
     <div>
@@ -28,7 +28,11 @@ function FileUpload() {
           multiple
           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
           className="hidden"
-          onChange={e => setFileNames(Array.from(e.target.files).map(f => f.name))}
+          onChange={e => {
+            const fileList = Array.from(e.target.files)
+            setFileNames(fileList.map(f => f.name))
+            if (onFileChange) onFileChange(fileList)
+          }}
         />
         <svg xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 text-gray-300 group-hover:text-[#1e7e34] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4" />
@@ -69,6 +73,7 @@ export default function Pokladna() {
   const [invoiceChecked, setInvoiceChecked] = useState(false)
   const [deliveryChecked, setDeliveryChecked] = useState(false)
   const [sidebarErrors, setSidebarErrors] = useState({})
+  const [attachedFiles, setAttachedFiles] = useState([])
 
   function switchType(t) {
     setType(t)
@@ -115,10 +120,23 @@ export default function Pokladna() {
     setLoading(true)
     setSubmitError('')
     try {
+      // Převeď soubory zákazníka na base64
+      const fileAttachments = await Promise.all(
+        attachedFiles.map(file => new Promise((resolve) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve({
+            name: file.name,
+            type: file.type || 'application/octet-stream',
+            data: reader.result.split(',')[1],
+          })
+          reader.readAsDataURL(file)
+        }))
+      )
+
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ form, items, total: cartTotal }),
+        body: JSON.stringify({ form, items, total: cartTotal, fileAttachments }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Chyba serveru')
@@ -315,7 +333,7 @@ export default function Pokladna() {
                 >
                   <h2 className="font-black text-gray-900 text-lg mb-1">Přílohy</h2>
                   <p className="text-sm text-gray-400 mb-4">Přiložte konfiguraci z webu Škoda-Auto, fotky nebo jakýkoli dokument.</p>
-                  <FileUpload />
+                  <FileUpload onFileChange={setAttachedFiles} />
                 </motion.div>
 
                 {/* Obchodní podmínky */}

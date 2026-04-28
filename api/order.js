@@ -169,7 +169,7 @@ function customerEmail(form, items, total, orderNumber) {
 </html>`
 }
 
-function clientNotificationEmail(form, items, total, orderNumber) {
+function clientNotificationEmail(form, items, total, orderNumber, attachmentCount) {
   const isCompany = !!form.companyName
   const name = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
   const contactPerson = isCompany ? form.contactPerson : `${form.firstName} ${form.lastName}`
@@ -204,6 +204,7 @@ function clientNotificationEmail(form, items, total, orderNumber) {
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Telefon</td><td style="padding:6px 0;font-size:13px;"><a href="tel:${form.phone}" style="color:#1e7e34;">${form.phone}</a></td></tr>
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Adresa</td><td style="padding:6px 0;font-size:13px;">${form.street}, ${form.zip} ${form.city}</td></tr>
             ${form.note ? `<tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Poznámka</td><td style="padding:6px 0;font-size:13px;">${form.note}</td></tr>` : ''}
+            <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Přílohy od zákazníka</td><td style="padding:6px 0;font-size:13px;font-weight:700;color:${attachmentCount > 0 ? '#1e7e34' : '#9ca3af'};">${attachmentCount > 0 ? `${attachmentCount} soubor${attachmentCount === 1 ? '' : attachmentCount < 5 ? 'y' : 'ů'}` : 'žádné'}</td></tr>
           </table>
 
           <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
@@ -232,7 +233,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { form, items, total } = req.body
+  const { form, items, total, fileAttachments = [] } = req.body
 
   if (!form || !items || !total) {
     return res.status(400).json({ error: 'Missing data' })
@@ -267,7 +268,13 @@ export default async function handler(req, res) {
       }
     }
 
-    // Email zákazníkovi
+    // Přílohy od zákazníka (jen pro interní email)
+    const customerFileAttachments = (fileAttachments || []).map(f => ({
+      filename: f.name,
+      content: f.data, // base64
+    }))
+
+    // Email zákazníkovi — pouze proforma faktura, bez nahraných souborů
     await resend.emails.send({
       from: `Nejlevnější Škoda <${FROM}>`,
       to: form.email,
@@ -276,13 +283,13 @@ export default async function handler(req, res) {
       attachments: [attachment],
     })
 
-    // Notifikace klientovi
+    // Notifikace klientovi — faktura + všechny soubory od zákazníka
     await resend.emails.send({
       from: `Nejlevnější Škoda <${FROM}>`,
       to: CLIENT_EMAIL,
       subject: `Nová objednávka ${orderNumber} — ${form.companyName || `${form.firstName} ${form.lastName}`}`,
-      html: clientNotificationEmail(form, items, total, orderNumber),
-      attachments: [attachment],
+      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length),
+      attachments: [attachment, ...customerFileAttachments],
     })
 
     return res.status(200).json({ success: true, orderNumber })

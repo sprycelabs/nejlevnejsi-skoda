@@ -494,7 +494,7 @@ export const cars = [
     originalPrice: 465600,
     salePrice: 333333,
     discount: 28,
-    inStock: 6,
+    inStock: 3,
     isNew: true,
     isSale: true,
     freeDelivery: true,
