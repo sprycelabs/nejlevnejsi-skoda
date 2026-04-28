@@ -29,7 +29,7 @@ const organizationJsonLd = {
   '@type': 'Organization',
   name: 'Nejlevnější Škoda',
   url: 'https://nejlevnejsi-skoda.cz',
-  logo: 'https://nejlevnejsi-skoda.cz/logo.png',
+  logo: 'https://nejlevnejsi-skoda.cz/logo.webp',
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+420733455966',

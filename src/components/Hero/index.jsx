@@ -100,7 +100,7 @@ export default function Hero() {
             className="flex items-end justify-center lg:justify-end"
           >
             <img
-              src="/hero-car.png"
+              src="/hero-car.webp"
               alt="Škoda"
               fetchpriority="high"
               decoding="sync"

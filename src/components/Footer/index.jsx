@@ -38,7 +38,7 @@ export default function Footer() {
           {/* Brand col */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <a href="/" className="flex items-center mb-5">
-              <img src="/logo.png" alt="Nejlevnější Škoda" className="h-6 sm:h-8 lg:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
+              <img src="/logo.webp" alt="Nejlevnější Škoda" className="h-6 sm:h-8 lg:h-9 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
             </a>
             <p className="text-gray-400 text-sm leading-relaxed mb-5">
               Váš partner pro nákup vozů Škoda z EU za výhodné ceny. Průměrná úspora 20 %.
