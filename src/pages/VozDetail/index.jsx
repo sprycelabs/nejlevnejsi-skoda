@@ -100,7 +100,10 @@ export default function VozDetail() {
               </div>
 
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white mb-2">{car.name}</h1>
-              <p className="text-gray-300 text-base sm:text-xl mb-5 sm:mb-8">{car.variant} · {car.power}</p>
+              <p className="text-gray-300 text-base sm:text-xl mb-2">{car.variant} · {car.power}</p>
+              {car.internalId && (
+                <p className="text-gray-600 text-xs font-mono mb-5 sm:mb-8">{car.internalId}</p>
+              )}
 
               {/* quick specs row */}
               <div className="flex flex-wrap gap-6 mb-8">

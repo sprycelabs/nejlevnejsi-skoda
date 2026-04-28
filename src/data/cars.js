@@ -18,6 +18,7 @@ export const cars = [
     color: 'Bílá Moon metalíza',
     image: '/cars/karoq-01.webp',
     slug: 'karoq-130',
+    internalId: 'TMBxxxxxxV/0001',
   },
   {
     id: 2,
@@ -38,6 +39,7 @@ export const cars = [
     color: 'Modrá Race metalíza',
     image: '/cars/karoq-02.webp',
     slug: 'karoq-sportline',
+    internalId: 'TMBxxxxxxV/0002',
   },
   {
     id: 3,
@@ -58,6 +60,7 @@ export const cars = [
     color: 'Šedá Steel',
     image: '/cars/karoq-03.webp',
     slug: 'karoq-classic',
+    internalId: 'TMBxxxxxxV/0003',
   },
   {
     id: 4,
@@ -78,6 +81,7 @@ export const cars = [
     color: 'Modrá Race metalíza',
     image: '/cars/fabia-01.webp',
     slug: 'fabia-classic-70',
+    internalId: 'TMBxxxxxxV/0004',
   },
   {
     id: 5,
@@ -98,6 +102,7 @@ export const cars = [
     color: 'Modrá Race metalíza',
     image: '/cars/fabia-02.webp',
     slug: 'fabia-classic-59',
+    internalId: 'TMBxxxxxxV/0005',
   },
   {
     id: 6,
@@ -118,6 +123,7 @@ export const cars = [
     color: 'Modrá Race metalíza',
     image: '/cars/fabia-03.webp',
     slug: 'fabia-classic-70-02',
+    internalId: 'TMBxxxxxxV/0006',
   },
     {
     id: 7,
@@ -138,6 +144,7 @@ export const cars = [
     color: 'Bílá Moon metalíza Černá Magic metalíza',
     image: '/cars/fabia-04.webp',
     slug: 'fabia-monte-carlo',
+    internalId: 'TMBxxxxxxV/0007',
   },
     {
     id: 8,
@@ -158,6 +165,7 @@ export const cars = [
     color: 'Černá Magic metalíza',
     image: '/cars/octavia-01.webp',
     slug: 'octavia-top-selection',
+    internalId: 'TMBxxxxxxV/0008',
   },
     {
     id: 9,
@@ -178,6 +186,7 @@ export const cars = [
     color: 'Bílá Moon metalíza',
     image: '/cars/octavia-02.webp',
     slug: 'octavia-exclusive-selection',
+    internalId: 'TMBxxxxxxV/0009',
   },
     {
     id: 10,
@@ -198,6 +207,7 @@ export const cars = [
     color: 'Šedá Graphite metalíza',
     image: '/cars/octavia-03.webp',
     slug: 'octavia-selection',
+    internalId: 'TMBxxxxxxV/0010',
   },
     {
     id: 11,
@@ -218,6 +228,7 @@ export const cars = [
     color: 'Šedá Graphite metalíza',
     image: '/cars/octavia-04.webp',
     slug: 'octavia-classic',
+    internalId: 'TMBxxxxxxV/0011',
   },
   {
     id: 12,
@@ -238,6 +249,7 @@ export const cars = [
     color: 'Bílá Moon metalíza',
     image: '/cars/octavia-05.webp',
     slug: 'octavia-130-premium',
+    internalId: 'TMBxxxxxxV/0012',
   },
       {
     id: 13,
@@ -258,6 +270,7 @@ export const cars = [
     color: 'Stříbrná Smokey Diamond metalíza',
     image: '/cars/kodiaq-01.webp',
     slug: 'kodiaq-sportline',
+    internalId: 'TMBxxxxxxV/0013',
   },
       {
     id: 14,
@@ -278,6 +291,7 @@ export const cars = [
     color: 'Zlatá Bronx metalíza',
     image: '/cars/kodiaq-02.webp',
     slug: 'kodiaq-exclusive-selection',
+    internalId: 'TMBxxxxxxV/0014',
   },
       {
     id: 15,
@@ -298,6 +312,7 @@ export const cars = [
     color: 'Stříbrná Smokey Diamond metalíza',
     image: '/cars/kamiq-01.webp',
     slug: 'kamiq-dynamic',
+    internalId: 'TMBxxxxxxV/0015',
   },
       {
     id: 16,
@@ -318,6 +333,7 @@ export const cars = [
     color: 'Modrá Race metalíza',
     image: '/cars/kamiq-02.webp',
     slug: 'kamiq-classic',
+    internalId: 'TMBxxxxxxV/0016',
   },
   {
     id: 17,
@@ -338,6 +354,7 @@ export const cars = [
     color: 'Šedá Graphite metalíza',
     image: '/cars/superb-01.webp',
     slug: 'superb-combi-sportline',
+    internalId: 'TMBxxxxxxV/0017',
   },
     {
     id: 18,
@@ -358,6 +375,7 @@ export const cars = [
     color: 'Černá Ebony metalíza',
     image: '/cars/superb-02.webp',
     slug: 'superb-selection',
+    internalId: 'TMBxxxxxxV/0018',
   },
     {
     id: 19,
@@ -378,6 +396,7 @@ export const cars = [
     color: 'Bílá Purity',
     image: '/cars/superb-03.webp',
     slug: 'superb-selection-purity',
+    internalId: 'TMBxxxxxxV/0019',
   },
     {
     id: 20,
@@ -398,6 +417,7 @@ export const cars = [
     color: 'Stříbrná Smokey Diamond metalíza',
     image: '/cars/enyaq-01.webp',
     slug: 'enyaq-rs',
+    internalId: 'TMBxxxxxxV/0020',
   },
     {
     id: 21,
@@ -418,6 +438,7 @@ export const cars = [
     color: 'Modrá Race metalíza',
     image: '/cars/scala-01.webp',
     slug: 'scala-classic',
+    internalId: 'TMBxxxxxxV/0021',
   },
     {
     id: 22,
@@ -438,6 +459,7 @@ export const cars = [
     color: 'Stříbrná Smokey Diamond metalíza',
     image: '/cars/scala-02.webp',
     slug: 'scala-top-selection',
+    internalId: 'TMBxxxxxxV/0022',
   },
     {
     id: 23,
@@ -458,6 +480,7 @@ export const cars = [
     color: 'Bílá Candy',
     image: '/cars/scala-03.webp',
     slug: 'scala-classic-candy',
+    internalId: 'TMBxxxxxxV/0023',
   },
   {
     id: 24,
@@ -478,6 +501,7 @@ export const cars = [
     color: 'Bílá Moon metalíza',
     image: '/cars/fabia-05.webp',
     slug: 'fabia-classic-bomb',
+    internalId: 'TMBxxxxxxV/0024',
     isBomb: true,
     bombTagline: 'Auto s naším Brandem za skvělou cenu',
     bombNote: 'Získáte nové auto za výjimečnou cenu výměnou za to, že vozidlo ponese reklamní polep značky Nejlevnější-Škoda.cz po dobu 18 měsíců. Auto je ihned vaše — bez čekání, bez komplikací.',
