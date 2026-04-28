@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ChevronRight, ChevronDown, Phone, Mail } from 'lucide-react'
+import { Helmet } from 'react-helmet-async'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
@@ -37,7 +38,7 @@ const faqs = [
       },
       {
         q: 'Jsou vozy nové nebo ojeté?',
-        a: 'Vždy se jedná o nové vozy do 3 měsíců od výroby s 0 najetými km. Žádné předváděčky a dealerské „uloženky“.',
+        a: 'Vždy se jedná o nové vozy do 3 měsíců od výroby s 0 najetými km. Žádné předváděčky a dealerské „uloženky".',
       },
       {
         q: 'Mohu si vybrat výbavu, barvu a doplňky přesně podle svých přání?',
@@ -89,12 +90,27 @@ const faqs = [
   },
 ]
 
+// JSON-LD: všechny otázky + odpovědi pro Google
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.flatMap(section =>
+    section.items.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    }))
+  ),
+}
+
+// Accordion — odpověď JE vždy v DOM, pouze vizuálně schovaná přes výšku
 function FAQItem({ q, a }) {
   const [open, setOpen] = useState(false)
   return (
     <div className="border-b border-gray-100 last:border-0">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
         className="w-full flex items-start justify-between gap-4 py-5 text-left"
       >
         <span className={`font-semibold text-sm sm:text-base leading-snug transition-colors ${open ? 'text-[#1e7e34]' : 'text-gray-900'}`}>
@@ -105,19 +121,16 @@ function FAQItem({ q, a }) {
           className={`shrink-0 mt-0.5 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180 text-[#1e7e34]' : ''}`}
         />
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
-          >
-            <p className="text-gray-500 text-sm leading-relaxed pb-5">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+      {/* Odpověď je VŽDY v DOM — Google ji přečte, jen vizuálně schovaná */}
+      <motion.div
+        initial={false}
+        animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
+        className="overflow-hidden"
+      >
+        <p className="text-gray-500 text-sm leading-relaxed pb-5">{a}</p>
+      </motion.div>
     </div>
   )
 }
@@ -130,6 +143,9 @@ export default function FAQ() {
         description="Odpovědi na nejčastější otázky o dovozu nové Škody z EU. Jak dlouho trvá dodání? Platí tovární záruka? Kolik ušetřím? Vše srozumitelně vysvětleno."
         canonical="/faq"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      </Helmet>
       <Navbar />
 
       {/* Hero */}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { Helmet } from 'react-helmet-async'
 import SEO from './components/SEO'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -23,6 +24,31 @@ import Cart from './components/Cart'
 import CookieBanner from './components/CookieBanner'
 import { CartProvider } from './context/CartContext'
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Nejlevnější Škoda',
+  url: 'https://nejlevnejsi-skoda.cz',
+  logo: 'https://nejlevnejsi-skoda.cz/logo.png',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+420733455966',
+    contactType: 'customer service',
+    availableLanguage: 'Czech',
+    hoursAvailable: 'Mo-Fr 08:00-18:00',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Rybná 716',
+    addressLocality: 'Praha',
+    postalCode: '110 00',
+    addressCountry: 'CZ',
+  },
+  sameAs: [
+    'https://www.facebook.com',
+  ],
+}
+
 function HomePage() {
   return (
     <div className="min-h-screen">
@@ -31,6 +57,9 @@ function HomePage() {
         description="Kupte novou Škodu z EU až o 20 % levněji než u českých dealerů. Tovární záruka zachována, dovoz do ČR zajištěn. Octavia, Fabia, Kodiaq, Superb a další modely."
         canonical="/"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(organizationJsonLd)}</script>
+      </Helmet>
       <Navbar />
       <main>
         <Hero />
