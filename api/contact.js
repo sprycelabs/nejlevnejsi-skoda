@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const FROM         = 'info@nejlevnejsi-skoda.cz'
+const FROM          = 'platby@nejlevnejsi-skoda.cz'
 const CONTACT_EMAIL = 'info@nejlevnejsi-skoda.cz'
 
 function contactEmail(form, attachmentCount) {
