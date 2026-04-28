@@ -25,13 +25,6 @@ const contactItems = [
     href: 'tel:+420733455966',
   },
   {
-    icon: WhatsAppIcon,
-    label: 'WhatsApp',
-    value: '+420 733 455 966',
-    sub: 'Napište nám kdykoliv',
-    href: 'https://wa.me/420733455966',
-  },
-  {
     icon: Mail,
     label: 'E-mail',
     value: 'info@nejlevnejsi-skoda.cz',
