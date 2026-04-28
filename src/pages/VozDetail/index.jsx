@@ -345,10 +345,9 @@ export default function VozDetail() {
               <h2 className="text-xl font-black text-gray-900 mb-4">{car.name} z EU — co o voze vědět</h2>
               <div className="space-y-3 text-gray-600 leading-relaxed text-[15px]">
                 <p>
-                  <strong className="text-gray-900">Dovoz {car.name} {car.variant} z EU</strong> za ceny
-                  výrazně nižší než u českých prodejců. Vůz pochází z oficiální distribuční sítě Škoda Auto
-                  — tovární záruka platí stejně jako při nákupu v ČR a servis zajistíte u jakéhokoli
-                  autorizovaného Škoda servisu.
+                  <strong className="text-gray-900">{car.name} {car.variant} levněji než u dealera</strong> —
+                  vůz pochází přímo z evropské distribuční sítě Škoda Auto. Tovární záruka platí stejně
+                  jako při nákupu v ČR a servis zajistíte u jakéhokoli autorizovaného servisu v celé EU.
                 </p>
                 <p>
                   Motor {car.variant} s výkonem {car.power} nabízí výbornou rovnováhu výkonu a
@@ -358,14 +357,15 @@ export default function VozDetail() {
                     : ' Manuální převodovka zaručuje přímý kontakt s vozem a nižší náklady na servis.'}
                 </p>
                 <p>
-                  Celý dovoz {car.name} z EU zajišťujeme za vás — od výběru vozu až po předání klíčků
-                  v ČR. Postaráme se o přepravu, přihlášení vozidla a veškerou administrativu.
+                  Koupit {car.name} levněji nebylo nikdy jednodušší — celý nákup v zahraničí
+                  zajišťujeme za vás. Od výběru vozu až po předání klíčků v ČR, včetně přepravy
+                  a přihlášení vozidla.
                 </p>
               </div>
 
               {/* Co je zahrnuto */}
               <div className="mt-7 pt-7 border-t border-gray-100">
-                <h3 className="font-black text-gray-900 mb-4">Co je zahrnuto v ceně</h3>
+                <h3 className="font-black text-gray-900 mb-4">Co je zahrnuto v ceně — žádné skryté příplatky</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   {[
                     'Prodloužená záruka 3 roky / 150 000 km',
@@ -395,8 +395,8 @@ export default function VozDetail() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
                 {[
                   { icon: BadgePercent, title: `Ušetříte ${car.discount} %`, sub: 'oproti ČR ceně' },
-                  { icon: ShieldCheck, title: 'Plná záruka', sub: 'jako u CZ dealera' },
-                  { icon: Star, title: 'Bez starostí', sub: 'Vše vyřídíme za vás' },
+                  { icon: ShieldCheck, title: 'Tovární záruka', sub: 'stejná jako u CZ dealera' },
+                  { icon: Star, title: 'Nákup na klíč', sub: 'Dovoz, přihlášení, předání' },
                 ].map(({ icon: Icon, title, sub }) => (
                   <div key={title} className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-white/10 rounded-md flex items-center justify-center shrink-0">

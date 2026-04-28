@@ -72,7 +72,7 @@ export default function ProcessSection() {
             </h2>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              Vyberte si z naší nabídky vozů Škoda dovezených z EU — objednejte online a my vám auto přivezeme přímo do ČR.
+              Kupte Škodu levněji než u jakéhokoli českého dealera — vyberte z naší nabídky a my vám ji doručíme přímo do ČR.
             </p>
             <p className="text-gray-600 leading-relaxed mb-3">
               Nebo si na{' '}
@@ -111,7 +111,7 @@ export default function ProcessSection() {
             </ul>
 
             <p className="text-gray-500 text-sm italic mb-8">
-              Vyhnete se složité administrativě, jazykovým bariérám i časově náročnému porovnávání nabídek.
+              Ušetříte čas, peníze i starosti — novou Škodu za výhodnou cenu vyřídíme za vás od A do Z.
             </p>
 
             <div className="flex flex-wrap lg:flex-nowrap gap-3 items-center">

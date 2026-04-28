@@ -18,7 +18,7 @@ const steps = [
     number: '03',
     icon: MapPin,
     title: 'Převezmete vůz v ČR',
-    desc: 'Váš nový Škoda dorazí přímo do ČR s plnou tovární zárukou. Vyřídíme registraci, přihlášení a předání – vše na klíč.',
+    desc: 'Váš nový vůz dorazí přímo do ČR s plnou tovární zárukou. Vyřídíme registraci, přihlášení a předání — nákup Škody v zahraničí nikdy nebyl jednodušší.',
   },
 ]
 

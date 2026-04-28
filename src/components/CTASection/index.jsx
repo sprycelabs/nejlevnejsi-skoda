@@ -31,7 +31,7 @@ export default function CTASection() {
                   </span>
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  Do 24 hodin připravíme konkrétní nabídku s reálnou cenou z EU trhu.
+                  Do 24 hodin připravíme nabídku s nejnižší cenou Škody na trhu.
                   Bez skrytých poplatků, bez závazků.
                 </p>
               </div>

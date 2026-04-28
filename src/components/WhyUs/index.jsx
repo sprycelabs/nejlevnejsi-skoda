@@ -64,7 +64,7 @@ export default function WhyUs() {
             transition={{ delay: 0.2 }}
             className="text-gray-500 text-lg"
           >
-            Dovoz Škody z EU bez starostí — transparentně, levněji a s tovární zárukou.
+            Nejlevnější Škoda na trhu — bez skrytých poplatků, s plnou tovární zárukou.
           </motion.p>
         </div>
 
