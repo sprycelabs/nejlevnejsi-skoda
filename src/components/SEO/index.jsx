@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 const SITE_NAME = 'Nejlevnější Škoda'
 const SITE_URL  = 'https://nejlevnejsi-skoda.cz'
-const OG_IMAGE  = `${SITE_URL}/og-image.jpg`
+const OG_IMAGE  = `${SITE_URL}/og-image.png`
 
 export default function SEO({
   title,
