@@ -19,7 +19,7 @@ export default function ClientsBar() {
           viewport={{ once: true }}
           className="text-center text-xs font-semibold uppercase tracking-widest text-gray-400 mb-8"
         >
-          Mezi naše nejvýznamnější zákazníky patří
+          Důvěřují nám každý den
         </motion.p>
       </div>
 
