@@ -44,9 +44,7 @@ const organizationJsonLd = {
     postalCode: '110 00',
     addressCountry: 'CZ',
   },
-  sameAs: [
-    'https://www.facebook.com',
-  ],
+  sameAs: [],
 }
 
 function HomePage() {
