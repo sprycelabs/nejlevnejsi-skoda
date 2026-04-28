@@ -64,7 +64,10 @@ export default function ONas() {
 
       {/* Hero */}
       <section className="relative bg-[#0d1f10] overflow-hidden pt-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
+        <div className="absolute inset-0">
+          <img src="/back-01.webp" alt="" className="w-full h-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10]/90 via-[#0d1f10]/75 to-[#0a1508]/80" />
+        </div>
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
