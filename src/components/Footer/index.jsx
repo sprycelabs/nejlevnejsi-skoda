@@ -93,6 +93,14 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Škoda partner bar */}
+      <div className="border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
+          <span className="text-gray-500 text-xs">Autorizovaný partner</span>
+          <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-5 w-auto opacity-60" />
+        </div>
+      </div>
+
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">

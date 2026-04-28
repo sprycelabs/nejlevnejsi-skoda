@@ -74,7 +74,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap items-center gap-4 sm:gap-6"
             >
               {[
                 { icon: ShieldCheck, text: 'Tovární záruka zachována' },
@@ -85,6 +85,10 @@ export default function Hero() {
                   {text}
                 </div>
               ))}
+              <div className="flex items-center gap-2 border-l border-white/10 pl-4 sm:pl-6">
+                <span className="text-gray-500 text-xs">Autorizovaný partner</span>
+                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-5 w-auto opacity-80" />
+              </div>
             </motion.div>
           </div>
 
