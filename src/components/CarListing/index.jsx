@@ -33,6 +33,8 @@ function CarCard({ car, index }) {
         <img
           src={car.image}
           alt={car.name}
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
         />
 

@@ -102,6 +102,8 @@ export default function Hero() {
             <img
               src="/hero-car.png"
               alt="Škoda"
+              fetchpriority="high"
+              decoding="sync"
               className="w-full scale-125 sm:scale-100 lg:scale-125 xl:scale-150 lg:max-w-2xl xl:max-w-3xl lg:translate-y-24 origin-bottom"
               style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.7))' }}
             />
