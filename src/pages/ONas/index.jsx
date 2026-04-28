@@ -21,7 +21,7 @@ const values = [
   {
     icon: BadgePercent,
     title: 'Úspora',
-    desc: 'Využíváme reálné cenové rozdíly mezi trhy EU. Průměrná úspora 20 % není marketingové číslo — je to průměr z reálných obchodů.',
+    desc: 'Koupit Škodu levněji je náš závazek. Průměrná úspora 20 % oproti cenám v ČR není marketingové číslo — je to průměr z reálných obchodů.',
   },
   {
     icon: HeartHandshake,
@@ -31,7 +31,7 @@ const values = [
   {
     icon: Globe,
     title: 'Znalost trhu',
-    desc: 'Sledujeme nabídky stovek dealerů po celé Evropě. Víme, kde a kdy nakoupit, aby cena i podmínky byly pro vás co nejlepší.',
+    desc: 'Sledujeme nabídky stovek dealerů po celé Evropě. Víme, kde najít nejlevnější Škodu — aby cena i podmínky byly pro vás co nejlepší.',
   },
 ]
 
@@ -108,9 +108,9 @@ export default function ONas() {
               transition={{ delay: 0.2 }}
               className="text-gray-300 text-lg leading-relaxed"
             >
-              Jsme nejlevnejsi-skoda.cz — specializovaný partner pro nákup vozů Škoda
-              z evropských trhů. Díky přístupu k nabídkám stovek dealerů v celé EU zajišťujeme
-              identické vozy za ceny, které čeští prodejci nenabídnou.
+              Jsme nejlevnejsi-skoda.cz — specialisté na dovoz vozů Škoda za nejnižší ceny v ČR.
+              Díky přístupu k nabídkám stovek dealerů v celé EU vám zajistíme identický vůz
+              levněji, než nabídne jakýkoli český prodejce.
             </motion.p>
           </div>
         </div>
@@ -221,7 +221,7 @@ export default function ONas() {
               transition={{ delay: 0.1 }}
               className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900"
             >
-              Naše hodnoty
+              Proč jsme nejlepší volbou pro nákup Škody levněji
             </motion.h2>
           </div>
 
@@ -256,11 +256,12 @@ export default function ONas() {
               viewport={{ once: true }}
             >
               <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">Naši zákazníci</p>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-6">Pro koho to děláme</h2>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-6">Komu pomáháme ušetřit na nové Škodě</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Naše služby využívají jak soukromí zákazníci, tak firmy, které chtějí efektivně
-                  obnovovat vozový park bez zbytečných nákladů.
+                  Pomoci koupit Škodu levněji — to je náš denní chleba. Naše služby využívají
+                  soukromí zákazníci i firmy, které chtějí efektivně obnovovat vozový park
+                  bez zbytečných přeplatků.
                 </p>
                 <p>
                   Každý projekt řešíme individuálně — od jednoho vozu až po větší flotily.
@@ -271,8 +272,8 @@ export default function ONas() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-8">
                 {[
-                  { icon: Users, title: 'Soukromé osoby', desc: 'Nový vůz pro rodinu bez přeplatků' },
-                  { icon: TrendingUp, title: 'Firmy & flotily', desc: 'Efektivní obnova vozového parku' },
+                  { icon: Users, title: 'Soukromé osoby', desc: 'Nová Škoda levněji pro celou rodinu' },
+                  { icon: TrendingUp, title: 'Firmy & flotily', desc: 'Výhodné ceny Škod pro firemní fleet' },
                 ].map(({ icon: Icon, title, desc }) => (
                   <div key={title} className="bg-white rounded-lg border border-gray-100 p-5 shadow-sm">
                     <div className="w-10 h-10 bg-[#f0faf2] rounded-md flex items-center justify-center mb-3">
@@ -292,10 +293,10 @@ export default function ONas() {
               viewport={{ once: true }}
               className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-6 sm:p-10 text-white"
             >
-              <h3 className="text-2xl font-black mb-3">Připraveni začít?</h3>
+              <h3 className="text-2xl font-black mb-3">Připraveni ušetřit na nové Škodě?</h3>
               <p className="text-gray-300 leading-relaxed mb-8">
-                Napište nám nebo zavolejte. Nezávazně vám připravíme konkrétní nabídku
-                na vůz, který chcete — s reálnou cenou z EU.
+                Napište nám nebo zavolejte. Nezávazně vám připravíme nabídku
+                s nejnižší cenou Škody na trhu — bez závazků, do 24 hodin.
               </p>
 
               <div className="space-y-3 mb-8">
