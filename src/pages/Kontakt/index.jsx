@@ -68,20 +68,52 @@ export default function Kontakt() {
     model: '',
     message: '',
   })
+  const [attachedFiles, setAttachedFiles] = useState([])
+  const [fileNames, setFileNames] = useState([])
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    const fileList = Array.from(e.target.files)
+    setAttachedFiles(fileList)
+    setFileNames(fileList.map(f => f.name))
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+    setSubmitError('')
+    try {
+      const fileAttachments = await Promise.all(
+        attachedFiles.map(file => new Promise((resolve) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve({
+            name: file.name,
+            type: file.type || 'application/octet-stream',
+            data: reader.result.split(',')[1],
+          })
+          reader.readAsDataURL(file)
+        }))
+      )
+
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ form, fileAttachments }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Chyba serveru')
       setSent(true)
-    }, 1200)
+    } catch (err) {
+      setSubmitError('Nepodařilo se odeslat zprávu. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -210,7 +242,7 @@ export default function Kontakt() {
                       Děkujeme za váš zájem. Ozveme se vám do 24 hodin s konkrétní nabídkou.
                     </p>
                     <button
-                      onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', model: '', message: '' }) }}
+                      onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', model: '', message: '' }); setAttachedFiles([]); setFileNames([]); setSubmitError('') }}
                       className="mt-6 text-sm text-[#1e7e34] font-semibold hover:underline"
                     >
                       Odeslat další poptávku
@@ -324,21 +356,27 @@ export default function Kontakt() {
                       <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-200 hover:border-[#1e7e34] rounded-md py-5 px-4 cursor-pointer transition-colors group">
                         <input
                           type="file"
-                          name="attachments"
                           multiple
                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
                           className="hidden"
-                          onChange={e => {
-                            const names = Array.from(e.target.files).map(f => f.name)
-                            e.target.closest('label').querySelector('span.filenames').textContent =
-                              names.length ? names.join(', ') : 'Vyberte soubory'
-                          }}
+                          onChange={handleFileChange}
                         />
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-gray-300 group-hover:text-[#1e7e34] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4" /></svg>
-                        <span className="filenames text-sm text-gray-400 text-center">Vyberte soubory</span>
+                        {fileNames.length > 0 ? (
+                          <span className="text-sm text-[#1e7e34] font-medium text-center">{fileNames.join(', ')}</span>
+                        ) : (
+                          <span className="text-sm text-gray-400 text-center">Vyberte soubory</span>
+                        )}
                         <span className="text-xs text-gray-300">PDF, Word, JPG, PNG — max. 10 MB</span>
                       </label>
                     </div>
+
+                    {submitError && (
+                      <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-md p-3 text-xs text-red-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" /></svg>
+                        {submitError}
+                      </div>
+                    )}
 
                     <button
                       type="submit"
