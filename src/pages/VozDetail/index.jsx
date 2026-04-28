@@ -172,7 +172,7 @@ export default function VozDetail() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4"
             >
               {[
                 { icon: ShieldCheck, title: 'Záruka v ceně', sub: '3 roky / 150 000 km' },
@@ -189,10 +189,17 @@ export default function VozDetail() {
                   </div>
                 </div>
               ))}
-              <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-4 sm:p-5 flex flex-col items-center justify-center gap-1.5">
-                <span className="text-xs text-gray-400 text-center leading-tight">Spolupracujeme s autorizovanými partnery</span>
-                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-6 w-auto" />
-              </div>
+            </motion.div>
+
+            {/* Škoda partner pruh */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.25 }}
+              className="bg-white rounded-lg border border-gray-100 shadow-sm px-5 py-3 flex items-center gap-4"
+            >
+              <span className="text-xs text-gray-400">Spolupracujeme s autorizovanými partnery</span>
+              <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-7 w-auto" />
             </motion.div>
 
             {/* CENOVÁ BOMBA — hlavní sekce */}
