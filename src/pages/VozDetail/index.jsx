@@ -323,7 +323,7 @@ export default function VozDetail() {
               className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden"
             >
               <div className="px-7 py-5 border-b border-gray-100">
-                <h2 className="text-xl font-black text-gray-900">Technické parametry</h2>
+                <h2 className="text-xl font-black text-gray-900">Technické parametry — {car.name} {car.variant}</h2>
               </div>
               <div className="divide-y divide-gray-50">
                 {specs.map(({ label, value }) => (
@@ -342,24 +342,24 @@ export default function VozDetail() {
               viewport={{ once: true }}
               className="bg-white rounded-lg border border-gray-100 shadow-sm p-7"
             >
-              <h2 className="text-xl font-black text-gray-900 mb-4">O tomto voze</h2>
+              <h2 className="text-xl font-black text-gray-900 mb-4">{car.name} z EU — co o voze vědět</h2>
               <div className="space-y-3 text-gray-600 leading-relaxed text-[15px]">
                 <p>
-                  <strong className="text-gray-900">{car.name} {car.variant}</strong> je dostupný přímo
-                  ze skladů evropských dealerů za výrazně nižší ceny než u českých prodejců.
-                  Vůz pochází z oficiální distribuční sítě Škoda Auto — tovární záruka platí stejně jako
-                  při nákupu v ČR.
+                  <strong className="text-gray-900">Dovoz {car.name} {car.variant} z EU</strong> za ceny
+                  výrazně nižší než u českých prodejců. Vůz pochází z oficiální distribuční sítě Škoda Auto
+                  — tovární záruka platí stejně jako při nákupu v ČR a servis zajistíte u jakéhokoli
+                  autorizovaného Škoda servisu.
                 </p>
                 <p>
                   Motor {car.variant} s výkonem {car.power} nabízí výbornou rovnováhu výkonu a
                   spotřeby ({car.consumption}).
                   {car.transmission === 'Automat'
-                    ? ' Automat zajišťuje pohodlné řízení ve městě i na dálnici.'
+                    ? ' Automatická převodovka zajišťuje pohodlné řízení ve městě i na dálnici.'
                     : ' Manuální převodovka zaručuje přímý kontakt s vozem a nižší náklady na servis.'}
                 </p>
                 <p>
-                  Celý proces nákupu zajišťujeme za vás — od výběru až po předání klíčků v ČR.
-                  Postaráme se o přepravu, přihlášení a veškerou administrativu.
+                  Celý dovoz {car.name} z EU zajišťujeme za vás — od výběru vozu až po předání klíčků
+                  v ČR. Postaráme se o přepravu, přihlášení vozidla a veškerou administrativu.
                 </p>
               </div>
 
@@ -391,7 +391,7 @@ export default function VozDetail() {
               viewport={{ once: true }}
               className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-7 text-white"
             >
-              <h2 className="text-xl font-black mb-5">Proč koupit přes nás?</h2>
+              <h2 className="text-xl font-black mb-5">Proč koupit {car.name} z EU přes nás?</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
                 {[
                   { icon: BadgePercent, title: `Ušetříte ${car.discount} %`, sub: 'oproti ČR ceně' },
@@ -553,7 +553,7 @@ export default function VozDetail() {
         {/* ── Podobné vozy ── */}
         <div className="mt-16">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-black text-gray-900">Podobné vozy</h2>
+            <h2 className="text-2xl font-black text-gray-900">Další vozy Škoda z EU</h2>
             <Link to="/vozy" className="text-[#1e7e34] font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
               Všechny vozy <ArrowRight size={15} />
             </Link>
