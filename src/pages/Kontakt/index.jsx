@@ -34,7 +34,7 @@ const contactItems = [
   {
     icon: MapPin,
     label: 'Kancelář ČR',
-    value: 'Rybná 716, 110 00 Praha 1',
+    value: 'Náměstí Republiky 1081/7, Praha 1',
     sub: 'Česká kancelář',
     href: 'https://maps.google.com/?q=Rybná+716,+110+00+Praha+1',
   },
