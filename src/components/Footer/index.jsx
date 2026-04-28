@@ -96,7 +96,7 @@ export default function Footer() {
       {/* Škoda partner bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
-          <span className="text-gray-500 text-xs">Autorizovaný partner</span>
+          <span className="text-gray-500 text-xs">Spolupracujeme s autorizovanými partnery</span>
           <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-5 w-auto opacity-60" />
         </div>
       </div>

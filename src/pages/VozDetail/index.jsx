@@ -190,7 +190,7 @@ export default function VozDetail() {
                 </div>
               ))}
               <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-4 sm:p-5 flex flex-col items-center justify-center gap-1.5">
-                <span className="text-xs text-gray-400">Autorizovaný partner</span>
+                <span className="text-xs text-gray-400 text-center leading-tight">Spolupracujeme s autorizovanými partnery</span>
                 <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-6 w-auto" />
               </div>
             </motion.div>
