@@ -5,6 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nejlevnější Škoda</title>
+
+    <!-- Google tag (gtag.js) — Consent Mode v2, výchozí stav: vše odmítnuto -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y33SCB91FT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Výchozí souhlas – zakázáno, dokud uživatel neodsouhlasí
+      gtag('consent', 'default', {
+        analytics_storage:    'denied',
+        ad_storage:           'denied',
+        ad_user_data:         'denied',
+        ad_personalization:   'denied',
+        wait_for_update:      500,
+      });
+
+      gtag('config', 'G-Y33SCB91FT', { send_page_view: false });
+    </script>
   </head>
   <body>
     <div id="root"></div>

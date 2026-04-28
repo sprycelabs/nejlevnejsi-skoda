@@ -18,6 +18,7 @@ import FAQ from './pages/FAQ'
 import Pokladna from './pages/Pokladna'
 import ScrollToTop from './components/ScrollToTop'
 import Cart from './components/Cart'
+import CookieBanner from './components/CookieBanner'
 import { CartProvider } from './context/CartContext'
 
 function HomePage() {
@@ -46,6 +47,7 @@ export default function App() {
       <CartProvider>
         <ScrollToTop />
         <Cart />
+        <CookieBanner />
         <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/vozy" element={<VozyPage />} />
