@@ -118,7 +118,8 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
 
   const carItems = items.map(({ car, qty }) => ({
-    name:  `${car.name} ${car.variant}`,
+    name:       `${car.name} ${car.variant}`,
+    internalId: car.internalId || null,
     qty,
     total: car.salePrice * qty,
   }))
@@ -253,9 +254,10 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
 
   // Car rows
   carItems.forEach((item, i) => {
-    rowHeight(ws, r, 18)
-    const bg = i % 2 ? LGRAY : WHITE
-    setCell(ws, r, 2, item.name, { size: 9, color: DARK, bg, border: bottomBorder() })
+    rowHeight(ws, r, item.internalId ? 24 : 18)
+    const bg   = i % 2 ? LGRAY : WHITE
+    const label = item.internalId ? `${item.name}\nNový osobní automobil · ${item.internalId}` : item.name
+    setCell(ws, r, 2, label, { size: 9, color: DARK, bg, border: bottomBorder(), wrap: true })
     setCell(ws, r, 3, item.qty,  { size: 9, color: DARK, bg, align: 'center', border: bottomBorder() })
     ws.mergeCells(r, 4, r, 5)
     setCell(ws, r, 4, czk(item.total), { bold: true, size: 9, color: GREEN, bg, align: 'right', border: bottomBorder() })

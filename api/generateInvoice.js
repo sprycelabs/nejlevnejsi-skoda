@@ -81,7 +81,8 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
 
     const carItems = items.map(({ car, qty }) => ({
-      name:  `${car.name} ${car.variant}`,
+      name:       `${car.name} ${car.variant}`,
+      internalId: car.internalId || null,
       qty,
       total: car.salePrice * qty,
     }))
@@ -227,7 +228,10 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     }
 
     carItems.forEach((item, i) => {
-      drawRow(item.name, 'Nový osobní automobil', item.qty, item.total, i % 2 ? LGRAY : null)
+      const sub = item.internalId
+        ? `Nový osobní automobil · ${item.internalId}`
+        : 'Nový osobní automobil'
+      drawRow(item.name, sub, item.qty, item.total, i % 2 ? LGRAY : null)
     })
     freeItems.forEach(name => {
       drawRow(name, null, totalQty, 0, '#f0faf2')
