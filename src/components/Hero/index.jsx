@@ -44,7 +44,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg"
             >
-              Zajistíme vám identický vůz za ceny výrazně nižší než u českých dealerů.
+              Dovoz Škody z EU za ceny výrazně nižší než u českých dealerů.
               Průměrná úspora <strong className="text-white">až 20 %</strong>, plná tovární záruka a kompletní servis bez starostí.
             </motion.p>
 

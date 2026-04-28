@@ -25,7 +25,7 @@ export default function CTASection() {
                   Nezávazná nabídka zdarma
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
-                  Řekněte nám, jaký vůz chcete.{' '}
+                  Řekněte nám, jakou Škodu z EU chcete.{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">
                     Zbytek je na nás.
                   </span>

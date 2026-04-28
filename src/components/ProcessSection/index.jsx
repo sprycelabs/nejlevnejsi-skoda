@@ -65,14 +65,14 @@ export default function ProcessSection() {
             className="order-1 lg:order-2"
           >
             <p className="text-[#1e7e34] font-semibold text-sm uppercase tracking-wider mb-3">
-              Vyberte si vůz
+              Dovoz Škody z EU
             </p>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-2">
-              Z nabídky nebo vlastní konfigurace.
+              Nová Škoda z EU — z nabídky nebo vlastní konfigurace.
             </h2>
 
             <p className="text-gray-600 leading-relaxed mb-4">
-              Vyberte si z naší nabídky již nakonfigurovaných vozidel, vozidlo kupte a my vám jej dodáme.
+              Vyberte si z naší nabídky vozů Škoda dovezených z EU — objednejte online a my vám auto přivezeme přímo do ČR.
             </p>
             <p className="text-gray-600 leading-relaxed mb-3">
               Nebo si na{' '}

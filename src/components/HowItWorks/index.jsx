@@ -12,7 +12,7 @@ const steps = [
     number: '02',
     icon: ClipboardCheck,
     title: 'My zajistíme vše',
-    desc: 'Analyzujeme nabídky po celé EU, vybereme optimální zdroj, zajistíme objednávku, komunikaci s dealerem, logistiku a veškerou administrativu.',
+    desc: 'Analyzujeme nabídky dealerů po celé EU, vybereme nejlevnější Škodu odpovídající vaší konfiguraci, zajistíme objednávku, komunikaci s dealerem, logistiku a veškerou administrativu.',
   },
   {
     number: '03',
@@ -43,7 +43,7 @@ export default function HowItWorks() {
             transition={{ delay: 0.1 }}
             className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-4"
           >
-            Jak to funguje?
+            Jak funguje dovoz Škody z EU?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -52,7 +52,7 @@ export default function HowItWorks() {
             transition={{ delay: 0.2 }}
             className="text-gray-500 text-lg"
           >
-            Celý nákup vyřídíme za vás – od výběru vozu po předání klíčků.
+            Celý dovoz Škody z EU vyřídíme za vás – od výběru vozu po předání klíčků v ČR.
           </motion.p>
         </div>
 
@@ -96,10 +96,10 @@ export default function HowItWorks() {
           className="mt-14 bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-6 sm:p-8 lg:p-12 text-center"
         >
           <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white mb-3">
-            Máte zájem? Nezávazně se nás zeptejte.
+            Máte zájem o Škodu z EU? Nezávazně se nás zeptejte.
           </h3>
           <p className="text-gray-300 mb-8 max-w-lg mx-auto">
-            Rádi vám připravíme konkrétní nabídku na váš vysněný vůz Škoda za cenu z EU.
+            Rádi vám připravíme konkrétní nabídku na dovoz Škody z EU — Octavia, Fabia, Kodiaq, Superb nebo jakýkoliv jiný model.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a

@@ -55,7 +55,7 @@ export default function WhyUs() {
             transition={{ delay: 0.1 }}
             className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-4"
           >
-            Transparentnost, úspora a klid
+            Proč koupit Škodu z EU přes nás?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -64,7 +64,7 @@ export default function WhyUs() {
             transition={{ delay: 0.2 }}
             className="text-gray-500 text-lg"
           >
-            Neprodáváme auta – optimalizujeme jejich pořízení.
+            Dovoz Škody z EU bez starostí — transparentně, levněji a s tovární zárukou.
           </motion.p>
         </div>
 
