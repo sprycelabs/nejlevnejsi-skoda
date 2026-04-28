@@ -23,7 +23,7 @@ const footerLinks = {
   'Společnost': [
     { label: 'O nás', href: '/o-nas' },
     { label: 'Kontakt', href: '/kontakt' },
-    { label: 'Obchodní podmínky', href: '/doc/term.docx', download: true },
+    { label: 'Obchodní podmínky', href: '/doc/terms.docx', download: true },
     { label: 'GDPR', href: '/doc/gdpr.docx', download: true },
     { label: 'Cookies', href: '/kontakt' },
   ],
