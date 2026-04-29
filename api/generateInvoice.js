@@ -105,6 +105,26 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     function rect(x, yy, w, h, color) { doc.rect(x, yy, w, h).fill(color) }
     function roundRect(x, yy, w, h, r, color) { doc.roundedRect(x, yy, w, h, r).fill(color) }
 
+    // ── PAGE BREAK HELPERS ───────────────────────────────────────────────────
+    const SAFE_BOTTOM = PH - 60  // poslední bezpečná y-souřadnice před spodní oblastí
+
+    function drawPageFooter() {
+      hline(PH - 28, ML, PW - MR, MGRAY, 0.5)
+      R(7.5, GRAY).text(
+        `${SELLER.name}  ·  Reg. číslo: ${SELLER.reg}  ·  ${SELLER.address}, ${SELLER.city}`,
+        ML, PH - 22, { width: CW - 60, lineBreak: false }
+      )
+      R(7.5, GRAY).text('nejlevnejsi-skoda.cz', 0, PH - 22, { width: PW - MR, align: 'right', lineBreak: false })
+    }
+
+    function maybeNewPage(needed) {
+      if (y + needed <= SAFE_BOTTOM) return
+      drawPageFooter()
+      doc.addPage({ size: 'A4', margin: 0 })
+      rect(0, 0, PW, 4, GREEN)
+      y = 24
+    }
+
     // ── GREEN HEADER BAR ─────────────────────────────────────────────────────
     rect(0, 0, PW, 6, GREEN)
     y = 6
@@ -211,6 +231,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
 
     function drawRow(name, sub, qty, price, bg, note) {
       const rowH = note ? 35 : (sub ? 29 : 22)
+      maybeNewPage(rowH)
       if (bg) rect(ML, y, CW, rowH, bg)
       hline(y + rowH, ML, PW - MR, MGRAY, 0.4)
 
@@ -236,6 +257,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
 
     // Sleva — zobrazit mezisoučet, slevu a cenu po slevě
     if (discount && discount.amount > 0) {
+      maybeNewPage(60)  // 3 řádky × ~20 px
       const carSubtotal = carItems.reduce((s, it) => s + it.total, 0)
       const discountedSubtotal = carSubtotal - discount.amount
       const discountLabel = discount.type === 'percent'
@@ -269,6 +291,9 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     })
 
     y += 18
+
+    // Spodní blok: předmět (72) + celkem (54) + platba (122) + právní (64) = 312 px
+    maybeNewPage(312)
 
     // ── PŘEDMĚT PLNĚNÍ ────────────────────────────────────────────────────────
     const predmetH = 56
