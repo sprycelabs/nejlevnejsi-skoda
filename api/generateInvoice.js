@@ -79,10 +79,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
 
     const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
-    const baseProforma = PROFORMA_DEPOSIT * totalQty
-    const PROFORMA_AMOUNT = discount && discount.amount > 0
-      ? Math.max(baseProforma - discount.amount, 0)
-      : baseProforma
+    const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
 
     const carItems = items.map(({ car, qty }) => ({
       name:       `${car.name} ${car.variant}`,
