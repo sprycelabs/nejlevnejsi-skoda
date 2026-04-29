@@ -1,8 +1,4 @@
-export const DISCOUNT_CODES = [
-  { code: 'SKODA10',   type: 'percent', value: 10 },
-  { code: 'VITEJTE',   type: 'percent', value: 5  },
-  { code: 'SLEVA5000', type: 'fixed',   value: 5000 },
-]
+export const DISCOUNT_CODES = []
 
 /**
  * Ověří slevový kód a vrátí objekt slevy, nebo null pokud kód neexistuje.
