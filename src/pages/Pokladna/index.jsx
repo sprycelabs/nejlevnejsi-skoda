@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2 } from 'lucide-react'
+import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 import { useCart } from '../../context/CartContext'
 import { formatPrice } from '../../data/cars'
+import { applyDiscount } from '../../data/discountCodes'
 
 const EMPTY_FYZICKA = {
   firstName: '', lastName: '', email: '', phone: '',
@@ -75,6 +76,32 @@ export default function Pokladna() {
   const [deliveryChecked, setDeliveryChecked] = useState(false)
   const [sidebarErrors, setSidebarErrors] = useState({})
   const [attachedFiles, setAttachedFiles] = useState([])
+  const [discountInput, setDiscountInput] = useState('')
+  const [appliedDiscount, setAppliedDiscount] = useState(null)
+  const [discountError, setDiscountError] = useState('')
+
+  const discountedTotal = appliedDiscount ? cartTotal - appliedDiscount.amount : cartTotal
+
+  function handleApplyDiscount() {
+    if (!discountInput.trim()) {
+      setDiscountError('Zadejte slevový kód')
+      return
+    }
+    const result = applyDiscount(discountInput, cartTotal)
+    if (!result) {
+      setDiscountError('Neplatný slevový kód')
+      setAppliedDiscount(null)
+    } else {
+      setAppliedDiscount(result)
+      setDiscountError('')
+    }
+  }
+
+  function handleRemoveDiscount() {
+    setAppliedDiscount(null)
+    setDiscountInput('')
+    setDiscountError('')
+  }
 
   function switchType(t) {
     setType(t)
@@ -137,7 +164,7 @@ export default function Pokladna() {
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ form, items, total: cartTotal, fileAttachments }),
+        body: JSON.stringify({ form, items, total: discountedTotal, discount: appliedDiscount, fileAttachments }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Chyba serveru')
@@ -438,10 +465,64 @@ export default function Pokladna() {
                     {sidebarErrors.delivery && <p className="text-red-500 text-xs mt-1 flex items-center gap-1"><AlertCircle size={11} /> Vyberte způsob dopravy</p>}
                   </div>
 
+                  {/* Slevový kód */}
+                  <div className="mb-4">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Slevový kód</p>
+                    {appliedDiscount ? (
+                      <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-md px-3 py-2.5">
+                        <div className="flex items-center gap-2">
+                          <Tag size={14} className="text-[#1e7e34]" />
+                          <span className="text-sm font-bold text-[#1e7e34]">{appliedDiscount.code}</span>
+                          <span className="text-xs text-green-700 bg-green-100 rounded px-1.5 py-0.5">
+                            {appliedDiscount.type === 'percent' ? `-${appliedDiscount.value} %` : `-${formatPrice(appliedDiscount.value)}`}
+                          </span>
+                        </div>
+                        <button type="button" onClick={handleRemoveDiscount} className="text-gray-400 hover:text-red-400 transition-colors">
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={discountInput}
+                          onChange={e => { setDiscountInput(e.target.value.toUpperCase()); setDiscountError('') }}
+                          onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleApplyDiscount())}
+                          placeholder="Zadejte kód..."
+                          className={`flex-1 border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e7e34]/30 focus:border-[#1e7e34] transition-colors ${discountError ? 'border-red-300 bg-red-50' : 'border-gray-200'}`}
+                        />
+                        <button
+                          type="button"
+                          onClick={handleApplyDiscount}
+                          className="px-3 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-bold rounded-md transition-colors whitespace-nowrap"
+                        >
+                          Použít
+                        </button>
+                      </div>
+                    )}
+                    {discountError && (
+                      <p className="flex items-center gap-1 text-red-500 text-xs mt-1.5">
+                        <AlertCircle size={11} /> {discountError}
+                      </p>
+                    )}
+                  </div>
+
                   <div className="border-t border-gray-100 pt-4 mb-6">
+                    {appliedDiscount && (
+                      <>
+                        <div className="flex justify-between items-center mb-1.5">
+                          <span className="text-gray-400 text-sm">Cena před slevou</span>
+                          <span className="text-gray-400 text-sm line-through">{formatPrice(cartTotal)}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-3">
+                          <span className="text-green-700 text-sm font-semibold">Sleva ({appliedDiscount.code})</span>
+                          <span className="text-green-700 text-sm font-bold">−{formatPrice(appliedDiscount.amount)}</span>
+                        </div>
+                      </>
+                    )}
                     <div className="flex justify-between items-center">
                       <span className="text-gray-500 text-sm">Celkem vč. DPH</span>
-                      <span className="font-black text-xl text-gray-900">{formatPrice(cartTotal)}</span>
+                      <span className="font-black text-xl text-gray-900">{formatPrice(discountedTotal)}</span>
                     </div>
                   </div>
 

@@ -58,7 +58,7 @@ async function generateOrderNumber() {
 
 const PROFORMA_DEPOSIT = 200000
 
-function customerEmail(form, items, total, orderNumber) {
+function customerEmail(form, items, total, orderNumber, discount) {
   const isCompany   = !!form.companyName
   const name        = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
   const totalQty    = items.reduce((sum, { qty }) => sum + qty, 0)
@@ -117,6 +117,11 @@ function customerEmail(form, items, total, orderNumber) {
             </thead>
             <tbody>${itemsRows}</tbody>
             <tfoot>
+              ${discount && discount.amount > 0 ? `
+              <tr style="background:#f0faf2;">
+                <td colspan="2" style="padding:10px 16px;font-size:13px;color:#1e7e34;font-weight:700;">Sleva (kód: ${discount.code})</td>
+                <td style="padding:10px 16px;text-align:right;font-size:13px;font-weight:700;color:#dc2626;">−${formatPrice(discount.amount)}</td>
+              </tr>` : ''}
               <tr style="background:#f9fafb;">
                 <td colspan="2" style="padding:14px 16px;font-weight:700;color:#111827;">Celkem vč. DPH</td>
                 <td style="padding:14px 16px;text-align:right;font-size:18px;font-weight:900;color:#1e7e34;">${formatPrice(total)}</td>
@@ -169,7 +174,7 @@ function customerEmail(form, items, total, orderNumber) {
 </html>`
 }
 
-function clientNotificationEmail(form, items, total, orderNumber, attachmentCount) {
+function clientNotificationEmail(form, items, total, orderNumber, attachmentCount, discount) {
   const isCompany = !!form.companyName
   const name = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
   const contactPerson = isCompany ? form.contactPerson : `${form.firstName} ${form.lastName}`
@@ -214,6 +219,11 @@ function clientNotificationEmail(form, items, total, orderNumber, attachmentCoun
               <td style="padding:8px 0;font-size:13px;color:#374151;">${car.name} ${car.variant} <span style="color:#9ca3af;">(${qty}×)</span></td>
               <td style="padding:8px 0;font-size:13px;font-weight:700;color:#1e7e34;text-align:right;">${formatPrice(car.salePrice * qty)}</td>
             </tr>`).join('')}
+            ${discount && discount.amount > 0 ? `
+            <tr>
+              <td style="padding:8px 0;font-size:13px;color:#1e7e34;font-weight:700;">Sleva (kód: ${discount.code})</td>
+              <td style="padding:8px 0;font-size:13px;font-weight:700;color:#dc2626;text-align:right;">−${formatPrice(discount.amount)}</td>
+            </tr>` : ''}
             <tr>
               <td style="padding:12px 0 0;font-weight:900;font-size:15px;border-top:2px solid #f0f0f0;">Celkem</td>
               <td style="padding:12px 0 0;font-weight:900;font-size:15px;color:#1e7e34;text-align:right;border-top:2px solid #f0f0f0;">${formatPrice(total)}</td>
@@ -233,7 +243,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { form, items, total, fileAttachments = [] } = req.body
+  const { form, items, total, discount, fileAttachments = [] } = req.body
 
   if (!form || !items || !total) {
     return res.status(400).json({ error: 'Missing data' })
@@ -245,7 +255,7 @@ export default async function handler(req, res) {
     // Vygeneruj PDF fakturu
     const logoBase64     = loadLogoBase64()
     const variableSymbol = generateVariableSymbol(orderNumber)
-    const pdfBuffer = await generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol })
+    const pdfBuffer = await generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol, discount })
     const pdfBase64 = pdfBuffer.toString('base64')
     const invoiceFilename = `faktura-${orderNumber}.pdf`
 
@@ -279,7 +289,7 @@ export default async function handler(req, res) {
       from: `Nejlevnější Škoda <${FROM}>`,
       to: form.email,
       subject: `Vaše objednávka ${orderNumber} — proforma faktura v příloze`,
-      html: customerEmail(form, items, total, orderNumber),
+      html: customerEmail(form, items, total, orderNumber, discount),
       attachments: [attachment],
     })
 
@@ -288,7 +298,7 @@ export default async function handler(req, res) {
       from: `Nejlevnější Škoda <${FROM}>`,
       to: CLIENT_EMAIL,
       subject: `Nová objednávka ${orderNumber} — ${form.companyName || `${form.firstName} ${form.lastName}`}`,
-      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length),
+      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount),
       attachments: [attachment, ...customerFileAttachments],
     })
 

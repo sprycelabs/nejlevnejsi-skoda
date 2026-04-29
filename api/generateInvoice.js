@@ -46,7 +46,7 @@ function addDays(date, n) {
   return d
 }
 
-export async function generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol }) {
+export async function generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol, discount }) {
   return new Promise((resolve, reject) => {
     const fontRegular = path.join(__dirname, 'fonts', 'Calibri-Regular.ttf')
     const fontBold    = path.join(__dirname, 'fonts', 'Calibri-Bold.ttf')
@@ -79,7 +79,10 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
 
     const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
-    const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
+    const baseProforma = PROFORMA_DEPOSIT * totalQty
+    const PROFORMA_AMOUNT = discount && discount.amount > 0
+      ? Math.max(baseProforma - discount.amount, 0)
+      : baseProforma
 
     const carItems = items.map(({ car, qty }) => ({
       name:       `${car.name} ${car.variant}`,
@@ -234,6 +237,37 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
         : 'Nový osobní automobil'
       drawRow(item.name, sub, item.qty, item.total, i % 2 ? LGRAY : null)
     })
+
+    // Sleva — zobrazit mezisoučet, slevu a cenu po slevě
+    if (discount && discount.amount > 0) {
+      const carSubtotal = carItems.reduce((s, it) => s + it.total, 0)
+      const discountedSubtotal = carSubtotal - discount.amount
+      const discountLabel = discount.type === 'percent'
+        ? `Sleva ${discount.value} % (kód: ${discount.code})`
+        : `Sleva (kód: ${discount.code})`
+
+      const rowH = 20
+      // Mezisoučet
+      hline(y, ML, PW - MR, MGRAY, 0.4)
+      R(8, GRAY).text('Cena před slevou:', ML + 8, y + 6, { width: cDesc - 16, lineBreak: false })
+      R(8.5, GRAY).text(czk(carSubtotal), xPrice, y + 6, { width: pWeff, align: 'right', lineBreak: false })
+      y += rowH
+
+      // Sleva
+      rect(ML, y, CW, rowH, '#f0faf2')
+      hline(y + rowH, ML, PW - MR, MGRAY, 0.4)
+      B(8.5, GREEN).text(discountLabel, ML + 8, y + 6, { width: cDesc - 16, lineBreak: false })
+      B(8.5, '#dc2626').text(`− ${czk(discount.amount)}`, xPrice, y + 6, { width: pWeff, align: 'right', lineBreak: false })
+      y += rowH
+
+      // Cena po slevě
+      rect(ML, y, CW, rowH, '#f0faf2')
+      hline(y + rowH, ML, PW - MR, '#c6e6cc', 0.8)
+      B(9, DARK).text('Cena po slevě:', ML + 8, y + 6, { width: cDesc - 16, lineBreak: false })
+      B(10, GREEN).text(czk(discountedSubtotal), xPrice, y + 6, { width: pWeff, align: 'right', lineBreak: false })
+      y += rowH
+    }
+
     freeItems.forEach(name => {
       drawRow(name, null, totalQty, 0, '#f0faf2')
     })

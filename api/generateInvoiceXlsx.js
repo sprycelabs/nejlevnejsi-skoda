@@ -89,7 +89,7 @@ const bottomBorder = (color = MGRAY) => ({
   bottom: { style: 'thin', color: { argb: color } },
 })
 
-export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64, variableSymbol }) {
+export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64, variableSymbol, discount }) {
   const wb = new ExcelJS.Workbook()
   wb.creator  = 'Nejlevnejsi-Skoda.cz'
   wb.created  = new Date()
@@ -116,7 +116,10 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
 
   const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
-  const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
+  const baseProforma = PROFORMA_DEPOSIT * totalQty
+  const PROFORMA_AMOUNT = discount && discount.amount > 0
+    ? Math.max(baseProforma - discount.amount, 0)
+    : baseProforma
 
   const carItems = items.map(({ car, qty }) => ({
     name:       `${car.name} ${car.variant}`,
@@ -264,6 +267,39 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
     setCell(ws, r, 4, czk(item.total), { bold: true, size: 9, color: GREEN, bg, align: 'right', border: bottomBorder() })
     r++
   })
+
+  // Sleva — mezisoučet, sleva, cena po slevě
+  if (discount && discount.amount > 0) {
+    const carSubtotal = carItems.reduce((s, it) => s + it.total, 0)
+    const discountedSubtotal = carSubtotal - discount.amount
+    const discountLabel = discount.type === 'percent'
+      ? `Sleva ${discount.value} % (kód: ${discount.code})`
+      : `Sleva (kód: ${discount.code})`
+
+    // Mezisoučet
+    rowHeight(ws, r, 16)
+    setCell(ws, r, 2, 'Cena před slevou:', { size: 8.5, color: GRAY, border: bottomBorder() })
+    setCell(ws, r, 3, '',                  { size: 8.5, color: GRAY, bg: WHITE, border: bottomBorder() })
+    ws.mergeCells(r, 4, r, 5)
+    setCell(ws, r, 4, czk(carSubtotal),   { size: 8.5, color: GRAY, align: 'right', border: bottomBorder() })
+    r++
+
+    // Sleva
+    rowHeight(ws, r, 16)
+    setCell(ws, r, 2, discountLabel,         { bold: true, size: 8.5, color: GREEN, bg: GREEN_LIGHT, border: bottomBorder(GREEN_BORDER) })
+    setCell(ws, r, 3, '',                    { size: 8.5, color: GREEN, bg: GREEN_LIGHT, border: bottomBorder(GREEN_BORDER) })
+    ws.mergeCells(r, 4, r, 5)
+    setCell(ws, r, 4, `− ${czk(discount.amount)}`, { bold: true, size: 8.5, color: 'FFDC2626', bg: GREEN_LIGHT, align: 'right', border: bottomBorder(GREEN_BORDER) })
+    r++
+
+    // Cena po slevě
+    rowHeight(ws, r, 18)
+    setCell(ws, r, 2, 'Cena po slevě:',     { bold: true, size: 9.5, color: DARK, bg: GREEN_LIGHT, border: bottomBorder(GREEN_BORDER) })
+    setCell(ws, r, 3, '',                    { size: 9.5, color: DARK, bg: GREEN_LIGHT, border: bottomBorder(GREEN_BORDER) })
+    ws.mergeCells(r, 4, r, 5)
+    setCell(ws, r, 4, czk(discountedSubtotal), { bold: true, size: 10, color: GREEN, bg: GREEN_LIGHT, align: 'right', border: bottomBorder(GREEN_BORDER) })
+    r++
+  }
 
   // Free items
   freeItems.forEach(name => {
