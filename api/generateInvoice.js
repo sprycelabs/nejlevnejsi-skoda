@@ -209,30 +209,29 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     doc.text('Cena vč. DPH',  xPrice, y + 8, { width: pWeff,      align: 'right',  lineBreak: false })
     y += thH
 
-    function drawRow(name, sub, qty, price, bg) {
-      const rowH = sub ? 29 : 22
+    function drawRow(name, sub, qty, price, bg, note) {
+      const rowH = note ? 35 : (sub ? 29 : 22)
       if (bg) rect(ML, y, CW, rowH, bg)
       hline(y + rowH, ML, PW - MR, MGRAY, 0.4)
 
-      R(9, DARK).text(name, ML + 8, y + (sub ? 6 : 7), { width: cDesc - 16, lineBreak: false })
-      if (sub) R(7.5, GRAY).text(sub, ML + 8, y + 18,  { width: cDesc - 16, lineBreak: false })
+      R(9, DARK).text(name, ML + 8, y + (note ? 5 : sub ? 6 : 7), { width: cDesc - 16, lineBreak: false })
+      if (sub) R(7.5, GRAY).text(sub, ML + 8, y + (note ? 16 : 18), { width: cDesc - 16, lineBreak: false })
+      if (note) R(6.5, '#9ca3af').text(note, ML + 8, y + 27, { width: cDesc - 16, lineBreak: false })
 
-      R(9, DARK).text(String(qty), xQty, y + (sub ? 10 : 7), { width: cQty, align: 'center', lineBreak: false })
+      const midY = note ? 13 : (sub ? 10 : 7)
+      R(9, DARK).text(String(qty), xQty, y + midY, { width: cQty, align: 'center', lineBreak: false })
 
       if (price > 0) {
-        B(9, GREEN).text(czk(price), xPrice, y + (sub ? 10 : 7), { width: pWeff, align: 'right', lineBreak: false })
+        B(9, GREEN).text(czk(price), xPrice, y + midY, { width: pWeff, align: 'right', lineBreak: false })
       } else {
-        R(9, GRAY).text('ZDARMA', xPrice, y + (sub ? 10 : 7), { width: pWeff, align: 'right', lineBreak: false })
+        R(9, GRAY).text('ZDARMA', xPrice, y + midY, { width: pWeff, align: 'right', lineBreak: false })
       }
 
       y += rowH
     }
 
     carItems.forEach((item, i) => {
-      const sub = item.internalId
-        ? `Nový osobní automobil · ${item.internalId}`
-        : 'Nový osobní automobil'
-      drawRow(item.name, sub, item.qty, item.total, i % 2 ? LGRAY : null)
+      drawRow(item.name, 'Nový osobní automobil', item.qty, item.total, i % 2 ? LGRAY : null, item.internalId || null)
     })
 
     // Sleva — zobrazit mezisoučet, slevu a cenu po slevě

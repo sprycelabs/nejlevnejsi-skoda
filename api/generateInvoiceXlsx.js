@@ -255,10 +255,30 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
 
   // Car rows
   carItems.forEach((item, i) => {
-    rowHeight(ws, r, item.internalId ? 24 : 18)
-    const bg   = i % 2 ? LGRAY : WHITE
-    const label = item.internalId ? `${item.name}\nNový osobní automobil · ${item.internalId}` : item.name
-    setCell(ws, r, 2, label, { size: 9, color: DARK, bg, border: bottomBorder(), wrap: true })
+    rowHeight(ws, r, item.internalId ? 32 : 18)
+    const bg = i % 2 ? LGRAY : WHITE
+
+    // Label cell — rich text so internalId renders tiny + light
+    const labelCell = ws.getCell(r, 2)
+    labelCell.fill      = { type: 'pattern', pattern: 'solid', fgColor: { argb: bg } }
+    labelCell.border    = bottomBorder()
+    labelCell.alignment = { vertical: 'middle', wrapText: true }
+    if (item.internalId) {
+      labelCell.value = {
+        richText: [
+          { text: item.name + '\n', font: { name: 'Calibri', size: 9, bold: false, color: { argb: DARK } } },
+          { text: 'Nový osobní automobil', font: { name: 'Calibri', size: 7.5, bold: false, color: { argb: GRAY } } },
+          { text: '  ' + item.internalId, font: { name: 'Calibri', size: 7, bold: false, color: { argb: 'FF9CA3AF' } } },
+        ],
+      }
+    } else {
+      labelCell.value = {
+        richText: [
+          { text: item.name + '\nNový osobní automobil', font: { name: 'Calibri', size: 9, bold: false, color: { argb: DARK } } },
+        ],
+      }
+    }
+
     setCell(ws, r, 3, item.qty,  { size: 9, color: DARK, bg, align: 'center', border: bottomBorder() })
     ws.mergeCells(r, 4, r, 5)
     setCell(ws, r, 4, czk(item.total), { bold: true, size: 9, color: GREEN, bg, align: 'right', border: bottomBorder() })
