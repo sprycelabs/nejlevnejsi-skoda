@@ -73,14 +73,17 @@ export default function AkceKveten() {
             >
               <div className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-500/40 rounded-full px-4 py-1.5 mb-6">
                 <Tag size={13} className="text-orange-400" />
-                <span className="text-orange-400 text-sm font-bold uppercase tracking-wider">Akce Květen</span>
+                <span className="text-orange-400 text-sm font-bold uppercase tracking-wider">Akce Květen · zbývá jen 10 míst!</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight mb-3">
-                Sleva <span className="text-orange-400">10 000 Kč</span><br />na první objednávku
+                Ušetřete <span className="text-orange-400">10 000 Kč</span><br />na první objednávku
               </h1>
-              <p className="text-gray-400 mb-10">
-                Pouze pro prvních 10 zákazníků. Zadejte e-mail a my vám pošleme slevový kód.
+              <p className="text-gray-300 text-lg mb-2">
+                Jen prvních <strong className="text-white">10 zákazníků</strong> v květnu získá slevový kód.
+              </p>
+              <p className="text-gray-500 text-sm mb-10">
+                Místa se rychle plní — zadejte e-mail a kód vám pošleme obratem.
               </p>
 
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -98,7 +101,7 @@ export default function AkceKveten() {
                   className="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 disabled:opacity-60 text-white font-black px-7 py-3.5 rounded-md transition-colors whitespace-nowrap"
                 >
                   {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-                  {loading ? 'Odesílám…' : 'Chci kód'}
+                  {loading ? 'Odesílám…' : 'Chci kód, dokud zbývá!'}
                 </button>
               </form>
 

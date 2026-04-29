@@ -377,17 +377,17 @@ export default function VozyPage() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč</span>
-                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">prvních 10 zákazníků</span>
+                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč na první objednávku!</span>
+                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">jen 10 míst!</span>
                   </div>
-                  <p className="text-orange-100 text-xs">Napište nám a získejte slevový kód na první objednávku.</p>
+                  <p className="text-orange-100 text-xs">Místa se plní — zajistěte si kód dříve, než bude pozdě.</p>
                 </div>
               </div>
               <a
                 href="/akce-kveten"
                 className="flex items-center gap-1.5 bg-white text-orange-600 font-bold text-sm px-4 py-2 rounded-md hover:bg-orange-50 transition-colors shrink-0"
               >
-                Napsat o kód
+                Chci kód, dokud zbývá
                 <ArrowRight size={14} />
               </a>
             </div>
