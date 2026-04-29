@@ -224,7 +224,7 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
 
   // ── PLATEBNÍ STRIP (3 boxy) ───────────────────────────────────────────────
   const stripData = [
-    { label: 'Číslo účtu:',        value: BANK.account },
+    { label: 'IBAN:',               value: BANK.account },
     { label: 'Datum splatnosti:',  value: formatDate(dueDate) },
     { label: 'Variabilní symbol:', value: vs },
   ]
