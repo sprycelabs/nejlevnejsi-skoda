@@ -1,4 +1,6 @@
-export const DISCOUNT_CODES = []
+export const DISCOUNT_CODES = [
+  { code: 'KVETEN10', type: 'fixed', value: 10000 },
+]
 
 /**
  * Ověří slevový kód a vrátí objekt slevy, nebo null pokud kód neexistuje.
