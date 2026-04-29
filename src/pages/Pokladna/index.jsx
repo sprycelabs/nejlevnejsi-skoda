@@ -80,7 +80,13 @@ export default function Pokladna() {
   const [appliedDiscount, setAppliedDiscount] = useState(null)
   const [discountError, setDiscountError] = useState('')
 
-  const discountedTotal = appliedDiscount ? cartTotal - appliedDiscount.amount : cartTotal
+  // Přepočítává se vždy z aktuálního cartTotal — reaguje na změny košíku
+  const discountAmount = appliedDiscount
+    ? appliedDiscount.type === 'percent'
+      ? Math.round(cartTotal * appliedDiscount.value / 100)
+      : Math.min(appliedDiscount.value, cartTotal)
+    : 0
+  const discountedTotal = cartTotal - discountAmount
 
   function handleApplyDiscount() {
     if (!discountInput.trim()) {
@@ -164,7 +170,10 @@ export default function Pokladna() {
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ form, items, total: discountedTotal, discount: appliedDiscount, fileAttachments }),
+        body: JSON.stringify({
+          form, items, total: discountedTotal, fileAttachments,
+          discount: appliedDiscount ? { ...appliedDiscount, amount: discountAmount } : null,
+        }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Chyba serveru')
@@ -516,7 +525,7 @@ export default function Pokladna() {
                         </div>
                         <div className="flex justify-between items-center mb-3">
                           <span className="text-green-700 text-sm font-semibold">Sleva ({appliedDiscount.code})</span>
-                          <span className="text-green-700 text-sm font-bold">−{formatPrice(appliedDiscount.amount)}</span>
+                          <span className="text-green-700 text-sm font-bold">−{formatPrice(discountAmount)}</span>
                         </div>
                       </>
                     )}
