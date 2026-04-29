@@ -43,6 +43,7 @@ export default function Navbar() {
           >
             <Phone size={13} />
             +420 733 455 966
+            <span className="hidden sm:inline text-green-300">· Po–Pá 10:00–16:00</span>
           </a>
         </div>
       </div>

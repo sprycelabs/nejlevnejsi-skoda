@@ -21,7 +21,7 @@ const contactItems = [
     icon: Phone,
     label: 'Telefon',
     value: '+420 733 455 966',
-    sub: 'Po–Pá 8:00–18:00',
+    sub: 'Po–Pá 10:00–16:00',
     href: 'tel:+420733455966',
   },
   {
@@ -449,7 +449,7 @@ export default function Kontakt() {
                   </a>
                 </div>
                 <div className="mt-4 pt-4 border-t border-white/10 text-xs text-gray-400">
-                  Dostupní Po–Pá 8:00–18:00 a So 9:00–13:00
+                  Dostupní Po–Pá 10:00–16:00
                 </div>
               </div>
 
