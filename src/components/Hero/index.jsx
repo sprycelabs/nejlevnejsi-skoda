@@ -101,7 +101,7 @@ export default function Hero() {
           >
             {/* Akce Květen badge */}
             <motion.a
-              href="/kontakt"
+              href="/akce-kveten"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}

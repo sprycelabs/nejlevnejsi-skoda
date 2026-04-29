@@ -384,7 +384,7 @@ export default function VozyPage() {
                 </div>
               </div>
               <a
-                href="/kontakt"
+                href="/akce-kveten"
                 className="flex items-center gap-1.5 bg-white text-orange-600 font-bold text-sm px-4 py-2 rounded-md hover:bg-orange-50 transition-colors shrink-0"
               >
                 Napsat o kód

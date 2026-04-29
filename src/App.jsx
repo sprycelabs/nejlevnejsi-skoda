@@ -19,6 +19,7 @@ import ONas from './pages/ONas'
 import Kontakt from './pages/Kontakt'
 import FAQ from './pages/FAQ'
 import Pokladna from './pages/Pokladna'
+import AkceKveten from './pages/AkceKveten'
 import ScrollToTop from './components/ScrollToTop'
 import Cart from './components/Cart'
 import CookieBanner from './components/CookieBanner'
@@ -91,6 +92,7 @@ export default function App() {
         <Route path="/kontakt" element={<Kontakt />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/pokladna" element={<Pokladna />} />
+        <Route path="/akce-kveten" element={<AkceKveten />} />
         </Routes>
       </CartProvider>
     </BrowserRouter>
