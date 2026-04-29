@@ -369,6 +369,29 @@ export default function VozyPage() {
               </div>
             )}
 
+            {/* Akce Květen banner */}
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg px-5 py-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
+                  <Flame size={18} className="text-white" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč</span>
+                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">prvních 10 zákazníků</span>
+                  </div>
+                  <p className="text-orange-100 text-xs">Napište nám a získejte slevový kód na první objednávku.</p>
+                </div>
+              </div>
+              <a
+                href="/kontakt"
+                className="flex items-center gap-1.5 bg-white text-orange-600 font-bold text-sm px-4 py-2 rounded-md hover:bg-orange-50 transition-colors shrink-0"
+              >
+                Napsat o kód
+                <ArrowRight size={14} />
+              </a>
+            </div>
+
             {/* Grid */}
             <AnimatePresence mode="wait">
               {filtered.length > 0 ? (

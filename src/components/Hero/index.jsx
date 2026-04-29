@@ -20,7 +20,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-28 sm:pb-32 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-16 sm:pb-32 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
           {/* Left — text */}
@@ -85,9 +85,9 @@ export default function Hero() {
                   {text}
                 </div>
               ))}
-              <div className="flex items-center gap-2 border-l border-white/10 pl-4 sm:pl-6">
-                <span className="text-gray-500 text-xs">Spolupracujeme s autorizovanými partnery</span>
-                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-11 w-auto opacity-80" />
+              <div className="flex items-center gap-3 border-l border-white/10 pl-4 sm:pl-6">
+                <span className="text-gray-400 text-sm">Spolupracujeme s autorizovanými partnery</span>
+                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-16 w-auto opacity-90" />
               </div>
             </motion.div>
           </div>
@@ -97,8 +97,29 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="flex items-end justify-center lg:justify-end"
+            className="relative flex items-end justify-center lg:justify-end"
           >
+            {/* Akce Květen badge */}
+            <motion.a
+              href="/kontakt"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="hidden lg:block absolute top-0 right-0 z-10 group"
+            >
+              <div className="bg-orange-500 hover:bg-orange-400 transition-colors rounded-xl px-4 py-3 shadow-xl shadow-orange-900/40 text-center">
+                <div className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Akce Květen</div>
+                <div className="text-white text-2xl font-black leading-none">−10 000 Kč</div>
+                <div className="text-orange-100 text-xs mt-1 font-medium">na první objednávku</div>
+                <div className="mt-2 pt-2 border-t border-white/20 text-orange-100 text-xs">
+                  Pouze prvních <strong className="text-white">10 zákazníků</strong>
+                </div>
+                <div className="mt-2 bg-white/15 group-hover:bg-white/25 transition-colors rounded-md px-3 py-1.5 text-white text-xs font-bold">
+                  Napsat o slevový kód →
+                </div>
+              </div>
+            </motion.a>
+
             <img
               src="/hero-car.webp"
               alt="Škoda"
@@ -110,6 +131,20 @@ export default function Hero() {
           </motion.div>
 
         </div>
+      </div>
+
+      {/* Akce Květen — mobile banner pod gridem */}
+      <div className="lg:hidden relative z-10 px-4 pb-6">
+        <a href="/kontakt" className="group flex items-center justify-between gap-4 bg-orange-500 hover:bg-orange-400 transition-colors rounded-xl px-5 py-4 shadow-xl shadow-orange-900/40">
+          <div>
+            <div className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Akce Květen</div>
+            <div className="text-white text-2xl font-black leading-none">−10 000 Kč</div>
+            <div className="text-orange-100 text-xs mt-1">na první objednávku · prvních <strong className="text-white">10 zákazníků</strong></div>
+          </div>
+          <div className="bg-white/20 group-hover:bg-white/30 transition-colors rounded-lg px-4 py-2.5 text-white text-sm font-bold shrink-0 whitespace-nowrap">
+            Napsat o kód →
+          </div>
+        </a>
       </div>
 
       {/* Bottom wave */}
