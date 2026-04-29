@@ -182,12 +182,8 @@ export default function Pokladna() {
       setSubmitted(true)
       window.scrollTo({ top: 0, behavior: 'smooth' })
       // Google Ads konverze — odeslání objednávky
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'conversion', {
-          send_to: 'AW-18126261669/Q1zaCOCFtaQcEKWbo8ND',
-          value: discountedTotal,
-          currency: 'CZK',
-        })
+      if (typeof window.gtag_report_conversion === 'function') {
+        window.gtag_report_conversion(discountedTotal)
       }
     } catch (err) {
       setSubmitError('Nepodařilo se odeslat objednávku. Zkuste to prosím znovu nebo nás kontaktujte.')

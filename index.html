@@ -48,6 +48,16 @@
 
       gtag('config', 'G-Y33SCB91FT', { send_page_view: false });
       gtag('config', 'AW-18126261669');
+
+      // Google Ads — konverzní funkce (click method)
+      function gtag_report_conversion(value) {
+        gtag('event', 'conversion', {
+          send_to: 'AW-18126261669/Q1zaCOCFtaQcEKWbo8ND',
+          value: value || 1.0,
+          currency: 'CZK',
+        });
+        return false;
+      }
     </script>
   </head>
   <body>
