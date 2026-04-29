@@ -516,6 +516,16 @@ export default function Pokladna() {
                     )}
                   </div>
 
+                  {/* Partnerský kód */}
+                  <div className="mb-4">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Partnerský kód</p>
+                    <input
+                      type="text"
+                      placeholder="Zadejte kód..."
+                      className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e7e34]/30 focus:border-[#1e7e34] transition-colors"
+                    />
+                  </div>
+
                   <div className="border-t border-gray-100 pt-4 mb-6">
                     {appliedDiscount && (
                       <>
