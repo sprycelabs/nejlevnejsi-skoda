@@ -43,7 +43,6 @@ export default function VozDetail() {
     { label: 'Výkon', value: car.power },
     { label: 'Rok výroby', value: String(car.year) },
     { label: 'Barva', value: car.color },
-    { label: 'Pohon', value: car.variant.includes('4x4') ? '4×4' : 'FWD' },
     { label: 'Stav', value: 'Nové' },
   ]
 
