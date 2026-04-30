@@ -171,7 +171,7 @@ export default function VozDetail() {
               <img
                 src={car.image}
                 alt={`${car.name} ${car.variant}`}
-                className="w-full max-w-sm lg:max-w-2xl lg:translate-y-6 pb-4 lg:pb-0"
+                className="w-full max-w-xs sm:max-w-sm lg:max-w-2xl scale-125 lg:scale-125 lg:translate-y-6 pb-4 lg:pb-0"
                 style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.7))' }}
               />
               {/* discount badge */}
@@ -388,25 +388,51 @@ export default function VozDetail() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-lg p-7 text-white"
+              className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-xl p-7 sm:p-10 text-white"
             >
-              <h2 className="text-xl font-black mb-5">Proč koupit {car.name} z EU přes nás?</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+              <p className="text-[#86efac] font-semibold text-sm uppercase tracking-wider mb-2">Proč nakoupit přes nás</p>
+              <h2 className="text-2xl sm:text-3xl font-black mb-2">Proč koupit {car.name} z EU přes nás?</h2>
+              <p className="text-gray-400 text-sm mb-8">Zajistíme vám nejlepší cenu na trhu, vše vyřídíme za vás — od výběru až po předání klíčků.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {[
-                  { icon: BadgePercent, title: `Ušetříte ${car.discount} %`, sub: 'oproti ČR ceně' },
-                  { icon: ShieldCheck, title: 'Tovární záruka', sub: 'stejná jako u CZ dealera' },
-                  { icon: Star, title: 'Nákup na klíč', sub: 'Dovoz, přihlášení, předání' },
+                  { icon: BadgePercent, title: `Ušetříte ${formatPrice(savings)}`, sub: `Oproti české ceně ${formatPrice(car.originalPrice)} — to je ${car.discount} % rozdíl.` },
+                  { icon: ShieldCheck, title: 'Tovární záruka beze změny', sub: 'Platí stejně jako při nákupu v ČR. Servis u každého autorizovaného Škoda servisu.' },
+                  { icon: Truck, title: 'Dovoz a registrace zdarma', sub: 'Přeprava do ČR, přihlášení vozidla a předávací protokol — vše v ceně.' },
+                  { icon: Star, title: 'Nákup na klíč', sub: 'Vy si vyberete, my zařídíme zbytek. Bez jazykové bariéry, bez stresu.' },
                 ].map(({ icon: Icon, title, sub }) => (
-                  <div key={title} className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-white/10 rounded-md flex items-center justify-center shrink-0">
+                  <div key={title} className="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                    <div className="w-10 h-10 bg-[#1e7e34]/40 rounded-md flex items-center justify-center shrink-0">
                       <Icon size={18} className="text-[#28a745]" />
                     </div>
                     <div>
-                      <div className="font-bold text-white">{title}</div>
-                      <div className="text-gray-400 text-sm">{sub}</div>
+                      <div className="font-bold text-white mb-0.5">{title}</div>
+                      <div className="text-gray-400 text-sm leading-relaxed">{sub}</div>
                     </div>
                   </div>
                 ))}
+              </div>
+              {/* Garance */}
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { icon: ShieldCheck, text: 'Vrácení zálohy při zrušení' },
+                  { icon: CheckCircle2, text: 'Žádné skryté poplatky — smluvně garantováno' },
+                  { icon: ShieldCheck, text: 'Stejná tovární záruka jako v ČR' },
+                ].map(({ icon: Icon, text }) => (
+                  <div key={text} className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-md px-4 py-3">
+                    <Icon size={15} className="text-[#28a745] shrink-0" />
+                    <span className="text-gray-300 text-xs leading-snug">{text}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <p className="text-gray-400 text-sm">Máte otázky? Zavolejte nám — rádi poradíme.</p>
+                <a
+                  href="tel:+420733455966"
+                  className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3 rounded-md transition-colors text-sm whitespace-nowrap"
+                >
+                  <Phone size={15} /> +420 733 455 966
+                </a>
               </div>
             </motion.div>
           </div>
@@ -423,24 +449,38 @@ export default function VozDetail() {
                 className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden"
               >
                 <div className="bg-[#f0faf2] px-6 py-5 border-b border-green-100">
-                  <div className="text-sm text-gray-400 line-through mb-0.5">{formatPrice(car.originalPrice)}</div>
-                  <div className="text-4xl font-black text-[#1e7e34]">{formatPrice(car.salePrice)}</div>
-                  <div className="flex items-center justify-between mt-1.5">
-                    <span className="text-sm text-gray-500">vč. DPH</span>
-                    <span className="text-sm font-semibold text-red-500">ušetříte {formatPrice(savings)}</span>
+                  {/* Vizuální porovnání cen */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <div className="text-xs text-gray-400 uppercase tracking-wider mb-0.5">Cena v ČR</div>
+                      <div className="text-lg font-bold text-gray-400 line-through">{formatPrice(car.originalPrice)}</div>
+                    </div>
+                    <div className="text-gray-300 text-2xl font-light">→</div>
+                    <div className="text-right">
+                      <div className="text-xs text-[#1e7e34] uppercase tracking-wider font-bold mb-0.5">Naše cena</div>
+                      <div className="text-3xl font-black text-[#1e7e34]">{formatPrice(car.salePrice)}</div>
+                    </div>
                   </div>
+                  <div className="bg-red-50 border border-red-100 rounded-md px-3 py-2 flex items-center justify-between">
+                    <span className="text-sm text-red-600 font-semibold">Ušetříte</span>
+                    <span className="text-base font-black text-red-600">{formatPrice(savings)}</span>
+                  </div>
+                  <div className="text-xs text-gray-400 mt-2">vč. DPH</div>
                   {car.freeDelivery && (
-                    <div className="flex items-center gap-1.5 mt-3 text-xs text-[#1e7e34] font-medium">
+                    <div className="flex items-center gap-1.5 mt-2 text-xs text-[#1e7e34] font-medium">
                       <Truck size={13} /> Doprava do ČR zdarma
                     </div>
                   )}
                 </div>
 
                 <div className="p-5 space-y-3">
-                  {/* stock */}
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
-                    Skladem {car.inStock} {car.inStock === 1 ? 'kus' : car.inStock < 5 ? 'kusy' : 'kusů'}
+                  {/* stock — urgency */}
+                  <div className={`flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-md ${car.inStock <= 3 ? 'bg-orange-50 text-orange-700' : 'text-gray-600'}`}>
+                    <div className={`w-2 h-2 rounded-full shrink-0 animate-pulse ${car.inStock <= 3 ? 'bg-orange-500' : 'bg-green-500'}`} />
+                    {car.inStock <= 3
+                      ? `Poslední ${car.inStock} ${car.inStock === 1 ? 'kus' : 'kusy'} za tuto cenu!`
+                      : `Skladem ${car.inStock} kusů`
+                    }
                   </div>
 
                   <button
@@ -458,12 +498,6 @@ export default function VozDetail() {
                     <Phone size={15} /> Zavolat: +420 733 455 966
                   </a>
 
-                  <a
-                    href="mailto:info@nejlevnejsi-skoda.cz"
-                    className="flex items-center justify-center gap-2 w-full border border-gray-200 text-gray-600 hover:border-[#1e7e34] hover:text-[#1e7e34] font-medium py-3 rounded-md transition-all text-sm"
-                  >
-                    <Mail size={15} /> Napsat e-mail
-                  </a>
                 </div>
               </motion.div>
 
@@ -519,32 +553,6 @@ export default function VozDetail() {
                 </motion.div>
               )}
 
-              {/* Quick info */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.35 }}
-                className="bg-white rounded-lg border border-gray-100 shadow-sm p-5"
-              >
-                <h3 className="font-bold text-gray-900 text-sm mb-4">Rychlý přehled</h3>
-                <div className="space-y-3">
-                  {[
-                    { icon: Fuel, label: 'Palivo', value: car.fuel },
-                    { icon: Cog, label: 'Převodovka', value: car.transmission },
-                    { icon: Zap, label: 'Spotřeba', value: car.consumption },
-                    { icon: Package, label: 'Výkon', value: car.power },
-                    { icon: Calendar, label: 'Rok', value: String(car.year) },
-                    { icon: Palette, label: 'Barva', value: car.color },
-                  ].map(({ icon: Icon, label, value }) => (
-                    <div key={label} className="flex items-center justify-between text-sm">
-                      <span className="flex items-center gap-2 text-gray-500">
-                        <Icon size={13} className="text-gray-400" />{label}
-                      </span>
-                      <span className="font-medium text-gray-800">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
             </div>
           </div>
         </div>
@@ -596,6 +604,30 @@ export default function VozDetail() {
       </div>
 
       <Footer />
+
+      {/* ── MOBILNÍ FIXNÍ CTA LIŠTA ── */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-2xl px-4 py-3 flex items-center gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="text-xs text-gray-400 line-through leading-none">{formatPrice(car.originalPrice)}</div>
+          <div className="text-xl font-black text-[#1e7e34] leading-tight">{formatPrice(car.salePrice)}</div>
+          <div className="text-xs text-red-500 font-semibold">ušetříte {formatPrice(savings)}</div>
+        </div>
+        <a
+          href="tel:+420733455966"
+          className="flex items-center gap-1 border-2 border-[#1e7e34] text-[#1e7e34] font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap"
+        >
+          <Phone size={14} /> Zavolat
+        </a>
+        <button
+          onClick={() => addToCart(car)}
+          className="flex items-center gap-1 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors"
+        >
+          <ShoppingCart size={14} /> Do košíku
+        </button>
+      </div>
+
+      {/* Spacer aby footer nebyl pod fixní lištou na mobilu */}
+      <div className="lg:hidden h-20" />
     </div>
   )
 }

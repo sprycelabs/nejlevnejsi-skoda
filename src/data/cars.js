@@ -110,7 +110,7 @@ export const cars = [
     variant: '1.0 TSI',
     power: '70 kW',
     fuel: 'Benzín',
-    transmission: 'Manuál',
+    transmission: 'Manual',
     consumption: '5.1 l/100 km',
     year: 2027,
     originalPrice: 465600,

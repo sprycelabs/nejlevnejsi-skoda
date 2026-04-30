@@ -8,7 +8,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 
-const MODELS = [...new Set(cars.map(c => c.name))]
+const MODELS = [...new Set(cars.map(c => c.name.split(' - ')[0].trim()))]
 const FUELS = [...new Set(cars.map(c => c.fuel))]
 const TRANSMISSIONS = [...new Set(cars.map(c => c.transmission))]
 const MAX_PRICE = Math.max(...cars.map(c => c.salePrice))
@@ -80,7 +80,10 @@ function CarCard({ car, index }) {
           <div className="flex items-center gap-1.5 text-xs text-gray-600"><Fuel size={13} className="text-gray-400 shrink-0" />{car.fuel}</div>
           <div className="flex items-center gap-1.5 text-xs text-gray-600"><Cog size={13} className="text-gray-400 shrink-0" />{car.transmission}</div>
           <div className="flex items-center gap-1.5 text-xs text-gray-600"><Zap size={13} className="text-gray-400 shrink-0" />{car.consumption}</div>
-          <div className="flex items-center gap-1.5 text-xs text-gray-600"><Package size={13} className="text-gray-400 shrink-0" />Skladem {car.inStock} ks</div>
+          <div className={`flex items-center gap-1.5 text-xs font-medium ${car.inStock <= 3 ? 'text-orange-600' : 'text-gray-600'}`}>
+            <Package size={13} className={`shrink-0 ${car.inStock <= 3 ? 'text-orange-500' : 'text-gray-400'}`} />
+            {car.inStock <= 3 ? `Poslední ${car.inStock} ks!` : `Skladem ${car.inStock} ks`}
+          </div>
         </div>
 
         <div className="mb-4 mt-auto">
@@ -98,7 +101,7 @@ function CarCard({ car, index }) {
 
         <div className="flex gap-2">
           <button
-            onClick={e => { e.preventDefault(); addToCart(car) }}
+            onClick={e => { e.preventDefault(); e.stopPropagation(); addToCart(car) }}
             className="flex-1 flex items-center justify-center gap-1.5 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-semibold py-3 px-4 rounded-md transition-colors"
           >
             <ShoppingCart size={15} />
@@ -146,7 +149,7 @@ export default function VozyPage() {
   const filtered = useMemo(() => {
     let result = cars.filter(car => {
       if (search && !`${car.name} ${car.variant}`.toLowerCase().includes(search.toLowerCase())) return false
-      if (selectedModels.length && !selectedModels.includes(car.name)) return false
+      if (selectedModels.length && !selectedModels.some(m => car.name.startsWith(m))) return false
       if (selectedFuels.length && !selectedFuels.includes(car.fuel)) return false
       if (selectedTransmissions.length && !selectedTransmissions.includes(car.transmission)) return false
       if (car.salePrice < priceRange[0] || car.salePrice > priceRange[1]) return false
@@ -284,11 +287,50 @@ export default function VozyPage() {
       <Navbar />
 
       {/* Page header */}
-      <div className="bg-[#0d1f10] pt-24 sm:pt-28 pb-8 sm:pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-[#86efac] text-sm font-semibold uppercase tracking-wider mb-2">Katalog</p>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white">Nové vozy Škoda</h1>
-          <p className="text-gray-400 mt-2">Vozy z EU za výhodné ceny · plná tovární záruka</p>
+      <div className="relative bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508] overflow-hidden pt-28 sm:pt-32 pb-10 sm:pb-14">
+        {/* Dekorativní kruhy */}
+        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-[#1e7e34]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-[#28a745]/8 rounded-full blur-3xl pointer-events-none" />
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-5 pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <p className="text-[#86efac] text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">Katalog vozů</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
+            Nové vozy Škoda<br className="sm:hidden" />{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">z EU levněji</span>
+          </h1>
+          <p className="text-gray-300 text-sm sm:text-base max-w-xl mb-6 sm:mb-8">
+            Vozy z EU za ceny až <strong className="text-white">o 20 % nižší</strong> než u českých dealerů.
+            Plná tovární záruka, doprava a registrace zdarma.
+          </p>
+
+          {/* Stats row */}
+          <div className="flex flex-wrap gap-3 sm:gap-6">
+            {[
+              { value: `${cars.length}`, label: 'vozů skladem', mobileHide: false },
+              { value: 'až 20 %', label: 'průměrná úspora', mobileHide: false },
+              { value: '24 h', label: 'odpověď na poptávku', mobileHide: true },
+            ].map(({ value, label, mobileHide }) => (
+              <div key={label} className={`flex items-center gap-2.5 ${mobileHide ? 'hidden sm:flex' : 'flex'}`}>
+                <div className="text-lg sm:text-xl font-black text-white">{value}</div>
+                <div className="text-gray-400 text-xs sm:text-sm">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom wave */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
+            <path d="M0 40L1440 40L1440 20C1200 40 960 0 720 20C480 40 240 0 0 20L0 40Z" fill="#f9fafb" />
+          </svg>
         </div>
       </div>
 
@@ -312,9 +354,9 @@ export default function VozyPage() {
           {/* Hlavní obsah */}
           <div className="flex-1 min-w-0">
             {/* Toolbar */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
-              {/* Search */}
-              <div className="relative flex-1 min-w-0">
+            <div className="flex flex-col gap-2 sm:gap-3 mb-6">
+              {/* Search — celá šířka */}
+              <div className="relative w-full">
                 <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
@@ -330,32 +372,35 @@ export default function VozyPage() {
                 )}
               </div>
 
-              {/* Mobile filtry */}
-              <button
-                onClick={() => setMobileFiltersOpen(true)}
-                className="lg:hidden flex items-center gap-2 bg-white border border-gray-200 rounded-md px-4 py-2.5 text-sm font-medium text-gray-700 hover:border-[#1e7e34] transition-colors"
-              >
-                <SlidersHorizontal size={15} />
-                Filtry
-                {activeFiltersCount > 0 && <span className="bg-[#1e7e34] text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{activeFiltersCount}</span>}
-              </button>
-
-              {/* Sort */}
-              <div className="relative">
-                <ArrowUpDown size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                <select
-                  value={sort}
-                  onChange={e => setSort(e.target.value)}
-                  className="appearance-none bg-white border border-gray-200 rounded-md pl-9 pr-8 py-2.5 text-sm font-medium text-gray-700 outline-none focus:border-[#1e7e34] cursor-pointer transition-colors"
+              {/* Řádek 2: Filtry + Sort + počet */}
+              <div className="flex items-center gap-2">
+                {/* Mobile filtry */}
+                <button
+                  onClick={() => setMobileFiltersOpen(true)}
+                  className="lg:hidden flex items-center gap-2 bg-white border border-gray-200 rounded-md px-4 py-2.5 text-sm font-medium text-gray-700 hover:border-[#1e7e34] transition-colors shrink-0"
                 >
-                  {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                </select>
-                <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-              </div>
+                  <SlidersHorizontal size={15} />
+                  Filtry
+                  {activeFiltersCount > 0 && <span className="bg-[#1e7e34] text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">{activeFiltersCount}</span>}
+                </button>
 
-              <span className="text-sm text-gray-400 ml-auto">
-                {filtered.length} {filtered.length === 1 ? 'vůz' : filtered.length < 5 ? 'vozy' : 'vozů'}
-              </span>
+                {/* Sort */}
+                <div className="relative flex-1 lg:flex-none">
+                  <ArrowUpDown size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  <select
+                    value={sort}
+                    onChange={e => setSort(e.target.value)}
+                    className="appearance-none w-full bg-white border border-gray-200 rounded-md pl-9 pr-8 py-2.5 text-sm font-medium text-gray-700 outline-none focus:border-[#1e7e34] cursor-pointer transition-colors"
+                  >
+                    {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                  <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                </div>
+
+                <span className="text-sm text-gray-400 shrink-0 ml-auto lg:ml-0">
+                  {filtered.length} {filtered.length === 1 ? 'vůz' : filtered.length < 5 ? 'vozy' : 'vozů'}
+                </span>
+              </div>
             </div>
 
             {/* Aktivní filtry chips */}

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, ShieldCheck, Truck } from 'lucide-react'
+import { ArrowRight, ShieldCheck, Truck, FileText } from 'lucide-react'
 
 export default function Hero() {
   return (
@@ -42,10 +42,19 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg"
+              className="text-gray-300 text-base sm:text-lg leading-relaxed mb-4 max-w-lg"
             >
               Dovoz Škody z EU za ceny výrazně nižší než u českých dealerů.
               Průměrná úspora <strong className="text-white">až 20 %</strong>, plná tovární záruka a kompletní servis bez starostí.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="text-sm text-gray-400 mb-6 sm:mb-8"
+            >
+              Např. Škoda Karoq od <strong className="text-white">639 900 Kč</strong> — ušetříte <strong className="text-[#28a745] whitespace-nowrap">170 000 Kč</strong> oproti ČR
             </motion.p>
 
             <motion.div
@@ -77,8 +86,8 @@ export default function Hero() {
               className="flex flex-wrap items-center gap-4 sm:gap-6"
             >
               {[
-                { icon: ShieldCheck, text: 'Tovární záruka zachována' },
-                { icon: Truck, text: 'Dovoz do ČR zajištěn' },
+                { icon: ShieldCheck, text: 'Tovární záruka zdarma' },
+                { icon: Truck, text: 'Doprava a registrace zdarma' },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
                   <Icon size={16} className="text-[#28a745]" />

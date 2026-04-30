@@ -25,10 +25,11 @@ export default function CTASection() {
                   Nezávazná nabídka zdarma
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
-                  Řekněte nám, jakou Škodu z EU chcete.{' '}
+                  Ušetřete až{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">
-                    Zbytek je na nás.
-                  </span>
+                    170 000 Kč
+                  </span>{' '}
+                  na nové Škodě.
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
                   Do 24 hodin připravíme nabídku s nejnižší cenou Škody na trhu.
@@ -47,38 +48,31 @@ export default function CTASection() {
                   </div>
                   <div className="flex-1">
                     <div className="font-black text-base">+420 733 455 966</div>
-                    <div className="text-white/70 text-xs">Po–Pá 8:00–18:00 · So 9:00–13:00</div>
-                  </div>
-                  <ArrowRight size={18} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                </a>
-
-                <a
-                  href="mailto:info@nejlevnejsi-skoda.cz"
-                  className="group flex items-center gap-4 bg-white/10 hover:bg-white/20 border border-white/15 text-white rounded-lg px-6 py-4 transition-colors"
-                >
-                  <div className="w-10 h-10 bg-white/15 rounded-md flex items-center justify-center shrink-0">
-                    <Mail size={20} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-bold text-sm">info@nejlevnejsi-skoda.cz</div>
-                    <div className="text-white/60 text-xs">Odpovídáme do 24 hodin</div>
+                    <div className="text-white/70 text-xs">Po–Pá 10:00–16:00 · Zavoláme zpět</div>
                   </div>
                   <ArrowRight size={18} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </a>
 
                 <a
                   href="/kontakt"
-                  className="group flex items-center gap-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg px-6 py-4 transition-colors"
+                  className="group flex items-center gap-4 bg-white/10 hover:bg-white/20 border border-white/15 text-white rounded-lg px-6 py-4 transition-colors"
                 >
                   <div className="w-10 h-10 bg-white/15 rounded-md flex items-center justify-center shrink-0">
                     <MessageSquare size={20} />
                   </div>
                   <div className="flex-1">
-                    <div className="font-bold text-sm">Nezávazná poptávka</div>
-                    <div className="text-white/60 text-xs">Vyplňte formulář online</div>
+                    <div className="font-bold text-sm">Nezávazná poptávka online</div>
+                    <div className="text-white/60 text-xs">Odpovídáme do 24 hodin</div>
                   </div>
                   <ArrowRight size={18} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                 </a>
+
+                <div className="flex items-center justify-center gap-2 pt-1">
+                  <Mail size={13} className="text-white/30" />
+                  <a href="mailto:info@nejlevnejsi-skoda.cz" className="text-white/40 hover:text-white/70 text-xs transition-colors">
+                    info@nejlevnejsi-skoda.cz
+                  </a>
+                </div>
               </div>
 
             </div>

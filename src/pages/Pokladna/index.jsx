@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X } from 'lucide-react'
+import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X, Truck, FileText } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
@@ -65,6 +65,8 @@ function Field({ label, name, type = 'text', value, onChange, error, placeholder
 
 export default function Pokladna() {
   const { items, removeFromCart, updateQty, clearCart, cartTotal } = useCart()
+  const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
+  const depositAmount = 200000 * totalQty
   const [type, setType] = useState('fyzicka') // 'fyzicka' | 'firma'
   const [form, setForm] = useState(EMPTY_FYZICKA)
   const [errors, setErrors] = useState({})
@@ -148,7 +150,14 @@ export default function Pokladna() {
     if (Object.keys(errs).length > 0 || Object.keys(sErrs).length > 0) {
       setErrors(errs)
       setSidebarErrors(sErrs)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      setTimeout(() => {
+        const firstError = document.querySelector(
+          'input.border-red-400, textarea.border-red-400, .border-red-300, .border-red-200'
+        )
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }, 50)
       return
     }
     setLoading(true)
@@ -253,9 +262,20 @@ export default function Pokladna() {
             <ChevronRight size={13} />
             <span className="text-gray-200">Pokladna</span>
           </div>
-          <div className="pb-12 pt-2">
+          <div className="pb-8 pt-2">
             <p className="text-[#28a745] font-semibold text-sm uppercase tracking-wider mb-2">Dokončení objednávky</p>
-            <h1 className="text-3xl sm:text-4xl font-black text-white">Pokladna</h1>
+            <h1 className="text-3xl sm:text-4xl font-black text-white mb-5">Pokladna</h1>
+            <div className="flex flex-wrap gap-4 sm:gap-6">
+              {[
+                { icon: ShieldCheck, text: 'Tovární záruka zdarma' },
+                { icon: Truck,       text: 'Doprava a registrace zdarma' },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
+                  <Icon size={15} className="text-[#28a745]" />
+                  {text}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className="relative z-10">
@@ -373,8 +393,8 @@ export default function Pokladna() {
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.175 }}
                   className="bg-white rounded-lg border border-gray-100 shadow-sm p-6"
                 >
-                  <h2 className="font-black text-gray-900 text-lg mb-1">Přílohy</h2>
-                  <p className="text-sm text-gray-400 mb-4">Přiložte konfiguraci z webu Škoda-Auto, fotky nebo jakýkoli dokument.</p>
+                  <h2 className="font-black text-gray-900 text-lg mb-1">Přílohy <span className="text-sm font-normal text-gray-400">(nepovinné)</span></h2>
+                  <p className="text-sm text-gray-400 mb-4">Volitelně přiložte konfiguraci z webu Škoda-Auto, fotky nebo jakýkoli dokument.</p>
                   <FileUpload onFileChange={setAttachedFiles} />
                 </motion.div>
 
@@ -520,15 +540,6 @@ export default function Pokladna() {
                     )}
                   </div>
 
-                  {/* Partnerský kód */}
-                  <div className="mb-4">
-                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Partnerský kód</p>
-                    <input
-                      type="text"
-                      placeholder="Zadejte kód..."
-                      className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1e7e34]/30 focus:border-[#1e7e34] transition-colors"
-                    />
-                  </div>
 
                   <div className="border-t border-gray-100 pt-4 mb-6">
                     {appliedDiscount && (
@@ -543,16 +554,23 @@ export default function Pokladna() {
                         </div>
                       </>
                     )}
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-1">
                       <span className="text-gray-500 text-sm">Celkem vč. DPH</span>
                       <span className="font-black text-xl text-gray-900">{formatPrice(discountedTotal)}</span>
                     </div>
+                    <div className="bg-green-50 border border-green-100 rounded-md px-3 py-2.5 mt-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-bold text-[#1e7e34]">Záloha k úhradě nyní</span>
+                        <span className="font-black text-sm text-[#1e7e34]">{formatPrice(depositAmount)}</span>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-0.5">Zbytek ceny uhradíte při převzetí vozu</p>
+                    </div>
                   </div>
 
-                  <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 rounded-md p-3 mb-5 text-xs text-amber-800 leading-relaxed">
-                    <AlertCircle size={15} className="text-amber-500 shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-100 rounded-md p-3 mb-5 text-xs text-blue-800 leading-relaxed">
+                    <ShieldCheck size={15} className="text-blue-400 shrink-0 mt-0.5" />
                     <span>
-                      Kliknutím na tlačítko <strong>"Odeslat objednávku"</strong> odesíláte <strong>závaznou objednávku</strong>. Po jejím přijetí vás budeme kontaktovat k potvrzení a dalším krokům.
+                      Odesláním nám sdělíte zájem o vůz. <strong>Do 24 hodin vás kontaktujeme</strong> telefonicky nebo e-mailem pro potvrzení. Zároveň obdržíte <strong>proforma fakturu</strong> s platebními údaji.
                     </span>
                   </div>
 
@@ -566,10 +584,10 @@ export default function Pokladna() {
                     className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] disabled:opacity-60 disabled:cursor-not-allowed text-white font-black py-4 rounded-md transition-colors text-base"
                   >
                     {loading ? <Loader2 size={18} className="animate-spin" /> : <ShieldCheck size={18} />}
-                    {loading ? 'Odesílám...' : 'Odeslat objednávku'}
+                    {loading ? 'Odesílám...' : 'Odeslat poptávku'}
                   </button>
                   <p className="text-center text-xs text-gray-400 mt-3">
-                    Závazná objednávka · Vyžaduje souhlas s podmínkami
+                    Po odeslání vás do 24 h kontaktujeme k potvrzení
                   </p>
                 </motion.div>
               </div>
