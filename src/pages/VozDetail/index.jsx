@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
-import { motion } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
   Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
-  AlertCircle, Scissors, Banknote
+  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -35,6 +36,28 @@ export default function VozDetail() {
   }
 
   const savings = car.originalPrice - car.salePrice
+  const images = car.imageCount > 1
+    ? Array.from({ length: car.imageCount }, (_, i) => `/cars/${car.slug}/${String(i + 1).padStart(2, '0')}.webp`)
+    : [car.image]
+  const [activeIdx, setActiveIdx] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState('prehled')
+  const [failedImages, setFailedImages] = useState(new Set())
+  const handleImgError = (idx) => setFailedImages(prev => new Set(prev).add(idx))
+
+  const prev = useCallback(() => setActiveIdx(i => (i - 1 + images.length) % images.length), [images.length])
+  const next = useCallback(() => setActiveIdx(i => (i + 1) % images.length), [images.length])
+
+  useEffect(() => {
+    if (!lightboxOpen) return
+    const handler = e => {
+      if (e.key === 'ArrowLeft') prev()
+      if (e.key === 'ArrowRight') next()
+      if (e.key === 'Escape') setLightboxOpen(false)
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [lightboxOpen, prev, next])
 
   const specs = [
     { label: 'Palivo', value: car.fuel },
@@ -197,6 +220,87 @@ export default function VozDetail() {
           {/* ── LEFT column (2/3) ── */}
           <div className="lg:col-span-2 space-y-8">
 
+            {/* ── GALERIE ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden"
+            >
+              {/* Hlavní foto */}
+              <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden" style={{ aspectRatio: '16/10' }}>
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeIdx}
+                    src={failedImages.has(activeIdx) ? car.image : images[activeIdx]}
+                    alt={`${car.name} – foto ${activeIdx + 1}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="w-full h-full object-contain p-6"
+                    onError={() => handleImgError(activeIdx)}
+                  />
+                </AnimatePresence>
+                {failedImages.has(activeIdx) && (
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs text-center py-1.5 px-3 backdrop-blur-sm">
+                    Ilustrační foto — pracujeme na tom
+                  </div>
+                )}
+
+                {/* Šipka vlevo */}
+                <button
+                  onClick={prev}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center transition-all hover:scale-105"
+                >
+                  <ChevronLeft size={20} className="text-gray-700" />
+                </button>
+
+                {/* Šipka vpravo */}
+                <button
+                  onClick={next}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-md flex items-center justify-center transition-all hover:scale-105"
+                >
+                  <ChevronRight size={20} className="text-gray-700" />
+                </button>
+
+                {/* Fullscreen */}
+                <button
+                  onClick={() => setLightboxOpen(true)}
+                  className="absolute top-3 right-3 w-9 h-9 bg-white/90 hover:bg-white rounded-md shadow-md flex items-center justify-center transition-all"
+                >
+                  <Maximize2 size={16} className="text-gray-700" />
+                </button>
+
+                {/* Počítadlo */}
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/50 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  {activeIdx + 1} / {images.length}
+                </div>
+              </div>
+
+              {/* Thumbnaily */}
+              <div className="flex gap-2 p-3 overflow-x-auto scrollbar-hide border-t border-gray-100">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveIdx(i)}
+                    className={`shrink-0 w-20 h-14 rounded-md overflow-hidden border-2 transition-all ${
+                      i === activeIdx
+                        ? 'border-[#1e7e34] shadow-md'
+                        : 'border-gray-200 hover:border-gray-400 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={failedImages.has(i) ? car.image : img}
+                      alt={`náhled ${i + 1}`}
+                      className="w-full h-full object-contain bg-gray-50 p-1"
+                      onError={() => handleImgError(i)}
+                    />
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+
             {/* Trust bar */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -314,24 +418,114 @@ export default function VozDetail() {
               </motion.div>
             )}
 
-            {/* Specifikace */}
+            {/* Tabs: Přehled / Výbava / Technická specifikace */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
               className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden"
             >
-              <div className="px-7 py-5 border-b border-gray-100">
-                <h2 className="text-xl font-black text-gray-900">Technické parametry — {car.name} {car.variant}</h2>
-              </div>
-              <div className="divide-y divide-gray-50">
-                {specs.map(({ label, value }) => (
-                  <div key={label} className="flex items-center justify-between px-7 py-4 hover:bg-gray-50 transition-colors">
-                    <span className="text-sm text-gray-500">{label}</span>
-                    <span className="text-sm font-semibold text-gray-900">{value}</span>
-                  </div>
+              {/* Tab hlavičky */}
+              <div className="flex border-b border-gray-100 overflow-x-auto scrollbar-hide">
+                {[
+                  { key: 'prehled', label: 'Přehled' },
+                  { key: 'vybava', label: 'Výbava' },
+                  { key: 'technika', label: 'Technická specifikace' },
+                ].map(tab => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`px-6 py-4 text-sm font-semibold whitespace-nowrap border-b-2 transition-colors ${
+                      activeTab === tab.key
+                        ? 'border-[#1e7e34] text-[#1e7e34]'
+                        : 'border-transparent text-gray-500 hover:text-gray-800'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
                 ))}
               </div>
+
+              {/* Tab obsah */}
+              <AnimatePresence mode="wait">
+                {activeTab === 'prehled' && (
+                  <motion.div
+                    key="prehled"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="divide-y divide-gray-50"
+                  >
+                    {specs.map(({ label, value }) => (
+                      <div key={label} className="flex items-center justify-between px-7 py-4 hover:bg-gray-50 transition-colors">
+                        <span className="text-sm text-gray-500">{label}</span>
+                        <span className="text-sm font-semibold text-gray-900">{value}</span>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+
+                {activeTab === 'vybava' && (
+                  <motion.div
+                    key="vybava"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="divide-y divide-gray-100"
+                  >
+                    {car.equipment
+                      ? Object.entries(car.equipment).map(([category, items]) => (
+                          <div key={category} className="px-7 py-5">
+                            <h3 className="font-bold text-gray-900 mb-3">{category}</h3>
+                            {items.length > 0 ? (
+                              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6">
+                                {items.map(item => (
+                                  <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
+                                    <CheckCircle2 size={14} className="text-[#1e7e34] shrink-0" />
+                                    {item}
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-sm text-gray-400 italic">Brzy doplníme</p>
+                            )}
+                          </div>
+                        ))
+                      : <p className="px-7 py-6 text-sm text-gray-400">Výbava bude brzy doplněna.</p>
+                    }
+                  </motion.div>
+                )}
+
+                {activeTab === 'technika' && (
+                  <motion.div
+                    key="technika"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className="divide-y divide-gray-100"
+                  >
+                    {car.technicalSpecs
+                      ? Object.entries(car.technicalSpecs).map(([group, rows]) => (
+                          <div key={group} className="px-7 py-5">
+                            <h3 className="font-bold text-gray-900 mb-3">{group}</h3>
+                            <div className="divide-y divide-gray-50">
+                              {rows.map(({ label, value }) => (
+                                <div key={label} className="flex items-center justify-between py-2.5 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
+                                  <span className="text-sm text-gray-500">{label}</span>
+                                  <span className="text-sm font-semibold text-gray-900 text-right ml-4">{value}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))
+                      : <p className="px-7 py-6 text-sm text-gray-400">Technická specifikace bude brzy doplněna.</p>
+                    }
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
 
             {/* Popis */}
@@ -343,11 +537,15 @@ export default function VozDetail() {
             >
               <h2 className="text-xl font-black text-gray-900 mb-4">{car.name} z EU — co o voze vědět</h2>
               <div className="space-y-3 text-gray-600 leading-relaxed text-[15px]">
-                <p>
-                  <strong className="text-gray-900">{car.name} {car.variant} levněji než u dealera</strong> —
-                  vůz pochází přímo z evropské distribuční sítě Škoda Auto. Tovární záruka platí stejně
-                  jako při nákupu v ČR a servis zajistíte u jakéhokoli autorizovaného servisu v celé EU.
-                </p>
+                {car.highlight ? (
+                  <p><strong className="text-gray-900">{car.highlight}</strong></p>
+                ) : (
+                  <p>
+                    <strong className="text-gray-900">{car.name} {car.variant} levněji než u dealera</strong> —
+                    vůz pochází přímo z evropské distribuční sítě Škoda Auto. Tovární záruka platí stejně
+                    jako při nákupu v ČR a servis zajistíte u jakéhokoli autorizovaného servisu v celé EU.
+                  </p>
+                )}
                 <p>
                   Motor {car.variant} s výkonem {car.power} nabízí výbornou rovnováhu výkonu a
                   spotřeby ({car.consumption}).
@@ -628,6 +826,70 @@ export default function VozDetail() {
 
       {/* Spacer aby footer nebyl pod fixní lištou na mobilu */}
       <div className="lg:hidden h-20" />
+
+      {/* ── LIGHTBOX ── */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center"
+            onClick={() => setLightboxOpen(false)}
+          >
+            {/* Hlavní foto */}
+            <div className="relative w-full max-w-5xl px-16" onClick={e => e.stopPropagation()}>
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={activeIdx}
+                  src={failedImages.has(activeIdx) ? car.image : images[activeIdx]}
+                  alt={`${car.name} – foto ${activeIdx + 1}`}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.18 }}
+                  className="w-full max-h-[75vh] object-contain"
+                  onError={() => handleImgError(activeIdx)}
+                />
+              </AnimatePresence>
+
+              <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center transition-colors">
+                <ChevronLeft size={26} className="text-white" />
+              </button>
+              <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center transition-colors">
+                <ChevronRight size={26} className="text-white" />
+              </button>
+            </div>
+
+            {/* Počítadlo */}
+            <div className="text-white/60 text-sm mt-4">{activeIdx + 1} / {images.length}</div>
+
+            {/* Thumbnaily */}
+            <div className="flex gap-2 mt-4 px-4 overflow-x-auto max-w-3xl" onClick={e => e.stopPropagation()}>
+              {images.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveIdx(i)}
+                  className={`shrink-0 w-16 h-11 rounded border-2 overflow-hidden transition-all ${
+                    i === activeIdx ? 'border-[#28a745]' : 'border-white/20 opacity-50 hover:opacity-80'
+                  }`}
+                >
+                  <img src={failedImages.has(i) ? car.image : img} alt="" className="w-full h-full object-contain bg-black p-0.5" onError={() => handleImgError(i)} />
+                </button>
+              ))}
+            </div>
+
+            {/* Zavřít */}
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="absolute top-5 right-5 w-10 h-10 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center transition-colors"
+            >
+              <X size={20} className="text-white" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
