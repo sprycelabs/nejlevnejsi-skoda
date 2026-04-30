@@ -73,7 +73,7 @@ export default function CookieBanner() {
                   <p className="text-white font-bold text-sm mb-0.5">Tento web používá cookies</p>
                   <p className="text-gray-400 text-xs leading-relaxed">
                     Analytické cookies nám pomáhají zlepšovat web. Žádné osobní údaje neprodáváme třetím stranám.{' '}
-                    <a href="/doc/gdpr.docx" download className="text-[#28a745] hover:underline">Zásady ochrany soukromí</a>
+                    <a href="/doc/gdpr.pdf" target="_blank" rel="noopener" className="text-[#28a745] hover:underline">Zásady ochrany soukromí</a>
                   </p>
                 </div>
               </div>

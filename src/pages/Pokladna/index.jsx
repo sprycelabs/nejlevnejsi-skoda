@@ -408,9 +408,9 @@ export default function Pokladna() {
                     />
                     <label htmlFor="terms" className="text-sm text-gray-700 leading-relaxed cursor-pointer">
                       Souhlasím s{' '}
-                      <a href="/doc/term.docx" download className="text-[#1e7e34] font-semibold hover:underline">obchodními podmínkami</a>
+                      <a href="/doc/terms.pdf" target="_blank" rel="noopener" className="text-[#1e7e34] font-semibold hover:underline">obchodními podmínkami</a>
                       {' '}a beru na vědomí zpracování osobních údajů dle{' '}
-                      <a href="/doc/gdpr.docx" download className="text-[#1e7e34] font-semibold hover:underline">zásad ochrany soukromí</a>. *
+                      <a href="/doc/gdpr.pdf" target="_blank" rel="noopener" className="text-[#1e7e34] font-semibold hover:underline">zásad ochrany soukromí</a>. *
                     </label>
                   </div>
                   {errors.terms && (
