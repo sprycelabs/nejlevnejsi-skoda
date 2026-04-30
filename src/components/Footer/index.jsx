@@ -23,8 +23,8 @@ const footerLinks = {
   'Společnost': [
     { label: 'O nás', href: '/o-nas' },
     { label: 'Kontakt', href: '/kontakt' },
-    { label: 'Obchodní podmínky', href: '/doc/terms.pdf', download: false },
-    { label: 'GDPR', href: '/doc/gdpr.pdf', download: false },
+    { label: 'Obchodní podmínky', href: '/doc/terms.pdf', blank: true },
+    { label: 'GDPR', href: '/doc/gdpr.pdf', blank: true },
     { label: 'Cookies', href: '/kontakt' },
   ],
 }
@@ -82,7 +82,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} {...(link.download ? { download: true } : {})} className="text-sm text-gray-400 hover:text-[#28a745] transition-colors">
+                    <a href={link.href} {...(link.blank ? { target: '_blank', rel: 'noopener' } : {})} className="text-sm text-gray-400 hover:text-[#28a745] transition-colors">
                       {link.label}
                     </a>
                   </li>
