@@ -112,7 +112,7 @@ export default function Hero() {
                 <div className="text-white text-2xl font-black leading-none">−10 000 Kč</div>
                 <div className="text-orange-100 text-xs mt-1 font-medium">na první objednávku</div>
                 <div className="mt-2 pt-2 border-t border-white/20 text-orange-100 text-xs">
-                  Zbývá jen <strong className="text-white">10 míst!</strong>
+                  Zbývá jen <strong className="text-white">10 kuponů!</strong>
                 </div>
                 <div className="mt-2 bg-white/15 group-hover:bg-white/25 transition-colors rounded-md px-3 py-1.5 text-white text-xs font-bold">
                   Chci kód, dokud zbývá →
@@ -137,7 +137,7 @@ export default function Hero() {
       <div className="lg:hidden relative z-10 px-4 pb-6">
         <a href="/akce-kveten" className="group flex items-center justify-between gap-4 bg-orange-500 hover:bg-orange-400 transition-colors rounded-xl px-5 py-4 shadow-xl shadow-orange-900/40">
           <div>
-            <div className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Akce Květen — zbývá 10 míst!</div>
+            <div className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Akce Květen — zbývá 10 kuponů!</div>
             <div className="text-white text-2xl font-black leading-none">−10 000 Kč</div>
             <div className="text-orange-100 text-xs mt-1">na první objednávku · <strong className="text-white">Neváhejte!</strong></div>
           </div>

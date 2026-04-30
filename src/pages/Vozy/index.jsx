@@ -378,9 +378,9 @@ export default function VozyPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
                     <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč na první objednávku!</span>
-                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">jen 10 míst!</span>
+                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">jen 10 kuponů!</span>
                   </div>
-                  <p className="text-orange-100 text-xs">Místa se plní — zajistěte si kód dříve, než bude pozdě.</p>
+                  <p className="text-orange-100 text-xs">Kupony se rychle rozdávají — zajistěte si kód dříve, než bude pozdě.</p>
                 </div>
               </div>
               <a

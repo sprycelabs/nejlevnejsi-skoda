@@ -73,7 +73,7 @@ export default function AkceKveten() {
             >
               <div className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-500/40 rounded-full px-4 py-1.5 mb-6">
                 <Tag size={13} className="text-orange-400" />
-                <span className="text-orange-400 text-sm font-bold uppercase tracking-wider">Akce Květen · zbývá jen 10 míst!</span>
+                <span className="text-orange-400 text-sm font-bold uppercase tracking-wider">Akce Květen · zbývá jen 10 kuponů!</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight mb-3">
