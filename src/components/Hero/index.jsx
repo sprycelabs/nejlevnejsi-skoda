@@ -20,7 +20,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-16 sm:pb-32 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-4 sm:pb-32 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
           {/* Left — text */}
@@ -52,7 +52,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-sm text-gray-400 mb-6 sm:mb-8"
+              className="hidden sm:block text-sm text-gray-400 mb-6 sm:mb-8"
             >
               Např. Škoda Karoq od <strong className="text-white">639 900 Kč</strong> — ušetříte <strong className="text-[#28a745] whitespace-nowrap">170 000 Kč</strong> oproti ČR
             </motion.p>
@@ -83,7 +83,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap items-center gap-4 sm:gap-6"
+              className="hidden sm:flex flex-wrap items-center gap-4 sm:gap-6"
             >
               {[
                 { icon: ShieldCheck, text: 'Tovární záruka zdarma' },
