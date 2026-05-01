@@ -27,11 +27,11 @@ function formatPrice(price) {
 }
 
 function generateVariableSymbol(orderNumber) {
-  // OBJ-2026-001 → 2026 + 001 + 4 náhodné číslice
+  // OBJ-2026-001 → 26 + 001 + 5 náhodných číslic = 10 číslic
   const parts  = orderNumber.split('-')   // ['OBJ', '2026', '001']
-  const year   = parts[1] || new Date().getFullYear()
-  const seq    = parts[2] || '001'
-  const rand   = String(Math.floor(1000 + Math.random() * 9000))
+  const year   = String(parts[1] || new Date().getFullYear()).slice(-2)
+  const seq    = (parts[2] || '001').padStart(3, '0')
+  const rand   = String(Math.floor(10000 + Math.random() * 90000))
   return `${year}${seq}${rand}`
 }
 
