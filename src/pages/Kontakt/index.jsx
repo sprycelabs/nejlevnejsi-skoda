@@ -33,17 +33,17 @@ const contactItems = [
   },
   {
     icon: MapPin,
-    label: 'Sídlo společnosti',
-    value: 'Gladstonos 83, 3032, Limassol, Kypr',
+    label: 'Kancelář',
+    value: 'Náměstí Republiky 1081/7, Praha 1',
     sub: 'Schůzky po domluvě',
-    href: null,
+    href: 'https://maps.google.com/?q=Rybná+716,+110+00+Praha+1',
   },
   {
-    icon: MapPin,
-    label: 'Kancelář ČR',
-    value: 'Náměstí Republiky 1081/7, Praha 1',
-    sub: 'Česká kancelář',
-    href: 'https://maps.google.com/?q=Rybná+716,+110+00+Praha+1',
+    icon: WhatsAppIcon,
+    label: 'WhatsApp',
+    value: '+420 733 455 966',
+    sub: 'Napište nám kdykoliv',
+    href: 'https://wa.me/420733455966',
   },
 ]
 
