@@ -584,7 +584,7 @@ export default function Pokladna() {
                     className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] disabled:opacity-60 disabled:cursor-not-allowed text-white font-black py-4 rounded-md transition-colors text-base"
                   >
                     {loading ? <Loader2 size={18} className="animate-spin" /> : <ShieldCheck size={18} />}
-                    {loading ? 'Odesílám...' : 'Odeslat poptávku'}
+                    {loading ? 'Odesílám...' : 'Odeslat objednávku'}
                   </button>
                   <p className="text-center text-xs text-gray-400 mt-3">
                     Po odeslání vás do 24 h kontaktujeme k potvrzení
