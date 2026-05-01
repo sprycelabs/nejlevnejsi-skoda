@@ -28,6 +28,18 @@ export function CartProvider({ children }) {
       return [...prev, { car, qty: 1 }]
     })
     setIsOpen(true)
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'add_to_cart', {
+        currency: 'CZK',
+        value: car.salePrice,
+        items: [{
+          item_id: car.slug,
+          item_name: `${car.name} ${car.variant}`,
+          price: car.salePrice,
+          quantity: 1,
+        }],
+      })
+    }
   }
 
   function removeFromCart(carId) {
