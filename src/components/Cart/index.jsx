@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight } from 'lucide-react'
+import { X, ClipboardList, Trash2, Plus, Minus, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { formatPrice } from '../../data/cars'
@@ -31,8 +31,8 @@ export default function Cart() {
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
               <div className="flex items-center gap-2">
-                <ShoppingCart size={20} className="text-[#1e7e34]" />
-                <h2 className="font-black text-gray-900 text-lg">Košík</h2>
+                <ClipboardList size={20} className="text-[#1e7e34]" />
+                <h2 className="font-black text-gray-900 text-lg">Moje poptávka</h2>
                 {items.length > 0 && (
                   <span className="bg-[#1e7e34] text-white text-xs font-bold px-2 py-0.5 rounded-full">
                     {items.reduce((s, i) => s + i.qty, 0)}
@@ -51,8 +51,8 @@ export default function Cart() {
             <div className="flex-1 overflow-y-auto">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full gap-4 text-center px-6">
-                  <ShoppingCart size={48} className="text-gray-200" />
-                  <p className="text-gray-400 font-medium">Košík je prázdný</p>
+                  <ClipboardList size={48} className="text-gray-200" />
+                  <p className="text-gray-400 font-medium">Poptávka je prázdná</p>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="text-[#1e7e34] font-semibold text-sm hover:underline"
@@ -119,7 +119,7 @@ export default function Cart() {
                   onClick={() => setIsOpen(false)}
                   className="flex items-center justify-center gap-2 w-full bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-3.5 rounded-md transition-colors"
                 >
-                  Odeslat objednávku
+                  Odeslat poptávku
                   <ArrowRight size={16} />
                 </Link>
                 <button
