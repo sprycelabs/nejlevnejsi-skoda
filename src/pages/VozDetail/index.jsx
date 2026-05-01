@@ -3,7 +3,7 @@ import { useCart } from '../../context/CartContext'
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  ArrowLeft, ClipboardList, Phone, Mail, Fuel, Cog, Zap, Package,
+  ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
   Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
   AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X
@@ -685,8 +685,8 @@ export default function VozDetail() {
                     onClick={() => addToCart(car)}
                     className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base"
                   >
-                    <ClipboardList size={18} />
-                    Mám zájem
+                    <ShoppingCart size={18} />
+                    Přidat do košíku
                   </button>
 
                   <a
@@ -820,7 +820,7 @@ export default function VozDetail() {
           onClick={() => addToCart(car)}
           className="flex items-center gap-1 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors"
         >
-          <ClipboardList size={14} /> Mám zájem
+          <ShoppingCart size={14} /> Do košíku
         </button>
       </div>
 

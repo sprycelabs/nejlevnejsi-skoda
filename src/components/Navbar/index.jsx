@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ClipboardList, Phone, Menu, X, ChevronDown } from 'lucide-react'
+import { ShoppingCart, Phone, Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../../context/CartContext'
 
@@ -97,7 +97,7 @@ export default function Navbar() {
             onClick={() => setIsOpen(true)}
             className="relative p-2 text-gray-700 hover:text-[#1e7e34] hover:bg-green-50 rounded-lg transition-all"
           >
-            <ClipboardList size={20} />
+            <ShoppingCart size={20} />
             {cartCount > 0 && (
               <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#1e7e34] text-white text-xs font-bold rounded-full flex items-center justify-center">
                 {cartCount}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ChevronRight, ClipboardList, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X, Truck, FileText } from 'lucide-react'
+import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X, Truck, FileText } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
@@ -195,7 +195,7 @@ export default function Pokladna() {
         window.gtag_report_conversion(discountedTotal)
       }
     } catch (err) {
-      setSubmitError('Nepodařilo se odeslat poptávku. Zkuste to prosím znovu nebo nás kontaktujte.')
+      setSubmitError('Nepodařilo se odeslat objednávku. Zkuste to prosím znovu nebo nás kontaktujte.')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } finally {
       setLoading(false)
@@ -219,7 +219,7 @@ export default function Pokladna() {
               </div>
             )}
             <p className="text-gray-500 leading-relaxed mb-8">
-              Děkujeme za vaši poptávku. Potvrzení jsme zaslali na <strong>{form.email}</strong>. Ozveme se vám do 24 hodin.
+              Děkujeme za vaši objednávku. Potvrzení jsme zaslali na <strong>{form.email}</strong>. Fakturu s platebními údaji obdržíte do 24 hodin.
             </p>
             <Link to="/" className="inline-flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-8 py-3 rounded-md transition-colors">
               Zpět na hlavní stránku
@@ -236,9 +236,9 @@ export default function Pokladna() {
       <div className="min-h-screen bg-gray-50">
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-40 pb-24 text-center">
-          <ClipboardList size={56} className="text-gray-200 mx-auto mb-4" />
-          <h1 className="text-2xl font-black text-gray-900 mb-3">Poptávka je prázdná</h1>
-          <p className="text-gray-400 mb-6">Přidejte nejprve vozy do poptávky.</p>
+          <ShoppingCart size={56} className="text-gray-200 mx-auto mb-4" />
+          <h1 className="text-2xl font-black text-gray-900 mb-3">Košík je prázdný</h1>
+          <p className="text-gray-400 mb-6">Přidejte nejprve vozy do košíku.</p>
           <Link to="/vozy" className="inline-flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3 rounded-md transition-colors">
             Prohlédnout vozy
           </Link>
@@ -427,8 +427,8 @@ export default function Pokladna() {
                   className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 sticky top-28"
                 >
                   <h2 className="font-black text-gray-900 text-lg mb-4 flex items-center gap-2">
-                    <ClipboardList size={18} className="text-[#1e7e34]" />
-                    Shrnutí poptávky
+                    <ShoppingCart size={18} className="text-[#1e7e34]" />
+                    Shrnutí objednávky
                   </h2>
 
                   <ul className="divide-y divide-gray-100 mb-4">

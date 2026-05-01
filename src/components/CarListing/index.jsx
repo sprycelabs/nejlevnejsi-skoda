@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Fuel, Cog, Zap, Package, Truck, ClipboardList, ArrowRight, Flame } from 'lucide-react'
+import { Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, Flame } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cars, formatPrice } from '../../data/cars'
 import { useCart } from '../../context/CartContext'
@@ -110,8 +110,8 @@ function CarCard({ car, index }) {
             onClick={e => { e.preventDefault(); addToCart(car) }}
             className="flex-1 flex items-center justify-center gap-1.5 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-semibold py-3 px-4 rounded-md transition-colors"
           >
-            <ClipboardList size={15} />
-            Mám zájem
+            <ShoppingCart size={15} />
+            Do košíku
           </button>
           <span className="flex items-center gap-1 border border-gray-200 hover:border-[#1e7e34] text-gray-600 hover:text-[#1e7e34] text-sm font-medium py-3 px-4 rounded-md transition-colors">
             Detail
