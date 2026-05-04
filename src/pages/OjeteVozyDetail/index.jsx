@@ -25,7 +25,7 @@ const CAR_CART = {
   name: 'Škoda Octavia Combi',
   variant: '1.0 TSI e-TEC DSG',
   power: '81 kW',
-  fuel: 'Benzín / mild hybrid',
+  fuel: 'Benzín',
   transmission: 'DSG automat',
   salePrice: PRICE,
   originalPrice: PRICE,
@@ -59,7 +59,7 @@ const IMAGES = [
 ].map(f => `/cars/ojete-octavia/${encodeURIComponent(f)}`)
 
 const SPECS = [
-  { label: 'Palivo', value: 'Benzín / mild hybrid' },
+  { label: 'Palivo', value: 'Benzín' },
   { label: 'Převodovka', value: 'Automatická DSG, 7st' },
   { label: 'Výkon', value: '81 kW' },
   { label: 'Zdvihový objem', value: '999 cm³' },
