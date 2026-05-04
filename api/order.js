@@ -56,13 +56,12 @@ async function generateOrderNumber() {
   return `OBJ-${year}-${String(count).padStart(3, '0')}`
 }
 
-const PROFORMA_DEPOSIT = 200000
+const PROFORMA_DEPOSIT_PCT = 0.20
 
 function customerEmail(form, items, total, orderNumber, discount) {
   const isCompany   = !!form.companyName
   const name        = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
-  const totalQty    = items.reduce((sum, { qty }) => sum + qty, 0)
-  const proformaAmt = PROFORMA_DEPOSIT * totalQty
+  const proformaAmt = Math.round(total * PROFORMA_DEPOSIT_PCT)
 
   const itemsRows = items.map(({ car, qty }) => `
     <tr>

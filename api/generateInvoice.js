@@ -12,7 +12,7 @@ const LGRAY = '#f5f5f5'
 const MGRAY = '#e5e7eb'
 const BLACK = '#111827'
 
-const PROFORMA_DEPOSIT = 200000
+const PROFORMA_DEPOSIT_PCT = 0.20
 
 const SELLER = {
   name:    'TOP GLOBAL STRATEGIC MANAGEMENT LTD',
@@ -79,7 +79,6 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const buyerName = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
 
     const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
-    const PROFORMA_AMOUNT = PROFORMA_DEPOSIT * totalQty
 
     const carItems = items.map(({ car, qty }) => ({
       name:       `${car.name} ${car.variant}`,
@@ -87,6 +86,10 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
       qty,
       total: car.salePrice * qty,
     }))
+
+    const carTotal = carItems.reduce((s, it) => s + it.total, 0)
+    const discountedTotal = discount && discount.amount > 0 ? carTotal - discount.amount : carTotal
+    const PROFORMA_AMOUNT = Math.round(discountedTotal * PROFORMA_DEPOSIT_PCT)
 
     const freeItems = [
       'Prodloužená záruka 3 roky / 150 000 km',

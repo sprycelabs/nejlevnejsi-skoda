@@ -1,4 +1,4 @@
-import { generateInvoiceXlsx } from './generateInvoiceXlsx.js'
+import { generateQuoteXlsx } from './generateQuoteXlsx.js'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -17,17 +17,16 @@ const form = {
 }
 
 const items = [
-  { car: { name: 'Škoda Kodiaq', variant: '2.0 TDI 4x4', salePrice: 1250000 }, qty: 1 },
+  { car: { name: 'Škoda Karoq', variant: '1.5 TSI 110 kW DSG', salePrice: 639900, internalId: 'TMBxxxxxxV/0001' }, qty: 1 },
 ]
 
-const orderNumber    = 'OBJ-2026-001'
-const variableSymbol = '20260014823'
+const quoteNumber = 'NAB-2026-001'
 
 const logoPath   = path.join(__dirname, '..', 'public', 'logo.png')
 const logoBase64 = fs.existsSync(logoPath) ? fs.readFileSync(logoPath).toString('base64') : null
 
-const wb = await generateInvoiceXlsx({ form, items, orderNumber, logoBase64, variableSymbol })
+const wb = await generateQuoteXlsx({ form, items, quoteNumber, logoBase64 })
 
-const outPath = 'C:\\Users\\schon\\Documents\\proforma-test-20pct.xlsx'
+const outPath = path.join('C:\\Users\\schon\\Documents', `nabidka-${quoteNumber}.xlsx`)
 await wb.xlsx.writeFile(outPath)
 console.log(`✅ Excel uložen: ${outPath}`)
