@@ -314,7 +314,7 @@ export default function VozyPage() {
           {/* Stats row */}
           <div className="flex flex-wrap gap-3 sm:gap-6">
             {[
-              { value: `${cars.length}`, label: 'vozů skladem', mobileHide: false },
+              { value: `${cars.length}`, label: 'modelů v nabídce', mobileHide: false },
               { value: 'až 20 %', label: 'průměrná úspora', mobileHide: false },
               { value: '24 h', label: 'odpověď na poptávku', mobileHide: true },
             ].map(({ value, label, mobileHide }) => (
