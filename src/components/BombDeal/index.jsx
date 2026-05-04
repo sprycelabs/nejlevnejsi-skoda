@@ -10,7 +10,7 @@ export default function BombDeal() {
   const savings = car.originalPrice - car.salePrice
 
   return (
-    <section className="py-16 sm:py-20 bg-[#1a0a00] overflow-hidden relative">
+    <section className="py-12 sm:py-20 bg-[#1a0a00] overflow-hidden relative">
       {/* bg glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-orange-500/20 rounded-full blur-3xl pointer-events-none" />
 

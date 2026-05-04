@@ -36,7 +36,7 @@ const benefits = [
 
 export default function WhyUs() {
   return (
-    <section id="o-nas" className="py-20 bg-gray-50">
+    <section id="o-nas" className="py-12 sm:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">

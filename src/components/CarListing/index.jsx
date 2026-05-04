@@ -126,7 +126,7 @@ function CarCard({ car, index }) {
 
 export default function CarListing() {
   return (
-    <section id="vozy" className="py-20 bg-gray-50">
+    <section id="vozy" className="py-12 sm:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">

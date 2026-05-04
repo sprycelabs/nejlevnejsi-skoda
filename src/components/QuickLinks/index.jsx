@@ -34,9 +34,9 @@ const links = [
 
 export default function QuickLinks() {
   return (
-    <section className="py-0">
+    <section className="py-12 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 pt-6 sm:pt-8 relative z-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 relative z-10">
           {links.map((item, i) => (
             <motion.a
               key={item.title}
