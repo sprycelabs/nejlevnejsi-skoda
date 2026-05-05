@@ -316,7 +316,7 @@ export default function VozyPage() {
             {[
               { value: `${cars.length}`, label: 'modelů v nabídce', mobileHide: false },
               { value: 'až 20 %', label: 'průměrná úspora', mobileHide: false },
-              { value: '24 h', label: 'odpověď na poptávku', mobileHide: true },
+              { value: '2026', label: 'rok výroby', mobileHide: true },
             ].map(({ value, label, mobileHide }) => (
               <div key={label} className={`flex items-center gap-2.5 ${mobileHide ? 'hidden sm:flex' : 'flex'}`}>
                 <div className="text-lg sm:text-xl font-black text-white">{value}</div>
