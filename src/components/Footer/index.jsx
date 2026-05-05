@@ -9,6 +9,10 @@ const footerLinks = {
     { label: 'Škoda Superb', href: '/vozy' },
     { label: 'Škoda Kamiq', href: '/vozy' },
   ],
+  'Ojeté vozy': [
+    { label: 'Ojeté vozy', href: '/ojete-vozy' },
+    { label: 'Škoda Octavia Combi 2022', href: '/ojete-vozy/octavia-combi' },
+  ],
   'Pro zákazníky': [
     { label: 'Jak to funguje', href: '/#jak-to-funguje' },
     { label: 'Financování', href: '/#jak-to-funguje' },

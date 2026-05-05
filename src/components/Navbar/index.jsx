@@ -6,6 +6,7 @@ import { useCart } from '../../context/CartContext'
 const navLinks = [
   { label: 'O nás', href: '/o-nas' },
   { label: 'Vozy', href: '/vozy' },
+  { label: 'Ojeté vozy', href: '/ojete-vozy' },
   { label: 'Jak to funguje', href: '/#jak-to-funguje' },
   { label: 'Časté dotazy', href: '/faq' },
   { label: 'Kontakt', href: '/kontakt' },
