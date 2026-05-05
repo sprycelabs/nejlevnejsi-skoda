@@ -64,7 +64,6 @@ export default function VozDetail() {
     { label: 'Převodovka', value: car.transmission },
     { label: 'Spotřeba', value: car.consumption },
     { label: 'Výkon', value: car.power },
-    { label: 'Rok výroby', value: String(car.year) },
     { label: 'Barva', value: car.color },
     { label: 'Stav', value: 'Nové' },
   ]

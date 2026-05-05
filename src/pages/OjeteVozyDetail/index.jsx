@@ -65,7 +65,6 @@ const SPECS = [
   { label: 'Zdvihový objem', value: '999 cm³' },
   { label: 'Nájezd', value: '116 600 – 121 120 km' },
   { label: '1. registrace', value: '04/2022' },
-  { label: 'Rok výroby', value: '2022' },
   { label: 'Počet majitelů', value: '1' },
   { label: 'Emisní třída', value: 'Euro 6' },
   { label: 'Původ', value: 'Holandsko' },
@@ -139,7 +138,6 @@ const TECH_SPECS = {
     { label: 'Počet sedadel', value: '5' },
   ],
   'Identifikace vozu': [
-    { label: 'Rok výroby', value: '2022' },
     { label: '1. registrace', value: '04/2022' },
     { label: 'Nájezd', value: '116 600 – 121 120 km' },
     { label: 'Počet majitelů', value: '1' },
