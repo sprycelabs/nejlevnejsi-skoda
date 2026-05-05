@@ -80,7 +80,7 @@ export default function AkceKveten() {
                 Ušetřete <span className="text-orange-400 whitespace-nowrap">10 000 Kč</span><br />na první objednávku
               </h1>
               <p className="text-gray-300 text-lg mb-2">
-                Jen prvních <strong className="text-white">10 zákazníků</strong> v květnu získá slevový kód.
+                Jen prvních <strong className="text-white">7 zákazníků</strong> v květnu získá slevový kód.
               </p>
               <p className="text-gray-500 text-sm mb-10">
                 Místa se rychle plní — zadejte e-mail a kód vám pošleme obratem.
