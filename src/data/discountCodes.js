@@ -3,6 +3,8 @@ export const DISCOUNT_CODES = [
   { code: 'KVETEN-10-TAFY', type: 'fixed', value: 10000 },
   { code: 'KVETEN10-PREISSOVA', type: 'fixed', value: 10000 },
   { code: 'KVETEN10-AK21', type: 'fixed', value: 10000 },
+  { code: 'KVETEN10-KHOR', type: 'fixed', value: 10000 },
+  { code: 'KVETEN10-HOSTALEK', type: 'fixed', value: 10000 },
 ]
 
 /**
