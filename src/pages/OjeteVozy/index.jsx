@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ShieldCheck, Truck, CheckCircle2, Wrench, Phone, Star, ChevronDown, BadgePercent, Users, Briefcase, TrendingUp } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 
 const PRICE = 249000
 const STOCK = 16
@@ -78,6 +79,11 @@ function FaqList() {
 export default function OjeteVozy() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="Ojeté vozy Škoda | Octavia Combi z aukce za výjimečnou cenu"
+        description="Prověřené ojeté Škody Octavia Combi z holandského leasingu. Kompletní servis 120 000 km hotový předem. Pouze 16 kusů — dovoz a registrace v ČR v ceně."
+        canonical="/ojete-vozy"
+      />
       <Navbar />
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}

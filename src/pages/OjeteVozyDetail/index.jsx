@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import SEO from '../../components/SEO'
 
 const PRICE = 249000
 const STOCK = 16
@@ -180,6 +181,13 @@ export default function OjeteVozyDetail() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Škoda Octavia Combi 1.0 TSI DSG 2022 | Ojeté vozy z aukce"
+        description="Škoda Octavia Combi 2022, 1.0 TSI e-TEC DSG, ~120 000 km, 1 majitel. Kompletní servis hotový, dovoz a registrace v ČR v ceně. Cena 249 000 Kč vč. DPH."
+        canonical="/ojete-vozy/octavia-combi"
+        image="https://nejlevnejsi-skoda.cz/ojete-hero.webp"
+        type="product"
+      />
       <Navbar />
 
       {/* ── HERO ── */}
