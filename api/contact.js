@@ -73,7 +73,7 @@ export default async function handler(req, res) {
     }))
 
     await resend.emails.send({
-      from: `Nejlevnější Škoda <${FROM}>`,
+      from: `Glenford Corp s.r.o. <${FROM}>`,
       to: CONTACT_EMAIL,
       replyTo: form.email,
       subject: `Nová poptávka od ${form.name}${form.model ? ` — ${form.model}` : ''}`,

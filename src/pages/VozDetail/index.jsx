@@ -83,7 +83,7 @@ export default function VozDetail() {
       priceCurrency: 'CZK',
       price: car.salePrice,
       availability: 'https://schema.org/InStock',
-      seller: { '@type': 'Organization', name: 'Nejlevnější Škoda' },
+      seller: { '@type': 'Organization', name: 'Glenford Corp s.r.o.' },
     },
   }
 

@@ -15,17 +15,18 @@ const BLACK = '#111827'
 const PROFORMA_DEPOSIT_PCT = 0.20
 
 const SELLER = {
-  name:    'TOP GLOBAL STRATEGIC MANAGEMENT LTD',
-  reg:     '490247',
-  address: 'Gladstonos 83, 3032',
-  city:    'Limassol, Kypr',
+  name:    'Glenford Corp s.r.o.',
+  reg:     '24602400',
+  dic:     'CZ24602400',
+  address: 'Primátorská 296/38, Libeň',
+  city:    'Praha 8, 180 00',
 }
 
 const BANK = {
   account:      'LT51 3250 0426 4014 3306',
   swift:        'REVOLT21',
   owner:        'TGSM',
-  ownerAddress: 'Náměstí Republiky 1081/7, Praha 1, Česká Republika',
+  ownerAddress: 'Primátorská 296/38, Libeň, Praha 8, 180 00, Česká Republika',
 }
 
 function czk(amount) {
@@ -114,7 +115,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     function drawPageFooter() {
       hline(PH - 28, ML, PW - MR, MGRAY, 0.5)
       R(7.5, GRAY).text(
-        `${SELLER.name}  ·  Reg. číslo: ${SELLER.reg}  ·  ${SELLER.address}, ${SELLER.city}`,
+        `${SELLER.name}  ·  IČO: ${SELLER.reg}  ·  DIČ: ${SELLER.dic}  ·  ${SELLER.address}, ${SELLER.city}`,
         ML, PH - 22, { width: CW - 60, lineBreak: false }
       )
       R(7.5, GRAY).text('nejlevnejsi-skoda.cz', 0, PH - 22, { width: PW - MR, align: 'right', lineBreak: false })
@@ -164,7 +165,9 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     y += 12
     R(9, GRAY).text(SELLER.city, ML, y, { width: colW })
     y += 12
-    R(9, GRAY).text(`Reg. číslo: ${SELLER.reg}`, ML, y, { width: colW })
+    R(9, GRAY).text(`IČO: ${SELLER.reg}`, ML, y, { width: colW })
+    y += 12
+    R(9, GRAY).text(`DIČ: ${SELLER.dic}`, ML, y, { width: colW })
 
     const sellerEndY = y + 12
 
@@ -365,7 +368,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
       ML + 12, y + 10, { width: CW - 24, lineBreak: true }
     )
     R(7.5, GRAY).text(
-      `Společnost ${SELLER.name}, se sídlem v Kyperské republice, je registrována k dani z přidané hodnoty v České republice dle příslušných právních předpisů.`,
+      `Společnost ${SELLER.name}, IČO: ${SELLER.reg}, DIČ: ${SELLER.dic}, se sídlem ${SELLER.address}, ${SELLER.city}.`,
       ML + 12, y + 32, { width: CW - 24, lineBreak: false }
     )
 
@@ -375,7 +378,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const footY = PH - 28
     hline(footY, ML, PW - MR, MGRAY, 0.5)
     R(7.5, GRAY).text(
-      `${SELLER.name}  ·  Reg. číslo: ${SELLER.reg}  ·  ${SELLER.address}, ${SELLER.city}`,
+      `${SELLER.name}  ·  IČO: ${SELLER.reg}  ·  DIČ: ${SELLER.dic}  ·  ${SELLER.address}, ${SELLER.city}`,
       ML, footY + 6, { width: CW - 60, lineBreak: false }
     )
     R(7.5, GRAY).text('nejlevnejsi-skoda.cz', 0, footY + 6, { width: PW - MR, align: 'right', lineBreak: false })

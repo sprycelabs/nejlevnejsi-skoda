@@ -30,7 +30,7 @@ import { CartProvider } from './context/CartContext'
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Nejlevnější Škoda',
+  name: 'Glenford Corp s.r.o.',
   url: 'https://nejlevnejsi-skoda.cz',
   logo: 'https://nejlevnejsi-skoda.cz/logo.webp',
   contactPoint: {
@@ -42,9 +42,9 @@ const organizationJsonLd = {
   },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Rybná 716',
+    streetAddress: 'Primátorská 296/38',
     addressLocality: 'Praha',
-    postalCode: '110 00',
+    postalCode: '180 00',
     addressCountry: 'CZ',
   },
   sameAs: [],

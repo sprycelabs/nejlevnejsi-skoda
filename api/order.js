@@ -285,7 +285,7 @@ export default async function handler(req, res) {
 
     // Email zákazníkovi — pouze proforma faktura, bez nahraných souborů
     await resend.emails.send({
-      from: `Nejlevnější Škoda <${FROM}>`,
+      from: `Glenford Corp s.r.o. <${FROM}>`,
       to: form.email,
       subject: `Vaše objednávka ${orderNumber} — proforma faktura v příloze`,
       html: customerEmail(form, items, total, orderNumber, discount),
@@ -294,7 +294,7 @@ export default async function handler(req, res) {
 
     // Notifikace klientovi — faktura + všechny soubory od zákazníka
     await resend.emails.send({
-      from: `Nejlevnější Škoda <${FROM}>`,
+      from: `Glenford Corp s.r.o. <${FROM}>`,
       to: CLIENT_EMAIL,
       subject: `Nová objednávka ${orderNumber} — ${form.companyName || `${form.firstName} ${form.lastName}`}`,
       html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount),

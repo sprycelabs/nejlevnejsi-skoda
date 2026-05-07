@@ -108,7 +108,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <span>© {new Date().getFullYear()} TOP GLOBAL STRATEGIC MANAGEMENT LTD,Reg. číslo: 490247, Všechna práva vyhrazena.</span>
+          <span>© {new Date().getFullYear()} Glenford Corp s.r.o. · IČO: 24602400 · DIČ: CZ24602400 · Všechna práva vyhrazena.</span>
           <div className="flex gap-4">
             <a href="/doc/gdpr.pdf" target="_blank" rel="noopener" className="hover:text-gray-300 transition-colors">GDPR</a>
             <a href="/doc/terms.pdf" target="_blank" rel="noopener" className="hover:text-gray-300 transition-colors">Obchodní podmínky</a>

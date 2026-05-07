@@ -20,17 +20,18 @@ const YELLOW_BDR  = 'FFfbbf24'
 const WHITE       = 'FFFFFFFF'
 
 const SELLER = {
-  name:    'TOP GLOBAL STRATEGIC MANAGEMENT LTD',
-  reg:     '490247',
-  address: 'Gladstonos 83, 3032',
-  city:    'Limassol, Kypr',
+  name:    'Glenford Corp s.r.o.',
+  reg:     '24602400',
+  dic:     'CZ24602400',
+  address: 'Primátorská 296/38, Libeň',
+  city:    'Praha 8, 180 00',
 }
 
 const BANK = {
   account:      'LT51 3250 0426 4014 3306',
   swift:        'REVOLT21',
   owner:        'TGSM',
-  ownerAddress: 'Náměstí Republiky 1081/7, Praha 1, Česká Republika',
+  ownerAddress: 'Primátorská 296/38, Libeň, Praha 8, 180 00, Česká Republika',
 }
 
 function czk(amount) {
@@ -196,7 +197,7 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   setCell(ws, r, 4, buyerName,    { bold: true, size: 10, color: DARK })
   r++
 
-  const sellerLines = [SELLER.address, SELLER.city, `Reg. číslo: ${SELLER.reg}`]
+  const sellerLines = [SELLER.address, SELLER.city, `IČO: ${SELLER.reg}`, `DIČ: ${SELLER.dic}`]
   const buyerLines  = [
     form.street,
     `${form.zip} ${form.city}`,
@@ -439,7 +440,7 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
   rowHeight(ws, r, 30)
   ws.mergeCells(r, 2, r, 5)
   setCell(ws, r, 2,
-    `Společnost ${SELLER.name}, se sídlem v Kyperské republice, je registrována k dani z přidané hodnoty v České republice dle příslušných právních předpisů.`,
+    `Společnost ${SELLER.name}, IČO: ${SELLER.reg}, DIČ: ${SELLER.dic}, se sídlem ${SELLER.address}, ${SELLER.city}.`,
     { size: 8, color: GRAY, bg: YELLOW_BG, wrap: true,
       border: { bottom: { style: 'thin', color: { argb: YELLOW_BDR } }, left: { style: 'thin', color: { argb: YELLOW_BDR } }, right: { style: 'thin', color: { argb: YELLOW_BDR } } },
     }
@@ -456,7 +457,7 @@ export async function generateInvoiceXlsx({ form, items, orderNumber, logoBase64
 
   rowHeight(ws, r, 14)
   ws.mergeCells(r, 2, r, 4)
-  setCell(ws, r, 2, `${SELLER.name}  ·  Reg. číslo: ${SELLER.reg}  ·  ${SELLER.address}, ${SELLER.city}`, { size: 7, color: GRAY })
+  setCell(ws, r, 2, `${SELLER.name}  ·  IČO: ${SELLER.reg}  ·  DIČ: ${SELLER.dic}  ·  ${SELLER.address}, ${SELLER.city}`, { size: 7, color: GRAY })
   setCell(ws, r, 5, 'nejlevnejsi-skoda.cz', { size: 7, color: GRAY, align: 'right' })
 
   return wb

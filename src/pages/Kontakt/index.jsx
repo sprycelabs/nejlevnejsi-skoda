@@ -34,9 +34,9 @@ const contactItems = [
   {
     icon: MapPin,
     label: 'Kancelář',
-    value: 'Náměstí Republiky 1081/7, Praha 1',
+    value: 'Primátorská 296/38, Praha 8',
     sub: 'Schůzky po domluvě',
-    href: 'https://maps.google.com/?q=Rybná+716,+110+00+Praha+1',
+    href: 'https://maps.google.com/?q=Primátorská+296/38,+180+00+Praha+8',
   },
   {
     icon: WhatsAppIcon,
