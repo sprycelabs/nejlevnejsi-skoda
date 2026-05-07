@@ -31,7 +31,7 @@ const BANK = {
   account:      'LT51 3250 0426 4014 3306',
   swift:        'REVOLT21',
   owner:        'TGSM',
-  ownerAddress: 'Primátorská 296/38, Libeň, Praha 8, 180 00, Česká Republika',
+  ownerAddress: 'Náměstí Republiky 1081/7, Praha 1, Česká Republika',
 }
 
 function czk(amount) {
