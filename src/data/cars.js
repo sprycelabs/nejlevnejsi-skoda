@@ -910,7 +910,7 @@
     freeDelivery: true,
     color: 'Bílá Moon metalíza',
     image: '/cars/fabia-05.webp',
-    imageCount: 6,
+    imageCount: 2,
     slug: 'fabia-classic-bomb',
     internalId: 'TMBxxxxxxV/0009',
     isBomb: true,
