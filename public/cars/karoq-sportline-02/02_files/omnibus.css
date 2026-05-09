@@ -1,0 +1,231 @@
+.omnibus-price, #omnibus-price {
+    font-family: 'SkodaNEXT', 'Skoda NEXT';
+}
+
+[id*="omnibus-price"] {
+    font-family: 'SkodaNEXT', 'Skoda NEXT';
+    position: relative;
+    font-weight: 200;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: rgba(22, 23, 24, 1);
+}
+
+.omnibus-price.trimline-price {
+    font-weight: 200;
+    font-size: 1.1rem;
+    color: rgb(22, 23, 24);
+}
+
+.trimline-price.mobile {
+    padding: 1rem 2rem 0;
+}
+
+#omnibus-price.mobile {
+    padding: 0 2rem;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+}
+
+#omnibus-price.stockcars {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    font-weight: 400;
+}
+
+#omnibus-price.stockcars span {
+    font-weight: inherit;
+}
+
+#omnibus-price.stockcars strong {
+    font-weight: 600;
+}
+
+#price-mobile #omnibus-price.stockcars {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+.tooltip-container {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+}
+
+.omnibus-price-inline {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+}
+
+.omnibusInfoIcon {
+    fill: rgb(65, 148, 104);
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+.omnibusInfoIcon.mobile {
+    width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.4rem;
+}
+
+.omnibusTooltip {
+    visibility: hidden;
+    max-width: min(350px, calc(100vw - 2rem));
+    width: max-content;
+    min-width: 0;
+    background-color: #0e3a2f;
+    color: #fff;
+    text-align: left;
+    border-radius: 8px;
+    padding: 12px 14px;
+    position: absolute;
+    bottom: auto;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    margin-bottom: 0;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.omnibusTooltip::after {
+    content: "";
+    position: absolute;
+    top: auto;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #0e3a2f transparent;
+}
+
+.omnibusTooltip.mobile {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    max-width: none;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 0;
+    padding: 12px 14px;
+    max-height: 70vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.trimline-price .tooltip-container .omnibusTooltip.mobile {
+    transform: translateY(-50%);
+}
+
+.omnibusTooltip.mobile::after {
+    display: none;
+}
+
+.persoOmnibusPriceListItem {
+    position: relative;
+    /* List cards inherit heading-sized typography from the card; reset to body-scale copy */
+    font-size: 0.875rem;
+    line-height: 1.45;
+    font-weight: 400;
+    color: rgba(22, 23, 24, 1);
+}
+
+.persoOmnibusPriceListItem strong {
+    font-weight: 600;
+}
+
+.persoOmnibusPriceListItem .tooltip-container {
+    position: static;
+}
+
+.persoOmnibusPriceListItem .omnibusTooltip {
+    position: absolute;
+    left: 50%;
+    right: auto;
+    top: 100%;
+    bottom: auto;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    max-width: calc(100% - 1rem);
+    width: max-content;
+    min-width: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.persoOmnibusPriceListItem .omnibusTooltip::after {
+    display: block;
+    top: auto;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: transparent transparent #0e3a2f transparent;
+}
+
+.persoOmnibusPriceListItem .omnibusTooltip.mobile {
+    position: absolute;
+    left: 50%;
+    right: auto;
+    top: 100%;
+    width: max-content;
+    max-width: calc(100% - 1rem);
+    transform: translateX(-50%);
+    margin-top: 8px;
+}
+
+.persoOmnibusPriceListItem .omnibusTooltip.mobile::after {
+    display: block;
+}
+
+@media (max-width: 1280px) {
+    .omnibusTooltip {
+        position: fixed;
+        left: 50%;
+        right: 1rem;
+        width: auto;
+        max-width: none;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: 0;
+        max-height: 70vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 1.0625rem;
+        line-height: 1.5;
+        padding: 1rem 1.25rem;
+    }
+
+    .omnibusTooltip::after {
+        display: none;
+    }
+
+    .persoOmnibusPriceListItem .omnibusTooltip {
+        max-width: calc(100% - 1rem);
+    }
+}
+
+.tooltip-container:hover .omnibusTooltip,
+.tooltip-container:focus .omnibusTooltip {
+    visibility: visible;
+    opacity: 1;
+}

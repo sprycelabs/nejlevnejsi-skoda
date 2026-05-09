@@ -1,0 +1,448 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable new-cap */
+/* eslint-disable no-redeclare */
+/* eslint-disable no-var */
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable eqeqeq */
+/* eslint-disable camelcase */
+/* eslint-disable no-undef */
+/* eslint-disable no-shadow */
+/* eslint-disable no-magic-numbers */
+/* eslint-disable max-lines-per-function */
+
+setTimeout(() => {
+  // Main function to execute parts in sequence using 'then'
+  function isInPreviewMode() {
+    return !!document.querySelector('debug-badge');
+  }
+
+  function notify(type = 'error', message) {
+    if (isInPreviewMode()) {
+      if (typeof message === 'object') {
+        console[type](message)
+      } else {
+        console[type]('Omnibug SC 2.0 - ' + message)
+      }
+    }
+  }
+
+  console.log("script for omnibus logging loaded!")
+
+  const cloudRunCollectorUrl = 'https://dxl-custom-event-receiver-827439587282.europe-west4.run.app/collect';
+const healthLogScriptVersion = 'omnibus_sc_2026-04-18';
+
+function sendHealthLog(eventType, message, extra = {}) {
+  try {
+    const payload = {
+      source: 'omnibus_sc',
+      event_type: eventType,
+      feature_id: 'OMNIBUS_SC',
+      experiment_type: matrixId == 48 ? 'OMNIBUS_SC_DETAIL' : matrixId == 44 ? 'OMNIBUS_SC_LIST' : 'OMNIBUS_SC',
+      message: String(message || ''),
+      market_bid: String(gtm?.[gtmId]?.dataLayer?.get('importer.BID') || ''),
+      page_url: window.location.pathname,
+      script_version: healthLogScriptVersion,
+      timestamp: new Date().toISOString(),
+      matrix_id: String(matrixId || ''),
+      locale: String(locale || ''),
+      ...extra,
+    };
+
+    fetch(cloudRunCollectorUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).catch(function(err) {
+      notify('error', 'Failed to send health log: ' + err);
+    });
+  } catch (e) {
+    notify('error', 'Failed to build health log payload: ' + e);
+  }
+}
+
+function shouldMirrorToHealthLog(eventAction, eventLabel) {
+  const mirroredEvents = {
+    K2NG_DETAIL_NOT_OK_RESPONSE: 'fetch_not_ok_response',
+    K2NG_LIST_NOT_OK_RESPONSE: 'fetch_not_ok_response',
+    K2NG_LIST_NO_NODELIST: 'target_element_missing',
+    K2NG_DETAIL_PRICE_RENDERED: 'rendered_ok',
+    K2NG_LIST_PRICE_RENDERED: 'rendered_ok',
+  };
+
+  return mirroredEvents[eventLabel] || null;
+}
+
+function pushEvent(eventAction, eventLabel, appwebName = 'perso_omnibus_error', eventValue = '') {
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'trackEvent',
+      eventCategory: 'GTM',
+      eventAction,
+      eventLabel,
+      eventValue,
+      'appweb.Name': appwebName,
+    });
+
+    const mirroredEventType = shouldMirrorToHealthLog(eventAction, eventLabel);
+    if (mirroredEventType) {
+      sendHealthLog(
+        mirroredEventType,
+        `dataLayer event mirrored to health log: ${eventAction} / ${eventLabel}`,
+        {
+          experiment_type: eventAction,
+          datalayer_event_label: eventLabel,
+          appweb_name: appwebName,
+          event_value: String(eventValue || ''),
+        }
+      );
+    }
+  } catch (e) {
+    sendHealthLog(
+      'datalayer_push_failed',
+      e && e.message ? e.message : String(e),
+      {
+        experiment_type: eventAction,
+        datalayer_event_label: eventLabel,
+        appweb_name: appwebName,
+        event_value: String(eventValue || ''),
+      }
+    );
+    notify('error', 'Failed to push event: ' + e);
+  }
+}
+
+  // eslint-disable-next-line camelcase
+  const gtm = window.google_tag_manager || []
+  const gtmId = 'GTM-TDHVGGG'
+  window.dataLayer = window.dataLayer || []
+  const locale =
+    gtm[gtmId].dataLayer.get('page.LanguageVersion') ||
+    sessionStorage.getItem('omnibusLanguageVersion')
+  const matrixId = sessionStorage.getItem('omnibusMatrixId')
+
+  const returnMinPrice = data => {
+    if (
+      Array.isArray(data) &&
+      data.length > 0 &&
+      data[0].minPrice !== undefined
+    ) {
+      return data[0].minPrice
+    }
+    return null // Return null if the array is empty or minPrice is not found
+  }
+
+  const detectDevice = () => {
+    return window.innerWidth < 992 ? 'mobile' : 'desktop'
+  }
+
+  const device = detectDevice()
+
+  const assignSelectorByDeviceAndPageType = (matrixId, data) => {
+    if (matrixId == 48) {
+      return window.innerWidth < 992
+        ? data.selectorStockCarsDetailMobile
+        : data.selectorStockCarsDetailDesktop
+    } else if (matrixId == 44) {
+      return window.innerWidth < 992
+        ? data.selectorStockCarsListMobile
+        : data.selectorStockCarsListDesktop
+    }
+    // Default case or handle other matrixId values if needed
+    return null
+  }
+
+  const data = {
+    selectorStockCarsDetailMobile: 'detailMobile',
+    selectorStockCarsDetailDesktop: 'detailDesktop',
+    selectorStockCarsListMobile: 'listMobile',
+    selectorStockCarsListDesktop: 'listDesktop',
+  }
+
+  const formatPrice = (number, decimals, locale, currency) => {
+    if (!number) {
+      return ""; // Pokud nenÃ­ platnÃ¡ cena, vrÃ¡tÃ­ prÃ¡zdnÃ½ Å™etÄ›zec mÃ­sto "N/A"
+    }
+  
+    const roundedNumber = Number(number.toFixed(decimals));
+  
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(roundedNumber);
+  };
+  
+  const showDetailPagePrice = (priceText, formatedPrice, selector, priceTextInfoBox) => {
+    if (!formatedPrice) return; // Pokud nenÃ­ platnÃ¡ cena, nic nezobrazÃ­
+  
+    const selectorDiv = document.querySelector(selector);
+    if (!selectorDiv) {
+        sendHealthLog(
+            'target_element_missing',
+            `Selector not found: ${selector}`,
+            {
+            experiment_type: 'OMNIBUS_SC_DETAIL',
+            selector,
+            device,
+            }
+        );
+
+      notify("error", `Selector not found: ${selector}`);
+      return;
+    }
+  
+    let priceDiv = document.querySelector("#omnibus-price");
+    if (!priceDiv) {
+      priceDiv = document.createElement("span");
+      priceDiv.id = "omnibus-price";
+      priceDiv.className = "stockcars";
+      selectorDiv.appendChild(priceDiv);
+    }
+  
+    priceDiv.innerHTML = `
+      <span>${priceText}: </span>
+      <span><strong>${formatedPrice}</strong></span>
+      ${
+        priceTextInfoBox
+          ? `<div class="tooltip-container ${device}">
+              <svg viewBox="0 0 24 24" class="omnibusInfoIcon ${device}" data-testid="text">
+                <path stroke="none" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"></path>
+              </svg>
+              <span class="omnibusTooltip ${device}">${priceTextInfoBox}</span>
+            </div>`
+          : ''
+      }
+    `;
+  };
+
+  const getDataLayerVariable = (variableName, matrixId) => {
+    // Check if the dataLayer exists
+    if (!window.dataLayer || !Array.isArray(window.dataLayer)) {
+      notify('error', 'Data Layer is not available.')
+      return undefined
+    }
+
+    // Loop through the dataLayer array in reverse to find the desired object
+    for (let i = window.dataLayer.length - 1; i >= 0; i--) {
+      const item = window.dataLayer[i]
+      if (item.matrixId == matrixId && item[variableName] !== undefined) {
+        return item[variableName]
+      }
+    }
+
+    // If no match is found, return undefined
+    return undefined
+  }
+
+  const addPricesToNodeList = (nodeList, pricesArray, priceText, currency, decimals, priceTextInfoBox, showOnlyDiscountAll) => {
+    let renderedCount = 0;
+    pricesArray.forEach(priceItem => {
+      const { id, minPrice, isDiscount } = priceItem;
+  
+      // ðŸ’¡ PÅ™eskoÄ, pokud platÃ­ "chci zobrazit jen se slevou" ale sleva nenÃ­
+      if (showOnlyDiscountAll && !(isDiscount || priceItem.isListPrice)) {
+        sendHealthLog(
+            'render_skipped',
+            'List price hidden due to showOnlyDiscountAll=true and no discount/list price',
+            {
+            experiment_type: 'OMNIBUS_SC_LIST',
+            show_only_discount_all: true,
+            is_discount: !!priceItem.isDiscount,
+            is_list_price: !!priceItem.isListPrice,
+            item_id: id,
+            }
+        );
+
+        return;
+      }
+  
+      const formattedPrice = formatPrice(minPrice, decimals, locale, currency);
+      if (!formattedPrice) return;
+  
+      const matchingNode = Array.from(nodeList).find(node => {
+        let parent = node.parentElement;
+        while (parent) {
+          const anchor = parent.querySelector("a");
+          if (anchor && anchor.href.includes(id)) {
+            return node;
+          }
+          parent = parent.parentElement;
+        }
+        return null;
+      });
+  
+      if (matchingNode) {
+        let priceDiv = matchingNode.nextElementSibling;
+        if (priceDiv && priceDiv.classList.contains("persoOmnibusPriceListItem")) {
+          priceDiv.innerText = `${priceText}: ${formattedPrice}`;
+        } else {
+          priceDiv = document.createElement("div");
+          priceDiv.classList.add("persoOmnibusPriceListItem");
+          priceDiv.innerHTML = `
+            <span>${priceText}: </span>
+            <span><strong>${formattedPrice}</strong></span>
+            ${
+              priceTextInfoBox
+                ? `<div class="tooltip-container ${device}">
+                    <svg viewBox="0 0 24 24" class="omnibusInfoIcon ${device}" data-testid="text">
+                      <path stroke="none" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"></path>
+                    </svg>
+                    <span class="omnibusTooltip ${device}">${priceTextInfoBox}</span>
+                  </div>`
+                : ''
+            }
+          `;
+          matchingNode.insertAdjacentElement("afterend", priceDiv);
+        }
+        renderedCount++;
+      }
+    });
+    return renderedCount;
+  };
+  
+
+  //var matrixId = getDataLayerVariable('matrixId')
+  if (matrixId == 48) {
+    notify('warn', 'run omnibus on detail stock car page')
+    const persoEcommerce = getDataLayerVariable('ecommerce', 48)
+    const persoDetail = persoEcommerce.detail.products[0]
+    uniqueId = [persoDetail.dimension89]
+  } else if (matrixId == 44) {
+    notify('warn', 'run omnibus on stock car list page')
+    const impressionList = getDataLayerVariable('ecommerce', 44)
+    const carList = impressionList.impressions
+    uniqueId = carList.map(car => car.id)
+  }
+  notify('warn', 'unique id is: ' + uniqueId)
+
+  // URL to which you want to send the POST request
+  const url =
+    (typeof process !== 'undefined' && process.env.OB_COUNT_STOCKCARS_URL) ||
+    'https://ob-pn-count-stockcars-827439587282.europe-west4.run.app/'
+
+  // Options object for the fetch request
+  const options = {
+    method: 'POST', // Method of the request
+
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      vinList: Array.isArray(uniqueId) && matrixId == 48 ? uniqueId : null,
+      idList: Array.isArray(uniqueId) && matrixId == 44 ? uniqueId : null,
+      locales: locale,
+    }),
+  }
+
+  const main = matrixId => {
+    fetch(url, options)
+      .then(response => {
+        if (!response.ok) {
+          const eventLabel =
+            matrixId == 48
+              ? 'K2NG_DETAIL_NOT_OK_RESPONSE'
+              : 'K2NG_LIST_NOT_OK_RESPONSE'
+
+          pushEvent(
+            matrixId == 48 ? 'OMNIBUS_SC_DETAIL' : 'OMNIBUS_SC_LIST',
+            eventLabel,
+            'perso_omnibus_error',
+            options.body
+            );
+
+          throw new warn('Network response was not ok ' + response.statusText)
+        }
+        return response.json()
+      })
+      .then(data => {
+        notify('warn', data)
+        const priceText = data.priceStockCars
+        const currency = data.currencyAll
+        const decimals = data.decimalNumberStockCars ?? data.decimalNumberAll ?? 0
+        const currencyDisplay = data.currencyDisplayAll
+        const selector = assignSelectorByDeviceAndPageType(matrixId, data)
+        const priceTextInfoBox = data.infoStockCars
+        notify('warn', selector)
+
+        if (matrixId == 48) {
+          const showOnlyDiscountAll = data.showOnlyDiscountAll === true;
+          const resultItem = data.result?.[0];
+
+          if (!resultItem) return;
+
+          if (showOnlyDiscountAll && !(resultItem.isDiscount || resultItem.isListPrice)) {
+            return;
+          }
+
+          const price = resultItem.minPrice;
+          const formatedPrice = formatPrice(price, decimals, locale, currency);
+          showDetailPagePrice(priceText, formatedPrice, selector, priceTextInfoBox);
+          
+          pushEvent(
+            'OMNIBUS_SC_DETAIL',
+            'K2NG_DETAIL_PRICE_RENDERED',
+            'perso_omnibus_price_rendered',
+            `Price rendered: ${formatedPrice}, locale: ${locale}`
+            );
+
+        } else if (matrixId == 44) {
+          var price = data.result
+          const nodelist = document.querySelectorAll(selector)
+
+          if (!nodelist || nodelist.length === 0) {
+            pushEvent(
+                'OMNIBUS_SC_LIST',
+                'K2NG_LIST_NO_NODELIST',
+                'perso_omnibus_error',
+                `selector: ${selector}`
+                );
+
+            notify('error', 'No matching nodes found for price insertion')
+            return
+          }
+
+          const showOnlyDiscountAll = data.showOnlyDiscountAll === true;
+
+          const renderedCount = addPricesToNodeList(
+            nodelist,
+            price,
+            priceText,
+            currency,
+            decimals,
+            priceTextInfoBox,
+            showOnlyDiscountAll
+          )
+          
+          if (renderedCount > 0) {
+            pushEvent(
+                'OMNIBUS_SC_LIST',
+                'K2NG_LIST_PRICE_RENDERED',
+                'perso_omnibus_price_rendered',
+                `Price rendered: ${renderedCount} prices, locale: ${locale}`
+                );
+          }
+        }
+      })
+      .catch(error => {
+      sendHealthLog(
+        'fetch_failed',
+        error && error.message ? error.message : String(error),
+        {
+          experiment_type: matrixId == 48 ? 'OMNIBUS_SC_DETAIL' : 'OMNIBUS_SC_LIST',
+          request_url: url,
+          request_body: options.body,
+        }
+      );
+      notify('error', error);
+    });
+  }
+
+  main(matrixId)
+}, 0)
