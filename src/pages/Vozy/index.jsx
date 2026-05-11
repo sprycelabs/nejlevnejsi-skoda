@@ -415,26 +415,19 @@ export default function VozyPage() {
             )}
 
             {/* Akce Květen banner */}
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg px-5 py-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="bg-gradient-to-r from-orange-500/60 to-orange-600/60 rounded-lg px-5 py-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
                   <Flame size={18} className="text-white" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč na první objednávku!</span>
-                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">jen 2 kupony!</span>
+                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč na první objednávku</span>
+                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">akce ukončena</span>
                   </div>
-                  <p className="text-orange-100 text-xs">Kupony se rychle rozdávají — zajistěte si kód dříve, než bude pozdě.</p>
+                  <p className="text-orange-100 text-xs">Dostupný počet kuponů byl již vyčerpán. Sledujte nás pro další akce.</p>
                 </div>
               </div>
-              <a
-                href="/akce-kveten"
-                className="flex items-center gap-1.5 bg-white text-orange-600 font-bold text-sm px-4 py-2 rounded-md hover:bg-orange-50 transition-colors shrink-0"
-              >
-                Chci kód, dokud zbývá
-                <ArrowRight size={14} />
-              </a>
             </div>
 
             {/* Grid */}
