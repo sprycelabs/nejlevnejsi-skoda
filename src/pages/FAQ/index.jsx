@@ -67,7 +67,7 @@ const faqs = [
       },
       {
         q: 'Kdy a jak se platí?',
-        a: 'Platební podmínky jsou stejné jako při koupi vozu u kteréhokoliv dealera škoda.',
+        a: 'Platební podmínky jsou stejné jako při koupi vozu u kteréhokoliv dealera Škoda. Při objednání vozu uhradíte rezervační zálohu ve výši 20 % z ceny vozu a zbytek doplatíte při jeho převzetí. Platba je možná online bankovním převodem nebo osobně našemu obchodnímu zástupci, který vás navštíví. V budoucnu bude přidána i možnost platby v naší kanceláři.',
       },
     ],
   },

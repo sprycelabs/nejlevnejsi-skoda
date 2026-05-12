@@ -74,7 +74,7 @@ export default function Pokladna() {
   const [orderNumber, setOrderNumber] = useState('')
   const [loading, setLoading] = useState(false)
   const [submitError, setSubmitError] = useState('')
-  const [invoiceChecked, setInvoiceChecked] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState('')
   const [deliveryChecked, setDeliveryChecked] = useState(false)
   const [sidebarErrors, setSidebarErrors] = useState({})
   const [attachedFiles, setAttachedFiles] = useState([])
@@ -145,7 +145,7 @@ export default function Pokladna() {
     e.preventDefault()
     const errs = validate()
     const sErrs = {}
-    if (!invoiceChecked) sErrs.invoice = 'Povinné'
+    if (!paymentMethod) sErrs.invoice = 'Povinné'
     if (!deliveryChecked) sErrs.delivery = 'Povinné'
     if (Object.keys(errs).length > 0 || Object.keys(sErrs).length > 0) {
       setErrors(errs)
@@ -182,6 +182,7 @@ export default function Pokladna() {
         body: JSON.stringify({
           form, items, total: discountedTotal, fileAttachments,
           discount: appliedDiscount ? { ...appliedDiscount, amount: discountAmount } : null,
+          paymentMethod,
         }),
       })
       const data = await res.json()
@@ -465,18 +466,30 @@ export default function Pokladna() {
                   {/* Platba */}
                   <div className="border-t border-gray-100 pt-4 mb-3">
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Platba</p>
-                    <label className={`flex items-start gap-2.5 p-3 rounded-md border cursor-pointer transition-colors ${sidebarErrors.invoice ? 'border-red-300 bg-red-50' : 'border-gray-100 bg-gray-50 hover:border-[#1e7e34]/30'}`}>
-                      <input
-                        type="checkbox"
-                        checked={invoiceChecked}
-                        onChange={e => { setInvoiceChecked(e.target.checked); setSidebarErrors(s => ({ ...s, invoice: '' })) }}
-                        className="w-4 h-4 accent-[#1e7e34] shrink-0 mt-0.5 cursor-pointer"
-                      />
-                      <div>
-                        <span className="text-sm font-semibold text-gray-800">Faktura</span>
-                        <p className="text-xs text-gray-400">Platba na základě faktury</p>
-                      </div>
-                    </label>
+                    <div className="flex flex-col gap-2">
+                      {[
+                        { value: 'prevod', label: 'Zálohová faktura – platba převodem', desc: 'Platba bankovním převodem na základě zálohové faktury' },
+                        { value: 'osobne', label: 'Zálohová faktura – platba osobně', desc: 'Platba v hotovosti nebo kartou obchodnímu zástupci' },
+                      ].map(opt => (
+                        <label
+                          key={opt.value}
+                          className={`flex items-start gap-2.5 p-3 rounded-md border cursor-pointer transition-colors ${sidebarErrors.invoice ? 'border-red-300 bg-red-50' : paymentMethod === opt.value ? 'border-[#1e7e34] bg-green-50' : 'border-gray-100 bg-gray-50 hover:border-[#1e7e34]/30'}`}
+                        >
+                          <input
+                            type="radio"
+                            name="paymentMethod"
+                            value={opt.value}
+                            checked={paymentMethod === opt.value}
+                            onChange={() => { setPaymentMethod(opt.value); setSidebarErrors(s => ({ ...s, invoice: '' })) }}
+                            className="w-4 h-4 accent-[#1e7e34] shrink-0 mt-0.5 cursor-pointer"
+                          />
+                          <div>
+                            <span className="text-sm font-semibold text-gray-800">{opt.label}</span>
+                            <p className="text-xs text-gray-400">{opt.desc}</p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
                     {sidebarErrors.invoice && <p className="text-red-500 text-xs mt-1 flex items-center gap-1"><AlertCircle size={11} /> Vyberte způsob platby</p>}
                   </div>
 
