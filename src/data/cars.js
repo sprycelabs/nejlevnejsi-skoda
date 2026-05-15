@@ -4974,7 +4974,7 @@
     isSale: true,
     freeDelivery: true,
     isBomb: false,
-    image: '/cars/karoq-top-selection-config-02.webp',
+    image: '/cars/karoq-02-config.webp',
     imageCount: 3,
     highlight: 'Škoda Karoq Top Selection v elegantní Černé Magic — 2,0 TDI 85 kW s manuální převodovkou. Virtuální kokpit 10", ACC, KESSY, vyhřívaná přední i zadní sedadla a úspora přes 165 000 Kč oproti české ceníkové ceně.',
     technicalSpecs: {
