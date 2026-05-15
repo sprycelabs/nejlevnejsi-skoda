@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
-import { ShoppingCart, Phone, Menu, X, ChevronDown, Sun, ArrowRight } from 'lucide-react'
-
+import { ShoppingCart, Phone, Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../../context/CartContext'
-
 
 const navLinks = [
   { label: 'O nás', href: '/o-nas' },
@@ -31,27 +29,22 @@ export default function Navbar() {
         scrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'
       }`}
     >
-      {/* Top bar — promo + kontakt */}
-      <div className="bg-[#0891b2] text-white text-xs sm:text-sm py-1.5 px-4">
+      {/* Top bar */}
+      <div className="bg-[#145523] text-white text-xs sm:text-sm py-1.5 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <a href="/akce-dovolena" className="flex items-center gap-1.5 hover:text-cyan-200 transition-colors min-w-0">
-            <Sun size={13} className="text-cyan-200 shrink-0" />
-            <span className="truncate">
-              <span className="hidden sm:inline">Škoda na dovolenou — </span>
-              <strong>−10 000 Kč</strong>
-              <span className="hidden sm:inline"> na první objednávku</span>
-            </span>
-            <span className="hidden sm:flex items-center gap-0.5 text-cyan-200 font-bold whitespace-nowrap">
-              · Chci kód <ArrowRight size={11} />
-            </span>
-          </a>
+          <span className="whitespace-nowrap">
+            <span className="hidden sm:inline">Vozy Škoda z EU – průměrná úspora </span>
+            <span className="sm:hidden">Úspora </span>
+            <strong>20 %</strong>
+            <span className="hidden sm:inline"> oproti ČR</span>
+          </span>
           <a
             href="tel:+420733455966"
-            className="flex items-center gap-1.5 hover:text-cyan-200 transition-colors whitespace-nowrap shrink-0"
+            className="flex items-center gap-1.5 hover:text-green-200 transition-colors whitespace-nowrap shrink-0"
           >
             <Phone size={13} />
             +420 733 455 966
-            <span className="hidden sm:inline text-cyan-200">· Po–Pá 10:00–16:00</span>
+            <span className="hidden sm:inline text-green-300">· Po–Pá 10:00–16:00</span>
           </a>
         </div>
       </div>

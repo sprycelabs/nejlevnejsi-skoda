@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, Flame, Sun } from 'lucide-react'
+import { Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, Flame } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cars, formatPrice } from '../../data/cars'
 import { useCart } from '../../context/CartContext'
@@ -40,16 +40,21 @@ function CarCard({ car, index }) {
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {car.isSale && (
+            <span className="bg-[#1e7e34] text-white text-xs font-bold px-2.5 py-1 rounded-full">
+              Akce
+            </span>
+          )}
+          {car.isNew && (
+            <span className="bg-[#0d6efd] text-white text-xs font-bold px-2.5 py-1 rounded-full">
+              Novinka
+            </span>
+          )}
           {car.freeDelivery && (
             <span className="bg-[#fd7e14] text-white text-xs font-bold px-2.5 py-1 rounded-full">
               Doprava ZDARMA
             </span>
           )}
-          {/* Promo badge */}
-          <span className="flex items-center gap-1 bg-[#0891b2] text-white text-xs font-bold px-2.5 py-1 rounded-full">
-            <Sun size={10} />
-            −10k s kódem
-          </span>
         </div>
 
         {/* Discount badge */}

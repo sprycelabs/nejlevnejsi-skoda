@@ -6,7 +6,7 @@ import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
   Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
-  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X, Sun
+  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -697,28 +697,6 @@ export default function VozDetail() {
 
                 </div>
               </motion.div>
-
-              {/* Škoda na dovolenou promo */}
-              <motion.a
-                href="/akce-dovolena"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.28 }}
-                className="block bg-[#ecfeff] border border-cyan-200 hover:border-cyan-400 rounded-lg p-4 flex items-start gap-3 transition-colors group"
-              >
-                <div className="w-9 h-9 bg-[#0891b2] rounded-md flex items-center justify-center shrink-0">
-                  <Sun size={17} className="text-white" />
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900 text-sm">Škoda na dovolenou</div>
-                  <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">
-                    Platí na tento vůz — získejte kód <strong className="text-[#0891b2]">−10 000 Kč</strong>
-                  </div>
-                  <span className="inline-flex items-center gap-1 mt-1.5 text-xs font-semibold text-[#0891b2] group-hover:underline">
-                    Chci slevový kód <ArrowRight size={11} />
-                  </span>
-                </div>
-              </motion.a>
 
               {/* ZTP sleva */}
               <motion.div
