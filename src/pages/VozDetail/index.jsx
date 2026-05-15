@@ -477,8 +477,25 @@ export default function VozDetail() {
                     {car.equipment
                       ? Object.entries(car.equipment).map(([category, items]) => (
                           <div key={category} className="px-7 py-5">
-                            <h3 className="font-bold text-gray-900 mb-3">{category}</h3>
-                            {items.length > 0 ? (
+                            <h3 className="font-bold text-gray-900 mb-4">{category}</h3>
+                            {/* Vnořené podkategorie (config vozy) */}
+                            {!Array.isArray(items) ? (
+                              <div className="space-y-5">
+                                {Object.entries(items).map(([sub, subItems]) => (
+                                  <div key={sub}>
+                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{sub}</p>
+                                    <ul className="space-y-1.5">
+                                      {subItems.map(item => (
+                                        <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
+                                          <CheckCircle2 size={14} className="text-[#1e7e34] shrink-0" />
+                                          {item}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : items.length > 0 ? (
                               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6">
                                 {items.map(item => (
                                   <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
