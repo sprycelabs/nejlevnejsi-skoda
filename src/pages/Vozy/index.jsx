@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown, Flame } from 'lucide-react'
+import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown, Flame, Sun } from 'lucide-react'
+
 import { Link } from 'react-router-dom'
 import { cars, formatPrice } from '../../data/cars'
 import { useCart } from '../../context/CartContext'
@@ -61,9 +62,11 @@ function CarCard({ car, index }) {
           className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {car.isSale && <span className="bg-[#1e7e34] text-white text-xs font-bold px-2.5 py-1 rounded-full">Akce</span>}
-          {car.isNew && <span className="bg-[#0d6efd] text-white text-xs font-bold px-2.5 py-1 rounded-full">Novinka</span>}
           {car.freeDelivery && <span className="bg-[#fd7e14] text-white text-xs font-bold px-2.5 py-1 rounded-full">Doprava ZDARMA</span>}
+          <span className="flex items-center gap-1 bg-[#0891b2] text-white text-xs font-bold px-2.5 py-1 rounded-full">
+            <Sun size={10} />
+            −10k s kódem
+          </span>
         </div>
         <div className="absolute top-3 right-3 w-11 h-11 bg-red-500 text-white rounded-full flex flex-col items-center justify-center shadow-lg">
           <span className="text-xs font-black leading-none">{car.discount} %</span>
@@ -414,21 +417,26 @@ export default function VozyPage() {
               </div>
             )}
 
-            {/* Akce Květen banner */}
-            <div className="bg-gradient-to-r from-orange-500/60 to-orange-600/60 rounded-lg px-5 py-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
-                  <Flame size={18} className="text-white" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč na první objednávku</span>
-                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">akce ukončena</span>
+            {/* Škoda na dovolenou banner */}
+            <a href="/akce-dovolena" className="block mb-6">
+              <div className="bg-gradient-to-r from-[#0891b2]/70 to-[#0e7490]/70 hover:from-[#0891b2]/90 hover:to-[#0e7490]/90 rounded-lg px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
+                    <Sun size={18} className="text-white" />
                   </div>
-                  <p className="text-orange-100 text-xs">Dostupný počet kuponů byl již vyčerpán. Sledujte nás pro další akce.</p>
+                  <div>
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-white font-black text-sm">Škoda na dovolenou — sleva 10 000 Kč na první objednávku</span>
+                      <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">Aktivní akce</span>
+                    </div>
+                    <p className="text-cyan-100 text-xs">Bylo by škoda nevzít. Omezený počet kuponů — získejte kód dřív než se vyčerpají.</p>
+                  </div>
                 </div>
+                <span className="shrink-0 flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-4 py-2 rounded-md transition-colors whitespace-nowrap">
+                  Chci kód <ArrowRight size={13} />
+                </span>
               </div>
-            </div>
+            </a>
 
             {/* Grid */}
             <AnimatePresence mode="wait">

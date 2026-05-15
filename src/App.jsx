@@ -20,6 +20,7 @@ import Kontakt from './pages/Kontakt'
 import FAQ from './pages/FAQ'
 import Pokladna from './pages/Pokladna'
 import AkceKveten from './pages/AkceKveten'
+import AkceDovolena from './pages/AkceDovolena'
 import OjeteVozy from './pages/OjeteVozy'
 import OjeteVozyDetail from './pages/OjeteVozyDetail'
 import ScrollToTop from './components/ScrollToTop'
@@ -95,6 +96,7 @@ export default function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/pokladna" element={<Pokladna />} />
         <Route path="/akce-kveten" element={<AkceKveten />} />
+        <Route path="/akce-dovolena" element={<AkceDovolena />} />
         <Route path="/ojete-vozy" element={<OjeteVozy />} />
         <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
         </Routes>
