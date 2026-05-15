@@ -40,12 +40,7 @@ function CarCard({ car, index }) {
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {car.isSale && (
-            <span className="bg-[#1e7e34] text-white text-xs font-bold px-2.5 py-1 rounded-full">
-              Akce
-            </span>
-          )}
-          {car.isNew && (
+          {car.type === 'config' && (
             <span className="bg-[#0d6efd] text-white text-xs font-bold px-2.5 py-1 rounded-full">
               Novinka
             </span>

@@ -61,8 +61,7 @@ function CarCard({ car, index }) {
           className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {car.isSale && <span className="bg-[#1e7e34] text-white text-xs font-bold px-2.5 py-1 rounded-full">Akce</span>}
-          {car.isNew && <span className="bg-[#0d6efd] text-white text-xs font-bold px-2.5 py-1 rounded-full">Novinka</span>}
+          {car.type === 'config' && <span className="bg-[#0d6efd] text-white text-xs font-bold px-2.5 py-1 rounded-full">Novinka</span>}
           {car.freeDelivery && <span className="bg-[#fd7e14] text-white text-xs font-bold px-2.5 py-1 rounded-full">Doprava ZDARMA</span>}
         </div>
         <div className="absolute top-3 right-3 w-11 h-11 bg-red-500 text-white rounded-full flex flex-col items-center justify-center shadow-lg">

@@ -146,8 +146,7 @@ export default function VozDetail() {
                     <Flame size={12} /> Cenová bomba
                   </span>
                 )}
-                {car.isNew && <span className="bg-[#0d6efd] text-white text-xs font-bold px-3 py-1.5 rounded-full">Novinka</span>}
-                {car.isSale && <span className="bg-[#1e7e34] text-white text-xs font-bold px-3 py-1.5 rounded-full">Akce</span>}
+                {car.type === 'config' && <span className="bg-[#0d6efd] text-white text-xs font-bold px-3 py-1.5 rounded-full">Novinka</span>}
                 {car.freeDelivery && <span className="bg-[#fd7e14] text-white text-xs font-bold px-3 py-1.5 rounded-full">Doprava ZDARMA</span>}
               </div>
 
