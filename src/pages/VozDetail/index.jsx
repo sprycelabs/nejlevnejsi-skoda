@@ -6,7 +6,7 @@ import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
   Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
-  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X
+  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X, Tag
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -180,6 +180,7 @@ export default function VozDetail() {
                   vč. DPH · <span className="text-red-400 font-semibold">ušetříte {formatPrice(savings)}</span>
                 </span>
               </div>
+
             </motion.div>
 
             {/* right — car image */}
@@ -728,6 +729,25 @@ export default function VozDetail() {
                   <div className="font-bold text-gray-900 text-sm">Sleva pro držitele ZTP</div>
                   <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">Jste držitelem průkazu ZTP? Kontaktujte nás pro individuální nabídku.</div>
                   <a href="/kontakt" className="inline-block mt-2 text-xs font-semibold text-[#1e7e34] hover:underline">Zjistit více →</a>
+                </div>
+              </motion.div>
+
+              {/* BERU_SLEVU promo */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.32 }}
+                className="bg-lime-50 border border-lime-300 rounded-lg p-4 flex items-start gap-3"
+              >
+                <div className="w-9 h-9 bg-lime-500 rounded-md flex items-center justify-center shrink-0">
+                  <Tag size={18} className="text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900 text-sm">Aktuální akce — 10 000 Kč</div>
+                  <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">Použij promo kód při objednávce a ušetři dalších 10 000 Kč na jakýkoliv vůz.</div>
+                  <div className="mt-2 inline-flex items-center gap-1.5 bg-lime-100 border border-lime-300 rounded px-2 py-1">
+                    <span className="font-mono font-black text-lime-700 text-xs tracking-wider">BERU_SLEVU</span>
+                  </div>
                 </div>
               </motion.div>
 

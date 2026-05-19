@@ -514,6 +514,18 @@ export default function Pokladna() {
                   {/* Slevový kód */}
                   <div className="mb-4">
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Slevový kód</p>
+                    {!appliedDiscount && (
+                      <div className="flex items-center justify-between bg-lime-50 border border-lime-200 rounded-md px-3 py-2 mb-2">
+                        <span className="text-xs text-lime-800">Aktuální akce: <strong className="font-mono">BERU_SLEVU</strong> = sleva 10 000 Kč</span>
+                        <button
+                          type="button"
+                          onClick={() => { setDiscountInput('BERU_SLEVU'); setDiscountError('') }}
+                          className="text-xs font-bold text-lime-700 hover:text-lime-900 transition-colors ml-2 shrink-0"
+                        >
+                          Použít →
+                        </button>
+                      </div>
+                    )}
                     {appliedDiscount ? (
                       <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-md px-3 py-2.5">
                         <div className="flex items-center gap-2">
