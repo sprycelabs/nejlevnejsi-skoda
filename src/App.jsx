@@ -8,6 +8,7 @@ import QuickLinks from './components/QuickLinks'
 import ClientsBar from './components/ClientsBar'
 import CarListing from './components/CarListing'
 import BombDeal from './components/BombDeal'
+import PromoBeruSlevu from './components/PromoBeruSlevu'
 import HowItWorks from './components/HowItWorks'
 import WhyUs from './components/WhyUs'
 import ProcessSection from './components/ProcessSection'
@@ -20,6 +21,7 @@ import Kontakt from './pages/Kontakt'
 import FAQ from './pages/FAQ'
 import Pokladna from './pages/Pokladna'
 import AkceKveten from './pages/AkceKveten'
+import BeruSlevu from './pages/BeruSlevu'
 import OjeteVozy from './pages/OjeteVozy'
 import OjeteVozyDetail from './pages/OjeteVozyDetail'
 import ScrollToTop from './components/ScrollToTop'
@@ -71,6 +73,7 @@ function HomePage() {
         <HowItWorks />
         <ProcessSection />
         <WhyUs />
+        <PromoBeruSlevu />
         <CTASection />
       </main>
       <Footer />
@@ -95,6 +98,7 @@ export default function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/pokladna" element={<Pokladna />} />
         <Route path="/akce-kveten" element={<AkceKveten />} />
+        <Route path="/beru-slevu" element={<BeruSlevu />} />
         <Route path="/ojete-vozy" element={<OjeteVozy />} />
         <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
         </Routes>

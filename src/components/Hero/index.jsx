@@ -1,24 +1,77 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, ShieldCheck, Truck, FileText } from 'lucide-react'
+import { ArrowRight, ShieldCheck, Truck, Copy, Check } from 'lucide-react'
+
+function PercentDecor({ className }) {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className={className}>
+      <circle cx="30" cy="30" r="20" stroke="currentColor" strokeWidth="10" />
+      <line x1="85" y1="10" x2="15" y2="110" stroke="currentColor" strokeWidth="10" strokeLinecap="round" />
+      <circle cx="90" cy="90" r="20" stroke="currentColor" strokeWidth="10" />
+    </svg>
+  )
+}
+
+function TagDecor({ className }) {
+  return (
+    <svg viewBox="0 0 100 100" fill="none" className={className}>
+      <path d="M10 10 L10 55 L50 95 L95 50 L55 10 Z" stroke="currentColor" strokeWidth="7" strokeLinejoin="round" />
+      <circle cx="32" cy="32" r="8" stroke="currentColor" strokeWidth="6" />
+    </svg>
+  )
+}
 
 export default function Hero() {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = (e) => {
+    e.preventDefault()
+    navigator.clipboard.writeText('BERU_SLEVU')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
-    <section className="relative bg-[#0d1f10] overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
+    <section className="relative bg-lime-600 overflow-hidden">
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-lime-600 via-lime-600 to-lime-700 pointer-events-none" />
 
-      {/* Decorative circles */}
-      <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#1e7e34]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[#28a745]/8 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Grid pattern overlay */}
+      {/* Subtle dot grid */}
       <div
-        className="absolute inset-0 opacity-5 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
+          backgroundImage: 'radial-gradient(circle, #65a30d 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+          opacity: 0.3,
         }}
       />
+
+      {/* Soft glow blobs */}
+      <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-lime-300/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-lime-600/20 rounded-full blur-3xl pointer-events-none" />
+
+
+      {/* Dekorativní % */}
+      <div className="absolute top-16 left-[4%] pointer-events-none text-lime-700 opacity-20">
+        <PercentDecor className="w-40 h-40 -rotate-12" />
+      </div>
+      <div className="absolute bottom-24 right-[3%] pointer-events-none text-lime-700 opacity-20 hidden sm:block">
+        <PercentDecor className="w-32 h-32 rotate-12" />
+      </div>
+      <div className="absolute top-1/2 -translate-y-1/2 left-[1%] pointer-events-none text-lime-700 opacity-15 hidden lg:block">
+        <PercentDecor className="w-24 h-24 rotate-6" />
+      </div>
+      <div className="absolute top-1/2 -translate-y-1/3 right-[8%] pointer-events-none text-lime-700 opacity-15 hidden lg:block">
+        <PercentDecor className="w-64 h-64 rotate-6" />
+      </div>
+
+      {/* Dekorativní tagy */}
+      <div className="absolute top-20 right-[42%] pointer-events-none text-lime-700 opacity-20 hidden lg:block">
+        <TagDecor className="w-16 h-16 rotate-12" />
+      </div>
+      <div className="absolute bottom-16 left-[8%] pointer-events-none text-lime-700 opacity-20 hidden sm:block">
+        <TagDecor className="w-20 h-20 -rotate-15" />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-4 sm:pb-32 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -32,7 +85,7 @@ export default function Hero() {
               className="text-3xl sm:text-4xl xl:text-6xl font-black text-white leading-tight mb-5 sm:mb-6"
             >
               Vozy Škoda z EU{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">
+              <span className="text-lime-950">
                 levněji
               </span>{' '}
               než v ČR
@@ -42,19 +95,19 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-gray-300 text-base sm:text-lg leading-relaxed mb-4 max-w-lg"
+              className="text-lime-950/80 text-base sm:text-lg leading-relaxed mb-4 max-w-lg"
             >
               Dovoz Škody z EU za ceny výrazně nižší než u českých dealerů.
-              Průměrná úspora <strong className="text-white">až 20 %</strong>, plná tovární záruka a kompletní servis bez starostí.
+              Průměrná úspora <strong className="text-lime-950">až 20 %</strong>, plná tovární záruka a kompletní servis bez starostí.
             </motion.p>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="hidden sm:block text-sm text-gray-400 mb-6 sm:mb-8"
+              className="hidden sm:block text-sm text-lime-950/70 mb-6 sm:mb-8"
             >
-              Např. Škoda Karoq od <strong className="text-white">639 900 Kč</strong> — ušetříte <strong className="text-[#28a745] whitespace-nowrap">170 000 Kč</strong> oproti ČR
+              Např. Škoda Karoq od <strong className="text-lime-950">639 900 Kč</strong> — ušetříte <strong className="text-white whitespace-nowrap">170 000 Kč</strong> oproti ČR
             </motion.p>
 
             <motion.div
@@ -65,14 +118,14 @@ export default function Hero() {
             >
               <a
                 href="#vozy"
-                className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-200 shadow-lg shadow-green-900/40 hover:-translate-y-0.5 text-sm sm:text-base"
+                className="flex items-center gap-2 bg-lime-950 hover:bg-lime-900 text-white font-black px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-200 shadow-lg shadow-lime-950/30 hover:-translate-y-0.5 text-sm sm:text-base"
               >
                 Prohlédnout vozy
                 <ArrowRight size={18} />
               </a>
               <a
                 href="#jak-to-funguje"
-                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-200 hover:-translate-y-0.5 text-sm sm:text-base"
+                className="flex items-center gap-2 bg-white/20 hover:bg-white/30 border border-white/40 text-white font-semibold px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-200 hover:-translate-y-0.5 text-sm sm:text-base"
               >
                 Jak to funguje
               </a>
@@ -89,14 +142,14 @@ export default function Hero() {
                 { icon: ShieldCheck, text: 'Tovární záruka zdarma' },
                 { icon: Truck, text: 'Doprava a registrace zdarma' },
               ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-2 text-gray-300 text-sm">
-                  <Icon size={16} className="text-[#28a745]" />
+                <div key={text} className="flex items-center gap-2 text-lime-950/80 text-sm">
+                  <Icon size={16} className="text-lime-950" />
                   {text}
                 </div>
               ))}
-              <div className="flex items-center gap-3 border-l border-white/10 pl-4 sm:pl-6">
-                <span className="text-gray-400 text-sm">Spolupracujeme s autorizovanými partnery</span>
-                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-16 w-auto opacity-90" />
+              <div className="flex items-center gap-3 border-l border-lime-950/20 pl-4 sm:pl-6">
+                <span className="text-lime-950/60 text-sm">Spolupracujeme s autorizovanými partnery</span>
+                <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-16 w-auto opacity-80" />
               </div>
             </motion.div>
           </div>
@@ -108,21 +161,32 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative flex items-end justify-center lg:justify-end"
           >
-            {/* Akce Květen badge */}
+            {/* BERU_SLEVU badge — desktop */}
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               className="hidden lg:block absolute top-0 right-0 z-10"
             >
-              <div className="bg-orange-500/70 rounded-xl px-4 py-3 shadow-xl shadow-orange-900/40 text-center">
-                <div className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Akce Květen</div>
-                <div className="text-white text-2xl font-black leading-none">−10 000 Kč</div>
-                <div className="text-orange-100 text-xs mt-1 font-medium">na první objednávku</div>
-                <div className="mt-2 pt-2 border-t border-white/20 text-orange-100 text-xs">
-                  Akce u konce — <strong className="text-white">kupony vyčerpány</strong>
+              <button
+                onClick={handleCopy}
+                className="group bg-lime-500 hover:bg-lime-400 transition-all duration-200 rounded-xl px-4 py-3 shadow-xl shadow-lime-500/30 text-center cursor-pointer hover:-translate-y-0.5"
+              >
+                <div className="text-lime-950/60 text-xs font-bold uppercase tracking-widest mb-1">Aktuální akce</div>
+                <div className="text-lime-950 text-2xl font-black leading-none">−10 000 Kč</div>
+                <div className="text-lime-950 text-sm font-black leading-snug mt-0.5">To se prostě bere.</div>
+                <div className="text-lime-950/70 text-xs mt-1 font-medium">na jakýkoliv vůz</div>
+                <div className="mt-2 pt-2 border-t border-lime-950/15 flex items-center justify-center gap-1.5">
+                  <span className="font-mono font-black text-lime-950 text-sm tracking-wider">BERU_SLEVU</span>
+                  {copied
+                    ? <Check size={12} className="text-lime-950/70" />
+                    : <Copy size={12} className="text-lime-950/50 group-hover:text-lime-950/80 transition-colors" />
+                  }
                 </div>
-              </div>
+                <div className="text-lime-950/50 text-xs mt-0.5">
+                  {copied ? '✓ Zkopírováno!' : 'Klikni pro kopírování'}
+                </div>
+              </button>
             </motion.div>
 
             <img
@@ -131,25 +195,31 @@ export default function Hero() {
               fetchpriority="high"
               decoding="sync"
               className="w-full scale-125 sm:scale-100 lg:scale-125 xl:scale-150 lg:max-w-2xl xl:max-w-3xl lg:translate-y-24 origin-bottom"
-              style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.7))' }}
+              style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.15))' }}
             />
           </motion.div>
 
         </div>
       </div>
 
-      {/* Akce Květen — mobile banner pod gridem */}
+      {/* BERU_SLEVU — mobile banner */}
       <div className="lg:hidden relative z-10 px-4 pb-6">
-        <div className="flex items-center justify-between gap-4 bg-orange-500/70 rounded-xl px-5 py-4 shadow-xl shadow-orange-900/40">
-          <div>
-            <div className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Akce Květen</div>
-            <div className="text-white text-2xl font-black leading-none">−10 000 Kč</div>
-            <div className="text-orange-100 text-xs mt-1">na první objednávku</div>
+        <button
+          onClick={handleCopy}
+          className="w-full flex items-center justify-between gap-4 bg-lime-500 hover:bg-lime-400 transition-colors rounded-xl px-5 py-4 shadow-lg shadow-lime-500/25"
+        >
+          <div className="text-left">
+            <div className="text-lime-950/60 text-xs font-bold uppercase tracking-widest mb-1">Aktuální akce</div>
+            <div className="text-lime-950 text-2xl font-black leading-none">−10 000 Kč</div>
+            <div className="text-lime-950/70 text-xs mt-1">na jakýkoliv vůz</div>
           </div>
-          <div className="rounded-lg px-4 py-2.5 bg-white/10 text-white text-xs font-bold shrink-0 whitespace-nowrap text-center">
-            Akce u konce<br />kupony vyčerpány
+          <div className="rounded-lg px-4 py-2.5 bg-lime-950/10 text-lime-950 shrink-0 text-center">
+            <div className="font-mono font-black text-sm tracking-wider">BERU_SLEVU</div>
+            <div className="flex items-center justify-center gap-1 mt-1 text-lime-950/60 text-xs">
+              {copied ? <><Check size={11} /> Zkopírováno</> : <><Copy size={11} /> Kopírovat</>}
+            </div>
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Bottom wave */}

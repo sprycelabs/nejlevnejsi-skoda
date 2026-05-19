@@ -7,6 +7,7 @@ import { useCart } from '../../context/CartContext'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
+import PromoBeruSlevu from '../../components/PromoBeruSlevu'
 
 const MODELS = [...new Set(cars.map(c => c.name.split(' - ')[0].trim()))]
 const FUELS = [...new Set(cars.map(c => c.fuel))]
@@ -413,21 +414,7 @@ export default function VozyPage() {
               </div>
             )}
 
-            {/* Akce Květen banner */}
-            <div className="bg-gradient-to-r from-orange-500/60 to-orange-600/60 rounded-lg px-5 py-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/20 rounded-md flex items-center justify-center shrink-0">
-                  <Flame size={18} className="text-white" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white font-black text-sm">Akce Květen — sleva 10 000 Kč na první objednávku</span>
-                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap">akce ukončena</span>
-                  </div>
-                  <p className="text-orange-100 text-xs">Dostupný počet kuponů byl již vyčerpán. Sledujte nás pro další akce.</p>
-                </div>
-              </div>
-            </div>
+            <PromoBeruSlevu compact />
 
             {/* Grid */}
             <AnimatePresence mode="wait">
