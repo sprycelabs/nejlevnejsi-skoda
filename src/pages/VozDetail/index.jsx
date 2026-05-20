@@ -751,6 +751,24 @@ export default function VozDetail() {
                 </div>
               </motion.div>
 
+              {/* Poznámka k dodání */}
+              {car.deliveryNote && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.34 }}
+                  className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3"
+                >
+                  <div className="w-9 h-9 bg-blue-500 rounded-md flex items-center justify-center shrink-0">
+                    <Clock size={18} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900 text-sm">Informace o dodání</div>
+                    <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">{car.deliveryNote}</div>
+                  </div>
+                </motion.div>
+              )}
+
               {/* CENOVÁ BOMBA — sidebar urgency */}
               {car.isBomb && (
                 <motion.div

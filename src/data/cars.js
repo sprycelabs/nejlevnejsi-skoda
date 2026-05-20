@@ -5105,6 +5105,7 @@
     inStock: 1,
     isNew: true,
     isSale: true,
+    deliveryNote: 'Nové auto do výroby — dodání do 3 měsíců',
     freeDelivery: true,
     isBomb: false,
     image: '/cars/octavia-combi-top-selection-config.webp',
