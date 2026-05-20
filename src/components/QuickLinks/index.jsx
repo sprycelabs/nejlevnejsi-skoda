@@ -5,7 +5,7 @@ const links = [
   {
     icon: Car,
     title: 'Nové skladové vozy',
-    desc: 'Ihned k odběru',
+    desc: 'Nové vozy k odběru',
     href: '#vozy',
     bg: 'bg-[#1e7e34]',
   },
