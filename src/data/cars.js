@@ -6027,7 +6027,7 @@
     isSale: true,
     freeDelivery: true,
     isBomb: true,
-    image: '/cars/octavia-03-config.webp',
+    image: '/cars/octavia-combi-bomb.webp',
     imageCount: 3,
     bombTagline: 'Octavia Combi s naším brandem za skvělou cenu',
     bombNote: 'Získáte novou Škodu Octavia Combi za výjimečnou cenu výměnou za to, že vozidlo ponese reklamní polep značky Nejlevnější-Škoda.cz po dobu 18 měsíců. Auto je ihned vaše — bez čekání, bez komplikací.',
