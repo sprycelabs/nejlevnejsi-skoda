@@ -334,19 +334,18 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
 
     B(9, GREEN).text('Platební údaje', ML + 12, y + 10)
 
-    const payData = [
-      ['Číslo účtu 1:', BANK.account1],
-      ['Číslo účtu 2:', BANK.account2],
-      ['Variabilní symbol:', vs],
-    ]
     const halfW = Math.floor(CW / 2) - 12
-    payData.forEach((row, i) => {
-      const col = i < 2 ? 0 : 1
-      const px  = ML + 12 + col * (halfW + 12)
-      const py  = y + 24 + (i % 2) * 18
-      R(8, GRAY).text(row[0], px, py, { width: 100, lineBreak: false })
-      B(8.5, DARK).text(row[1], px + 102, py, { width: halfW - 102, lineBreak: false })
-    })
+
+    // Levý sloupec — číslo bankovního účtu (dvě čísla)
+    const pxL = ML + 12
+    R(8, GRAY).text('Číslo bankovního účtu:', pxL, y + 24, { width: halfW, lineBreak: false })
+    B(8.5, DARK).text(BANK.account1, pxL, y + 35, { width: halfW, lineBreak: false })
+    R(8, GRAY).text(`nebo ${BANK.account2}`, pxL, y + 47, { width: halfW, lineBreak: false })
+
+    // Pravý sloupec — variabilní symbol
+    const pxR = ML + 12 + halfW + 12
+    R(8, GRAY).text('Variabilní symbol:', pxR, y + 24, { width: halfW, lineBreak: false })
+    B(8.5, DARK).text(vs, pxR, y + 35, { width: halfW, lineBreak: false })
 
     y += payH + 18
 
