@@ -88,8 +88,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
 
     const carTotal = carItems.reduce((s, it) => s + it.total, 0)
     const discountedTotal = discount && discount.amount > 0 ? carTotal - discount.amount : carTotal
-    const originalTotal = items.reduce((sum, { car, qty }) => sum + car.originalPrice * qty, 0)
-    const PROFORMA_AMOUNT = Math.round(originalTotal * PROFORMA_DEPOSIT_PCT)
+    const PROFORMA_AMOUNT = Math.round(carTotal * PROFORMA_DEPOSIT_PCT)
 
     const freeItems = [
       'Prodloužená záruka 3 roky / 150 000 km',

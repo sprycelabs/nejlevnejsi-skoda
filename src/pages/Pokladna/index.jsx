@@ -66,8 +66,7 @@ function Field({ label, name, type = 'text', value, onChange, error, placeholder
 export default function Pokladna() {
   const { items, removeFromCart, updateQty, clearCart, cartTotal } = useCart()
   const totalQty = items.reduce((sum, { qty }) => sum + qty, 0)
-  const cartOriginalTotal = items.reduce((sum, { car, qty }) => sum + car.originalPrice * qty, 0)
-  const depositAmount = Math.round(cartOriginalTotal * 0.20)
+  const depositAmount = Math.round(cartTotal * 0.20)
   const [type, setType] = useState('fyzicka') // 'fyzicka' | 'firma'
   const [form, setForm] = useState(EMPTY_FYZICKA)
   const [errors, setErrors] = useState({})
