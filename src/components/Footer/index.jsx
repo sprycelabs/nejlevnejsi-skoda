@@ -9,10 +9,6 @@ const footerLinks = {
     { label: 'Škoda Superb', href: '/vozy' },
     { label: 'Škoda Kamiq', href: '/vozy' },
   ],
-  'Ojeté vozy': [
-    { label: 'Ojeté vozy', href: '/ojete-vozy' },
-    { label: 'Škoda Octavia Combi 2022', href: '/ojete-vozy/octavia-combi' },
-  ],
   'Pro zákazníky': [
     { label: 'Jak to funguje', href: '/#jak-to-funguje' },
     { label: 'Financování', href: '/#jak-to-funguje' },
@@ -94,6 +90,17 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Vedení společnosti */}
+      <div className="border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+          <p className="text-gray-500 text-xs">
+            <span className="text-gray-400 font-semibold">Vedení společnosti:</span>
+            {' '}e-mail: info@glenforcorp.cz
+            {' · '}ID datové schránky: 8xq2ue8
+          </p>
         </div>
       </div>
 
