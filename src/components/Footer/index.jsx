@@ -98,8 +98,9 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <p className="text-gray-500 text-xs">
             <span className="text-gray-400 font-semibold">Vedení společnosti:</span>
-            {' '}e-mail: info@glenforcorp.cz
+            {' '}e-mail: info@glenfordcorp.cz
             {' · '}ID datové schránky: 8xq2ue8
+            {' · '}Číslo bankovního účtu: 368 512 688 / 0300 nebo 7064728369 / 0800
           </p>
         </div>
       </div>

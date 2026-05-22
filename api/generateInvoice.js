@@ -23,10 +23,8 @@ const SELLER = {
 }
 
 const BANK = {
-  account:      'LT51 3250 0426 4014 3306',
-  swift:        'REVOLT21',
-  owner:        'TGSM',
-  ownerAddress: 'Náměstí Republiky 1081/7, Praha 1, Česká Republika',
+  account1: '368 512 688 / 0300',
+  account2: '7064728369 / 0800',
 }
 
 function czk(amount) {
@@ -194,7 +192,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     y += 24
 
     // ── PAYMENT STRIP (3 boxes) ───────────────────────────────────────────────
-    const stripH = 42
+    const stripH = 52
     const boxW   = Math.floor(CW / 3)
 
     for (let i = 0; i < 3; i++) {
@@ -202,16 +200,21 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
       doc.roundedRect(bx, y, boxW, stripH, 3).lineWidth(0.8).strokeColor(MGRAY).fillAndStroke(LGRAY, MGRAY)
     }
 
-    const boxes = [
-      { label: 'IBAN:',               value: BANK.account },
-      { label: 'Datum splatnosti:',  value: formatDate(dueDate) },
-      { label: 'Variabilní symbol:', value: vs },
-    ]
-    boxes.forEach((b, i) => {
-      const bx = ML + i * boxW + 10
-      R(7.5, GRAY).text(b.label, bx, y + 8,  { width: boxW - 20 })
-      B(10.5, DARK).text(b.value, bx, y + 20, { width: boxW - 20 })
-    })
+    // První box — číslo účtu (dvě čísla)
+    const bx0 = ML + 10
+    R(7.5, GRAY).text('Číslo účtu:', bx0, y + 7, { width: boxW - 20 })
+    B(9.5, DARK).text(BANK.account1, bx0, y + 18, { width: boxW - 20 })
+    R(8, GRAY).text(`nebo ${BANK.account2}`, bx0, y + 31, { width: boxW - 20 })
+
+    // Druhý box — datum splatnosti
+    const bx1 = ML + boxW + 10
+    R(7.5, GRAY).text('Datum splatnosti:', bx1, y + 8, { width: boxW - 20 })
+    B(10.5, DARK).text(formatDate(dueDate), bx1, y + 20, { width: boxW - 20 })
+
+    // Třetí box — variabilní symbol
+    const bx2 = ML + 2 * boxW + 10
+    R(7.5, GRAY).text('Variabilní symbol:', bx2, y + 8, { width: boxW - 20 })
+    B(10.5, DARK).text(vs, bx2, y + 20, { width: boxW - 20 })
 
     y += stripH + 22
 
@@ -326,36 +329,24 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     y += fboxH + 20
 
     // ── PLATEBNÍ ÚDAJE ────────────────────────────────────────────────────────
-    const payH = 104
+    const payH = 76
     doc.roundedRect(ML, y, CW, payH, 4).lineWidth(0.8).strokeColor('#c6e6cc').fillAndStroke('#f0faf2', '#c6e6cc')
 
     B(9, GREEN).text('Platební údaje', ML + 12, y + 10)
 
     const payData = [
-      ['IBAN:',               BANK.account],
-      ['SWIFT/BIC:',          BANK.swift],
-      ['Variabilní symbol:',  vs],
+      ['Číslo účtu 1:', BANK.account1],
+      ['Číslo účtu 2:', BANK.account2],
+      ['Variabilní symbol:', vs],
     ]
     const halfW = Math.floor(CW / 2) - 12
     payData.forEach((row, i) => {
       const col = i < 2 ? 0 : 1
       const px  = ML + 12 + col * (halfW + 12)
-      const py  = y + 22 + (i % 2) * 16
-      R(8, GRAY).text(row[0], px, py, { width: 90, lineBreak: false })
-      B(8, DARK).text(row[1], px + 92, py, { width: halfW - 92, lineBreak: false })
+      const py  = y + 24 + (i % 2) * 18
+      R(8, GRAY).text(row[0], px, py, { width: 100, lineBreak: false })
+      B(8.5, DARK).text(row[1], px + 102, py, { width: halfW - 102, lineBreak: false })
     })
-
-    // Doplňující údaje pro banky které je vyžadují
-    const noteY = y + 62
-    doc.moveTo(ML + 12, noteY - 6).lineTo(ML + CW - 12, noteY - 6).lineWidth(0.5).strokeColor('#c6e6cc').stroke()
-    R(7, GRAY).text(
-      'Dodatečné údaje vyžadované některými bankami:',
-      ML + 12, noteY, { width: CW - 24, lineBreak: false }
-    )
-    R(7.5, DARK).text(
-      `Majitel účtu: ${BANK.owner}  ·  Adresa: ${BANK.ownerAddress}`,
-      ML + 12, noteY + 11, { width: CW - 24, lineBreak: false }
-    )
 
     y += payH + 18
 
