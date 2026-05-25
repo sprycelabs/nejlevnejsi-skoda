@@ -6,7 +6,8 @@ import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 
 const PRICE = 249000
-const STOCK = 16
+const STOCK = 5
+const TOTAL_STOCK = 16
 
 function czk(n) {
   return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(n)
@@ -81,7 +82,7 @@ export default function OjeteVozy() {
     <div className="min-h-screen bg-white">
       <SEO
         title="Ojeté vozy Škoda | Octavia Combi z aukce za výjimečnou cenu"
-        description="Prověřené ojeté Škody Octavia Combi z holandského leasingu. Kompletní servis 120 000 km hotový předem. Pouze 16 kusů — dovoz a registrace v ČR v ceně."
+        description="Prověřené ojeté Škody Octavia Combi z holandského leasingu. Kompletní servis 120 000 km hotový předem. Zbývá jen 5 z 16 kusů — dovoz a registrace v ČR v ceně."
         canonical="/ojete-vozy"
       />
       <Navbar />
@@ -111,7 +112,7 @@ export default function OjeteVozy() {
                 className="inline-flex items-center gap-2 bg-[#1e7e34]/20 border border-[#1e7e34]/40 text-[#86efac] text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase"
               >
                 <Star size={12} fill="currentColor" />
-                Pouze {STOCK} vozů · Aukční výprodej
+                Zbývá jen {STOCK} z {TOTAL_STOCK} vozů · Aukční výprodej
               </motion.div>
 
               <motion.h1
@@ -187,7 +188,7 @@ export default function OjeteVozy() {
                 <div className="text-green-200 text-xs font-bold uppercase tracking-widest mb-1">Cena vč. DPH</div>
                 <div className="text-white text-3xl font-black leading-none">{czk(PRICE)}</div>
                 <div className="mt-2 pt-2 border-t border-white/20 text-green-100 text-xs">
-                  Zbývá jen <strong className="text-white">{STOCK} kusů</strong>
+                  Zbývá jen <strong className="text-white">{STOCK} z {TOTAL_STOCK} kusů</strong>
                 </div>
               </div>
 
@@ -211,7 +212,7 @@ export default function OjeteVozy() {
             </div>
             <div className="text-right">
               <div className="text-green-200 text-xs mb-0.5">Zbývá</div>
-              <div className="text-white font-black text-xl">{STOCK} kusů</div>
+              <div className="text-white font-black text-xl">{STOCK} <span className="text-green-200 font-normal text-sm">z {TOTAL_STOCK}</span></div>
             </div>
           </div>
         </div>
@@ -352,7 +353,7 @@ export default function OjeteVozy() {
               <span className="text-[#1e7e34] text-xs font-black tracking-widest uppercase mb-3 block">Pro koho je nabídka ideální</span>
               <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mb-3 leading-tight">
                 Limitovaná aukční nabídka —{' '}
-                <span className="text-[#1e7e34]">pouze {STOCK} vozů</span>
+                <span className="text-[#1e7e34]">zbývá jen {STOCK} z {TOTAL_STOCK} vozů</span>
               </h2>
               <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-6">
                 Nabízíme výjimečnou příležitost nákupu zcela prověřených vozů Škoda Octavia Combi ve zvýhodněném režimu hromadného výprodeje z aukce.
@@ -361,7 +362,7 @@ export default function OjeteVozy() {
               <div className="space-y-3">
                 {[
                   { icon: Users,      title: 'Jednotlivci',          desc: 'Hledáte výhodné rodinné kombi s prověřenou historií a bez skrytých nákladů?' },
-                  { icon: Briefcase,  title: 'Firmy',                desc: 'Ideální jako firemní flotila — k dispozici je celá série 16 identických vozů za výhodnou cenu.' },
+                  { icon: Briefcase,  title: 'Firmy',                desc: 'Ideální jako firemní flotila — k dispozici jsou zbývající vozy z aukční série za výhodnou cenu.' },
                   { icon: TrendingUp, title: 'Investoři / další prodej', desc: 'Nízká vstupní cena a prověřený stav vozů — výhodná příležitost pro další obchodní využití.' },
                 ].map(({ icon: Icon, title, desc }, i) => (
                   <motion.div key={title} {...fadeUp(i * 0.08)} className="flex items-start gap-4 p-4 rounded-2xl border border-gray-100 bg-white hover:border-[#1e7e34]/30 hover:shadow-md transition-all duration-300">
@@ -381,7 +382,7 @@ export default function OjeteVozy() {
             <motion.div {...fadeUp(0.15)}>
               <div className="bg-gradient-to-br from-[#0d1f10] to-[#1a3d1e] rounded-3xl p-6 sm:p-10 text-white">
                 <p className="text-[#86efac] font-bold text-sm uppercase tracking-wider mb-2">Nečekejte</p>
-                <h3 className="text-2xl sm:text-3xl font-black mb-2">Zbývá jen {STOCK} kusů</h3>
+                <h3 className="text-2xl sm:text-3xl font-black mb-2">Zbývá jen {STOCK} z {TOTAL_STOCK} kusů</h3>
                 <p className="text-gray-300 text-sm leading-relaxed mb-6">
                   Tato nabídka se nebude opakovat. Jakmile jsou vozy pryč, jsou pryč.
                 </p>
@@ -434,7 +435,7 @@ export default function OjeteVozy() {
       <section className="py-12 sm:py-20 bg-[#0d1f10]">
         <div className="max-w-xl mx-auto px-4 sm:px-6 text-center">
           <motion.div {...fadeUp()}>
-            <p className="text-[#28a745] text-xs font-black tracking-widest uppercase mb-3">Zbývá {STOCK} kusů</p>
+            <p className="text-[#28a745] text-xs font-black tracking-widest uppercase mb-3">Zbývá jen {STOCK} z {TOTAL_STOCK} kusů</p>
             <h2 className="text-3xl sm:text-5xl font-black text-white mb-2">{czk(PRICE)}</h2>
             <p className="text-gray-400 mb-8 text-xs sm:text-sm">vč. DPH · dovoz domů · registrace v ČR · bez skrytých poplatků</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
