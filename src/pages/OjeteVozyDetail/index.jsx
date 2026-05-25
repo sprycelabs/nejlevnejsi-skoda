@@ -13,7 +13,8 @@ import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 
 const PRICE = 249000
-const STOCK = 16
+const STOCK = 5
+const TOTAL_STOCK = 16
 
 function czk(n) {
   return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(n)
@@ -216,7 +217,7 @@ export default function OjeteVozyDetail() {
               <div className="flex flex-wrap gap-2 mb-5">
                 <span className="bg-gray-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">Ojeté</span>
                 <span className="bg-[#1e7e34] text-white text-xs font-bold px-3 py-1.5 rounded-full">Aukční série</span>
-                <span className="bg-[#fd7e14] text-white text-xs font-bold px-3 py-1.5 rounded-full">Pouze {STOCK} kusů</span>
+                <span className="bg-[#fd7e14] text-white text-xs font-bold px-3 py-1.5 rounded-full">Zbývá jen {STOCK} z {TOTAL_STOCK} kusů</span>
               </div>
 
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white mb-2">
@@ -364,7 +365,7 @@ export default function OjeteVozyDetail() {
               <div>
                 <div className="font-black text-amber-900 text-sm mb-1">Důležité — princip této nabídky</div>
                 <p className="text-sm text-amber-800 leading-relaxed">
-                  Jedná se o výprodej celé aukční série 16 identických vozů.{' '}
+                  Jedná se o výprodej aukční série {TOTAL_STOCK} identických vozů — zbývá posledních {STOCK} kusů.{' '}
                   <strong>Kupujete vůz z této série, nikoliv konkrétní VIN.</strong>{' '}
                   Všechny vozy mají obdobné parametry, historii a stav — díky tomu získáváte výrazně nižší cenu než na běžném trhu.
                 </p>
@@ -471,7 +472,7 @@ export default function OjeteVozyDetail() {
               <h2 className="text-xl font-black text-gray-900 mb-4">Škoda Octavia Combi 2022 — co o voze vědět</h2>
               <div className="space-y-3 text-gray-600 leading-relaxed text-[15px]">
                 <p>
-                  <strong className="text-gray-900">Limitovaná aukční nabídka – pouze 16 vozů.</strong>{' '}
+                  <strong className="text-gray-900">Limitovaná aukční nabídka – zbývá jen {STOCK} z {TOTAL_STOCK} vozů.</strong>{' '}
                   Nabízíme výjimečnou příležitost nákupu zcela prověřených vozů Škoda Octavia Combi ve zvýhodněném režimu hromadného výprodeje z aukce.
                 </p>
                 <p>
@@ -517,7 +518,7 @@ export default function OjeteVozyDetail() {
                   { icon: ShieldCheck,  title: 'Transparentní původ',  sub: 'Holandský leasing, plná servisní historia, žádná překvapení.' },
                   { icon: Wrench,       title: 'Servis hotový předem', sub: 'Koupíte auto a jedete. Žádné náklady navíc hned po nákupu.' },
                   { icon: Truck,        title: 'Vše na klíč',          sub: 'Přeprava, registrace v ČR, dovoz domů — vše v ceně.' },
-                  { icon: Users,        title: 'Ideální pro firmy',    sub: 'Dostupná celá série 16 identických vozů pro firemní flotilu.' },
+                  { icon: Users,        title: 'Ideální pro firmy',    sub: `Zbývá ${STOCK} z ${TOTAL_STOCK} identických vozů — výhodná příležitost pro firemní flotilu.` },
                 ].map(({ icon: Icon, title, sub }) => (
                   <div key={title} className="flex items-start gap-4 bg-white/5 rounded-lg p-4">
                     <div className="w-10 h-10 bg-[#1e7e34]/40 rounded-md flex items-center justify-center shrink-0">
@@ -573,7 +574,7 @@ export default function OjeteVozyDetail() {
                 <div className="p-5 space-y-3">
                   <div className="flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-md bg-orange-50 text-orange-700">
                     <div className="w-2 h-2 rounded-full bg-orange-500 shrink-0 animate-pulse" />
-                    Poslední {STOCK} kusů z aukční série
+                    Zbývá jen {STOCK} z {TOTAL_STOCK} kusů
                   </div>
 
                   <button
@@ -603,7 +604,7 @@ export default function OjeteVozyDetail() {
                 <Clock size={18} className="text-amber-500 shrink-0 mt-0.5" />
                 <div>
                   <div className="font-bold text-amber-900 text-sm">Omezená dostupnost</div>
-                  <div className="text-xs text-amber-700 mt-0.5 leading-relaxed">Pouze {STOCK} vozů z aukční série. Po vyprodání se nabídka nebude opakovat.</div>
+                  <div className="text-xs text-amber-700 mt-0.5 leading-relaxed">Zbývá jen {STOCK} z {TOTAL_STOCK} vozů. Po vyprodání se nabídka nebude opakovat.</div>
                 </div>
               </motion.div>
 
@@ -623,7 +624,7 @@ export default function OjeteVozyDetail() {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-2xl px-4 py-3 flex items-center gap-3">
         <div className="flex-1 min-w-0">
           <div className="text-xl font-black text-[#1e7e34] leading-tight">{czk(PRICE)}</div>
-          <div className="text-xs text-orange-500 font-semibold">Zbývá {STOCK} kusů</div>
+          <div className="text-xs text-orange-500 font-semibold">Zbývá {STOCK} z {TOTAL_STOCK} kusů</div>
         </div>
         <a href="tel:+420733455966" className="flex items-center gap-1 border-2 border-[#1e7e34] text-[#1e7e34] font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap">
           <Phone size={14} /> Zavolat
