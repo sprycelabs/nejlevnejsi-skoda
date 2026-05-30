@@ -11,6 +11,7 @@ import BombDeal from './components/BombDeal'
 import PromoBeruSlevu from './components/PromoBeruSlevu'
 import HowItWorks from './components/HowItWorks'
 import WhyUs from './components/WhyUs'
+import PriceGuarantee from './components/PriceGuarantee'
 import ProcessSection from './components/ProcessSection'
 import CTASection from './components/CTASection'
 import Footer from './components/Footer'
@@ -73,7 +74,7 @@ function HomePage() {
         <HowItWorks />
         <ProcessSection />
         <WhyUs />
-        <PromoBeruSlevu />
+        <PriceGuarantee />
         <CTASection />
       </main>
       <Footer />
