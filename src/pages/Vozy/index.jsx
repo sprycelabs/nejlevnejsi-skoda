@@ -338,7 +338,7 @@ export default function VozyPage() {
         <div className="flex gap-0 lg:gap-8">
           {/* Sidebar filtry — desktop */}
           <aside className="hidden lg:block w-64 shrink-0">
-            <div className="bg-white rounded-lg border border-gray-100 p-6 sticky top-24">
+            <div className="bg-white rounded-lg border border-gray-100 p-6 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="font-black text-gray-900">Filtry</h2>
                 {activeFiltersCount > 0 && (
