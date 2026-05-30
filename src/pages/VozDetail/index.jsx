@@ -382,6 +382,7 @@ export default function VozDetail() {
                 </div>
 
                 {/* Podmínky */}
+                {car.bombConditions?.length > 0 && (
                 <div className="bg-white px-6 py-5 border-b border-gray-100">
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Podmínky nabídky</p>
                   <div className="space-y-2.5">
@@ -395,8 +396,10 @@ export default function VozDetail() {
                     ))}
                   </div>
                 </div>
+                )}
 
                 {/* Po 18 měsících — 2 možnosti */}
+                {car.bombAfterOptions?.length > 0 && (
                 <div className="bg-white px-6 py-5">
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Po uplynutí 18 měsíců si vyberete</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -414,6 +417,7 @@ export default function VozDetail() {
                     ))}
                   </div>
                 </div>
+                )}
               </motion.div>
             )}
 
