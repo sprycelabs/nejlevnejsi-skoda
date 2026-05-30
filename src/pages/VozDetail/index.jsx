@@ -335,8 +335,8 @@ export default function VozDetail() {
               <img src="/logo/skoda.webp" alt="Škoda Auto" className="h-9 w-auto" />
             </motion.div>
 
-            {/* CENOVÁ BOMBA — hlavní sekce */}
-            {car.isBomb && (
+            {/* CENOVÁ BOMBA — hlavní sekce (jen pro auta s bombTagline) */}
+            {car.isBomb && car.bombTagline && (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
