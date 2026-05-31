@@ -6171,7 +6171,7 @@
     isSale: true,
     freeDelivery: true,
     isBomb: false,
-    image: '/cars/octavia-classic-config.webp',
+    image: '/cars/octavia-07-config.webp',
     imageCount: 3,
     internalId: 'CGSHQSFG',
     highlight: 'Škoda Octavia Classic 1,5 TSI 85 kW — elegantní sedan v luxusní Červené Velvet metalíze s bohatou výbavou. Virtuální kokpit 10", dvouzónová klimatizace Climatronic, vyhřívané přední sedady, Side Assist, Lane Assist+ a prediktivní tempomat v sériové výbavě. Kožený vyhřívaný volant, bezdrátový SmartLink a LED světlomety. Ušetříte 154 900 Kč oproti české ceně.',
