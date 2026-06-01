@@ -29,6 +29,10 @@ import ScrollToTop from './components/ScrollToTop'
 import Cart from './components/Cart'
 import CookieBanner from './components/CookieBanner'
 import { CartProvider } from './context/CartContext'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import KlientskeCentrum from './pages/KlientskeCentrum'
+import KlientskeCentrumLogin from './pages/KlientskeCentrum/Login'
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -86,24 +90,36 @@ export default function App() {
   return (
     <HelmetProvider>
     <BrowserRouter>
-      <CartProvider>
-        <ScrollToTop />
-        <Cart />
-        <CookieBanner />
-        <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/vozy" element={<VozyPage />} />
-        <Route path="/vozy/:slug" element={<VozDetail />} />
-        <Route path="/o-nas" element={<ONas />} />
-        <Route path="/kontakt" element={<Kontakt />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/pokladna" element={<Pokladna />} />
-        <Route path="/akce-kveten" element={<AkceKveten />} />
-        <Route path="/beru-slevu" element={<BeruSlevu />} />
-        <Route path="/ojete-vozy" element={<OjeteVozy />} />
-        <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
-        </Routes>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <ScrollToTop />
+          <Cart />
+          <CookieBanner />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/vozy" element={<VozyPage />} />
+            <Route path="/vozy/:slug" element={<VozDetail />} />
+            <Route path="/o-nas" element={<ONas />} />
+            <Route path="/kontakt" element={<Kontakt />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/pokladna" element={<Pokladna />} />
+            <Route path="/akce-kveten" element={<AkceKveten />} />
+            <Route path="/beru-slevu" element={<BeruSlevu />} />
+            <Route path="/ojete-vozy" element={<OjeteVozy />} />
+            <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
+            {/* Klientské centrum */}
+            <Route path="/klientske-centrum/login" element={<KlientskeCentrumLogin />} />
+            <Route
+              path="/klientske-centrum"
+              element={
+                <ProtectedRoute>
+                  <KlientskeCentrum />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
     </HelmetProvider>
   )

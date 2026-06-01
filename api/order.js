@@ -3,6 +3,14 @@ import fs from 'fs'
 import path from 'path'
 import { put, list } from '@vercel/blob'
 import { generateInvoicePDF } from './generateInvoice.js'
+import { createClient } from '@supabase/supabase-js'
+
+function getSupabase() {
+  const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) return null
+  return createClient(url, key)
+}
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -300,6 +308,29 @@ export default async function handler(req, res) {
       html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount),
       attachments: [attachment, ...customerFileAttachments],
     })
+
+    // Ulož objednávku do Supabase (jedna řádka na každý vůz v košíku)
+    try {
+      const supabase = getSupabase()
+      if (supabase && items?.length > 0) {
+        const rows = items.map(({ car, qty }) => ({
+          email:        form.email,
+          car_name:     car.name,
+          car_slug:     car.slug ?? null,
+          car_variant:  car.variant ?? null,
+          car_color:    car.color ?? null,
+          price:        car.salePrice * qty,
+          order_number: orderNumber,
+          internal_id:  car.internalId ?? null,
+          status:       'prijato',
+        }))
+        const { error: dbErr } = await supabase.from('orders').insert(rows)
+        if (dbErr) console.error('Supabase insert error:', dbErr.message)
+      }
+    } catch (dbErr) {
+      // Neblokuj odpověď — email byl úspěšně odeslán
+      console.error('Supabase insert failed:', dbErr.message)
+    }
 
     return res.status(200).json({ success: true, orderNumber })
   } catch (err) {
