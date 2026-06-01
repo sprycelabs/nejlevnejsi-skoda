@@ -336,7 +336,7 @@ export default function KlientskeCentrum() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <a href="/">
-              <img src="/logo.webp" alt="Nejlevnější Škoda" className="h-7" />
+              <img src="/logo.webp" alt="Nejlevnější Škoda" className="h-5 sm:h-7" />
             </a>
             <ChevronRight size={14} className="text-gray-300" />
             <span className="text-gray-600 text-sm font-semibold">Klientské centrum</span>
