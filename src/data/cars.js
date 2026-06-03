@@ -3193,6 +3193,7 @@
     isSale: true,
     freeDelivery: true,
     isBomb: false,
+    isReserved: true,
     image: '/cars/octavia-01-config.webp',
     imageCount: 3,
     highlight: 'Škoda Octavia RS v nejvýkonnější sériové verzi — 2,0 TSI s výkonem 195 kW a sedmistupňovou DSG převodovkou. Sportovní charakter, prémiová výbava a úspora přes 260 000 Kč oproti české ceníkové ceně.',

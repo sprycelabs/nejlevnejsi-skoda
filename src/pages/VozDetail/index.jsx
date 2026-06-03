@@ -107,8 +107,20 @@ export default function VozDetail() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
+        {/* REZERVOVÁNO banner */}
+        {car.isReserved && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 w-full flex items-center justify-center gap-3 bg-gray-700 text-white text-sm font-black tracking-widest uppercase py-2.5"
+          >
+            Tento vůz je rezervován
+          </motion.div>
+        )}
+
         {/* CENOVÁ BOMBA banner — full width */}
-        {car.isBomb && (
+        {!car.isReserved && car.isBomb && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -141,7 +153,12 @@ export default function VozDetail() {
             >
               {/* badges */}
               <div className="flex flex-wrap gap-2 mb-5">
-                {car.isBomb && (
+                {car.isReserved && (
+                  <span className="flex items-center gap-1.5 bg-gray-600 text-white text-xs font-black px-3 py-1.5 rounded-full">
+                    Rezervováno
+                  </span>
+                )}
+                {!car.isReserved && car.isBomb && (
                   <span className="flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-black px-3 py-1.5 rounded-full">
                     <Flame size={12} /> Cenová bomba
                   </span>

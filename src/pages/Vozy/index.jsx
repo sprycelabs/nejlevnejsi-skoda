@@ -42,12 +42,19 @@ function CarCard({ car, index }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       className={`bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group flex flex-col h-full ${
-        car.isBomb
-          ? 'border-2 border-orange-400 ring-2 ring-orange-200'
-          : 'border border-gray-100'
+        car.isReserved
+          ? 'border-2 border-gray-400 ring-2 ring-gray-200 opacity-80'
+          : car.isBomb
+            ? 'border-2 border-orange-400 ring-2 ring-orange-200'
+            : 'border border-gray-100'
       }`}
     >
-      {car.isBomb && (
+      {car.isReserved && (
+        <div className="bg-gray-700 flex items-center justify-center gap-1.5 py-1.5">
+          <span className="text-white text-xs font-black tracking-widest uppercase">Rezervováno</span>
+        </div>
+      )}
+      {!car.isReserved && car.isBomb && (
         <div className="bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center gap-1.5 py-1.5">
           <Flame size={13} className="text-white" />
           <span className="text-white text-xs font-black tracking-widest uppercase">Cenová bomba</span>
@@ -61,6 +68,11 @@ function CarCard({ car, index }) {
           alt={car.name}
           className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
         />
+        {car.isReserved && (
+          <div className="absolute inset-0 bg-gray-900/10 flex items-center justify-center">
+            <span className="bg-gray-800/80 text-white text-sm font-black px-4 py-2 rounded-full tracking-wide">Rezervováno</span>
+          </div>
+        )}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
           {car.type === 'config' && <span className="bg-[#0d6efd] text-white text-xs font-bold px-2.5 py-1 rounded-full">Novinka</span>}
           {car.freeDelivery && <span className="bg-[#fd7e14] text-white text-xs font-bold px-2.5 py-1 rounded-full">Doprava ZDARMA</span>}
