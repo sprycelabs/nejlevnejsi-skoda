@@ -47,6 +47,11 @@ const timeline = [
     desc: 'Po zjištění, že strukturální cenové rozdíly jsou u vozů Škoda v rámci EU nejsilnější, jsme se na tuto značku specializovali výhradně.',
   },
   {
+    year: '2018',
+    title: 'Vznik nejlevnejsi-skoda.cz',
+    desc: 'Spustili jsme platformu, aby tento proces zvládl kdokoliv — bez znalostí a bez starostí. Za cenu, kterou v danou chvíli v ČR nenajdete.',
+  },
+  {
     year: '2026',
     title: 'Dnes',
     desc: '500+ spokojených zákazníků v Evropě, od jednotlivců po firemní flotily. Každý případ řešíme individuálně, každý vůz s plnou zárukou a bez kompromisů.',
