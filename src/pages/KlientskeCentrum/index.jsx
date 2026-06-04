@@ -87,38 +87,63 @@ function StatusBadge({ status }) {
 
 function StatusTimeline({ status }) {
   const currentStep = STATUS_CONFIG[status]?.step ?? 0
-  const currentLabel = STATUS_CONFIG[status]?.label ?? ''
   return (
     <div className="mt-4">
-      {/* Mobil: aktuální krok jako text */}
-      <div className="flex items-center justify-between mb-2 sm:hidden">
-        <span className="text-xs text-gray-500">Krok {currentStep + 1} / {STEPS.length}</span>
-        <span className="text-xs font-bold text-gray-700">{currentLabel}</span>
+      {/* Mobil — vertikální timeline */}
+      <div className="sm:hidden space-y-0">
+        {STEPS.map((step, i) => {
+          const done = i <= currentStep
+          const active = i === currentStep
+          return (
+            <div key={step.key} className="flex items-stretch gap-3">
+              {/* Linka + tečka */}
+              <div className="flex flex-col items-center">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 shrink-0 ${
+                  done ? 'bg-[#1e7e34] border-[#28a745]' : 'bg-gray-100 border-gray-200'
+                } ${active ? 'ring-2 ring-green-200' : ''}`}>
+                  {done
+                    ? <CheckCircle2 size={12} className="text-white" />
+                    : <span className="text-gray-400 text-[10px] font-bold">{i + 1}</span>
+                  }
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div className={`w-0.5 flex-1 my-0.5 ${i < currentStep ? 'bg-[#28a745]' : 'bg-gray-200'}`} />
+                )}
+              </div>
+              {/* Label */}
+              <div className={`pb-3 pt-0.5 text-sm font-medium leading-none ${
+                active ? 'text-gray-900 font-bold' : done ? 'text-gray-600' : 'text-gray-400'
+              }`}>
+                {step.label}
+                {active && <span className="ml-2 text-[10px] font-bold text-[#28a745] uppercase tracking-wide">← Aktuálně</span>}
+              </div>
+            </div>
+          )
+        })}
       </div>
-      {/* Tečky */}
-      <div className="flex items-center gap-0">
+
+      {/* Desktop — horizontální timeline */}
+      <div className="hidden sm:flex items-center gap-0">
         {STEPS.map((step, i) => {
           const done = i <= currentStep
           const active = i === currentStep
           return (
             <div key={step.key} className="flex items-center flex-1 last:flex-none">
               <div className="flex flex-col items-center gap-1">
-                <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center border-2 transition-colors ${
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-colors ${
                   done ? 'bg-[#1e7e34] border-[#28a745]' : 'bg-gray-100 border-gray-200'
                 } ${active ? 'ring-2 ring-green-200' : ''}`}>
-                  {done ? (
-                    <CheckCircle2 size={12} className="text-white" />
-                  ) : (
-                    <span className="text-gray-400 text-[10px] font-bold">{i + 1}</span>
-                  )}
+                  {done
+                    ? <CheckCircle2 size={14} className="text-white" />
+                    : <span className="text-gray-400 text-xs font-bold">{i + 1}</span>
+                  }
                 </div>
-                {/* Popisky jen na desktopu */}
-                <span className={`hidden sm:block text-[10px] font-medium text-center leading-tight max-w-[52px] ${done ? 'text-gray-700' : 'text-gray-400'}`}>
+                <span className={`text-[10px] font-medium text-center leading-tight max-w-[52px] ${done ? 'text-gray-700' : 'text-gray-400'}`}>
                   {step.label}
                 </span>
               </div>
               {i < STEPS.length - 1 && (
-                <div className={`flex-1 h-0.5 mx-0.5 sm:mb-4 ${i < currentStep ? 'bg-[#28a745]' : 'bg-gray-200'}`} />
+                <div className={`flex-1 h-0.5 mb-4 mx-0.5 ${i < currentStep ? 'bg-[#28a745]' : 'bg-gray-200'}`} />
               )}
             </div>
           )
