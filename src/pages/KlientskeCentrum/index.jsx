@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { LogOut, Car, Package, ChevronRight, ChevronDown, Clock, CheckCircle2, Truck, MessageCircle, AlertCircle, ExternalLink, Fuel, Zap, Settings2, Gauge } from 'lucide-react'
+import { LogOut, Car, Package, ChevronRight, ChevronDown, Clock, CheckCircle2, Truck, MessageCircle, AlertCircle, ExternalLink, Fuel, Zap, Settings2, Gauge, CreditCard } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -180,15 +180,6 @@ function CarDetailPanel({ carData, order }) {
         </div>
       )}
 
-      {/* Záloha + poznámka */}
-      {order.deposit_paid && (
-        <div className="flex justify-between items-center py-2 border-t border-gray-100">
-          <span className="text-gray-500 text-sm">Záloha zaplacena</span>
-          <span className="text-gray-800 text-sm font-semibold">
-            {new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(order.deposit_paid)}
-          </span>
-        </div>
-      )}
       {order.admin_note && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
           <p className="text-blue-600 text-xs font-semibold uppercase tracking-wide mb-1">Zpráva od nás</p>
@@ -296,6 +287,61 @@ function OrderCard({ order, index }) {
 
         {/* Timeline */}
         <StatusTimeline status={order.status} />
+
+        {/* Platby */}
+        {order.price && (
+          <div className="mt-5 pt-4 border-t border-gray-100">
+            <div className="flex items-center gap-2 mb-3">
+              <CreditCard size={14} className="text-gray-400" />
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Přehled plateb</p>
+            </div>
+            {(() => {
+              const fmt = v => new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(v)
+              const total = order.price
+              const paid = order.deposit_paid ?? 0
+              const remaining = total - paid
+              const pct = Math.round((paid / total) * 100)
+              const isDone = order.status === 'doruceno'
+              return (
+                <div className="space-y-3">
+                  {/* Progress bar */}
+                  <div>
+                    <div className="flex justify-between text-xs text-gray-500 mb-1.5">
+                      <span>Zaplaceno {pct} %</span>
+                      <span>{fmt(total)}</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ${isDone ? 'bg-[#28a745]' : 'bg-blue-500'}`}
+                        style={{ width: `${isDone ? 100 : pct}%` }}
+                      />
+                    </div>
+                  </div>
+                  {/* Řádky */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className={`rounded-xl px-4 py-3 ${paid > 0 ? 'bg-green-50 border border-green-100' : 'bg-gray-50 border border-gray-100'}`}>
+                      <p className="text-xs text-gray-400 mb-0.5">Záloha zaplacena</p>
+                      <p className={`text-sm font-black ${paid > 0 ? 'text-[#28a745]' : 'text-gray-400'}`}>
+                        {paid > 0 ? fmt(paid) : '—'}
+                      </p>
+                      {paid > 0 && <p className="text-[10px] text-green-600 mt-0.5">✓ Uhrazeno</p>}
+                    </div>
+                    <div className={`rounded-xl px-4 py-3 ${isDone ? 'bg-green-50 border border-green-100' : remaining > 0 ? 'bg-orange-50 border border-orange-100' : 'bg-gray-50 border border-gray-100'}`}>
+                      <p className="text-xs text-gray-400 mb-0.5">Zbývá doplatit</p>
+                      <p className={`text-sm font-black ${isDone ? 'text-[#28a745]' : remaining > 0 ? 'text-orange-600' : 'text-gray-400'}`}>
+                        {isDone ? fmt(0) : fmt(remaining)}
+                      </p>
+                      {isDone
+                        ? <p className="text-[10px] text-green-600 mt-0.5">✓ Vše uhrazeno</p>
+                        : remaining > 0 && <p className="text-[10px] text-orange-500 mt-0.5">Splatné při převzetí</p>
+                      }
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
+        )}
 
         {/* Expandable detail */}
         {hasExpandable && (
