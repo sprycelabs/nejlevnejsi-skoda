@@ -23,13 +23,37 @@ const STATUS_CONFIG = {
     icon: Clock,
     step: 1,
   },
-  expedovano: {
-    label: 'Expedováno',
+  potvrzeno_dealerem: {
+    label: 'Potvrzeno dealerem',
+    color: 'text-violet-600',
+    bg: 'bg-violet-50 border-violet-200',
+    dot: 'bg-violet-500',
+    icon: CheckCircle2,
+    step: 2,
+  },
+  na_ceste: {
+    label: 'Na cestě do ČR',
     color: 'text-orange-600',
     bg: 'bg-orange-50 border-orange-200',
     dot: 'bg-orange-500',
     icon: Truck,
-    step: 2,
+    step: 3,
+  },
+  prihlasovani: {
+    label: 'Přihlašování vozu',
+    color: 'text-cyan-600',
+    bg: 'bg-cyan-50 border-cyan-200',
+    dot: 'bg-cyan-500',
+    icon: Clock,
+    step: 4,
+  },
+  dorucovani: {
+    label: 'Doručování zákazníkovi',
+    color: 'text-indigo-600',
+    bg: 'bg-indigo-50 border-indigo-200',
+    dot: 'bg-indigo-500',
+    icon: Truck,
+    step: 5,
   },
   doruceno: {
     label: 'Doručeno',
@@ -37,15 +61,18 @@ const STATUS_CONFIG = {
     bg: 'bg-green-50 border-green-200',
     dot: 'bg-green-500',
     icon: CheckCircle2,
-    step: 3,
+    step: 6,
   },
 }
 
 const STEPS = [
-  { key: 'prijato', label: 'Přijato' },
-  { key: 'zpracovava_se', label: 'Zpracovává se' },
-  { key: 'expedovano', label: 'Expedováno' },
-  { key: 'doruceno', label: 'Doručeno' },
+  { key: 'prijato',            label: 'Přijato' },
+  { key: 'zpracovava_se',      label: 'Zpracovává se' },
+  { key: 'potvrzeno_dealerem', label: 'Potvrzeno dealerem' },
+  { key: 'na_ceste',           label: 'Na cestě do ČR' },
+  { key: 'prihlasovani',       label: 'Přihlašování vozu' },
+  { key: 'dorucovani',         label: 'Doručování' },
+  { key: 'doruceno',           label: 'Doručeno' },
 ]
 
 function StatusBadge({ status }) {
@@ -79,7 +106,7 @@ function StatusTimeline({ status }) {
                   <span className="text-gray-400 text-xs font-bold">{i + 1}</span>
                 )}
               </div>
-              <span className={`text-xs font-medium whitespace-nowrap ${done ? 'text-gray-700' : 'text-gray-400'}`}>
+              <span className={`text-[10px] font-medium text-center leading-tight max-w-[52px] ${done ? 'text-gray-700' : 'text-gray-400'}`}>
                 {step.label}
               </span>
             </div>
@@ -162,9 +189,15 @@ function CarDetailPanel({ carData, order }) {
           </span>
         </div>
       )}
+      {order.admin_note && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
+          <p className="text-blue-600 text-xs font-semibold uppercase tracking-wide mb-1">Zpráva od nás</p>
+          <p className="text-gray-700 text-sm">{order.admin_note}</p>
+        </div>
+      )}
       {order.notes && (
         <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
-          <p className="text-amber-700 text-xs font-semibold uppercase tracking-wide mb-1">Poznámka</p>
+          <p className="text-amber-700 text-xs font-semibold uppercase tracking-wide mb-1">Vaše poznámka</p>
           <p className="text-gray-700 text-sm">{order.notes}</p>
         </div>
       )}
@@ -193,7 +226,7 @@ function OrderCard({ order, index }) {
 
   const hasImage = carData?.image || order.car_slug
   const imageSrc = carData?.image || (order.car_slug ? `/cars/${order.car_slug}.webp` : null)
-  const hasExpandable = carData || order.deposit_paid || order.notes || order.car_slug
+  const hasExpandable = carData || order.deposit_paid || order.notes || order.admin_note || order.car_slug
 
   return (
     <motion.div
