@@ -289,7 +289,7 @@ function OrderCard({ order, index }) {
         </div>
 
         {/* Info grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 pt-4 border-t border-gray-100">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-gray-100">
           {order.car_color && (
             <div>
               <p className="text-gray-400 text-xs mb-0.5">Barva</p>
