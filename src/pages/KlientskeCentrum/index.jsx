@@ -366,7 +366,7 @@ function OrderCard({ order, index }) {
                       </p>
                       {isDone
                         ? <p className="text-[10px] text-green-600 mt-0.5">✓ Vše uhrazeno</p>
-                        : remaining > 0 && <p className="text-[10px] text-orange-500 mt-0.5">Splatné při převzetí</p>
+                        : null
                       }
                     </div>
                   </div>
