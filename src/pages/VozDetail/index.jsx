@@ -77,6 +77,7 @@ export default function VozDetail() {
     name: carTitle,
     description: `Nový ${carTitle} dovezený z EU. Ušetřete ${car.discount} % oproti české ceně. Tovární záruka zachována, dovoz do ČR zajištěn.`,
     brand: { '@type': 'Brand', name: 'Škoda' },
+    image: `${siteUrl}${car.image}`,
     offers: {
       '@type': 'Offer',
       url: `${siteUrl}/vozy/${car.slug}`,
@@ -84,6 +85,32 @@ export default function VozDetail() {
       price: car.salePrice,
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: 'Glenford Corp s.r.o.' },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'CZK',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'CZ',
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 7,
+            maxValue: 30,
+            unitCode: 'DAY',
+          },
+        },
+      },
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'CZ',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+      },
     },
   }
 
