@@ -6,7 +6,7 @@ import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
   Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
-  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X, Tag
+  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X, Tag, Sparkles
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -177,6 +177,33 @@ export default function VozDetail() {
           </motion.div>
         )}
 
+        {/* TOP VÝBAVA banner */}
+        {!car.isReserved && !car.isBomb && car.topVybava && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white text-sm font-black tracking-widest uppercase py-2.5"
+          >
+            <Star size={14} className="text-yellow-300 fill-yellow-300" />
+            TOP výbava — prémiová konfigurace
+            <Star size={14} className="text-yellow-300 fill-yellow-300" />
+          </motion.div>
+        )}
+
+        {/* DODÁNÍ banner */}
+        {car.deliveryNote && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 w-full flex items-center justify-center gap-3 bg-[#0d6efd] text-white text-sm font-black tracking-wide uppercase py-2.5"
+          >
+            <Clock size={14} />
+            {car.deliveryNote}
+          </motion.div>
+        )}
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           {/* breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-gray-400 pt-6 pb-4">
@@ -207,7 +234,17 @@ export default function VozDetail() {
                     <Flame size={12} /> Cenová bomba
                   </span>
                 )}
-                {car.type === 'config' && <span className="bg-[#0d6efd] text-white text-xs font-bold px-3 py-1.5 rounded-full">Novinka</span>}
+                {!car.isReserved && !car.isBomb && car.topVybava && (
+                  <span className="flex items-center gap-1.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white text-xs font-black px-3 py-1.5 rounded-full">
+                    <Star size={11} className="fill-yellow-300 text-yellow-300" /> TOP výbava
+                  </span>
+                )}
+                {car.deliveryNote && (
+                  <span className="flex items-center gap-1.5 bg-[#0d6efd] text-white text-xs font-black px-3 py-1.5 rounded-full">
+                    <Clock size={11} /> {car.deliveryNote}
+                  </span>
+                )}
+                {car.type === 'config' && <span className="bg-[#0d6efd]/80 text-white text-xs font-bold px-3 py-1.5 rounded-full">Novinka</span>}
                 {car.freeDelivery && <span className="bg-[#fd7e14] text-white text-xs font-bold px-3 py-1.5 rounded-full">Doprava ZDARMA</span>}
               </div>
 

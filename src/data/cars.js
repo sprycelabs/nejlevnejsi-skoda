@@ -8197,6 +8197,7 @@
     image: '/cars/enyaq-config.webp',
     imageCount: 3,
     internalId: 'TMBxxxxxxV/0067',
+    topVybava: true,
     highlight: 'Škoda Enyaq Sportline 82 kWh s výkonem 220 kW a pohonem AWD — elektrické SUV s absolutně TOP výbavou. Maxx paket, Matrix-LED světlomety, třízónová Climatronic, panoramatické střešní okno, tažné zařízení, tepelné čerpadlo, masážní sedadlo řidiče, KESSY, digitální klíč a úspora 314 509 Kč oproti české ceně.',
     technicalSpecs: {
       'Motor a výkon': [
@@ -8338,6 +8339,7 @@
     image: '/cars/elroq-config.webp',
     imageCount: 3,
     internalId: 'TMBxxxxxxV/0069',
+    topVybava: true,
     highlight: 'Škoda Elroq Sportline 82 kWh s výkonem 220 kW a pohonem AWD — kompaktní elektrické SUV s TOP výbavou. Matrix-LED světlomety, třízónová Climatronic, panoramatické střešní okno, tepelné čerpadlo, KESSY, sportovní interiér Sportline a úspora 349 901 Kč oproti české ceně.',
     technicalSpecs: {
       'Motor a výkon': [
@@ -8480,6 +8482,7 @@
     image: '/cars/kodiaq-02-config.webp',
     imageCount: 3,
     internalId: 'TMBxxxxxxV/0068',
+    topVybava: true,
     highlight: 'Škoda Kodiaq Sportline 2,0 TSI 150 kW DSG 4x4 v elegantní Šedé Steel — prémiové 7místné SUV s výjimečnou výbavou. Navi 13", Matrix-LED světlomety, třízónová Climatronic, panoramatické střešní okno, 3. řada sedadel, nezávislé topení, tažné zařízení s asistentem pro manévrování a úspora 481 901 Kč oproti české ceně.',
     technicalSpecs: {
       'Motor a výkon': [
@@ -8607,6 +8610,7 @@
     image: '/cars/epiq-config.webp',
     imageCount: 3,
     internalId: 'TMBxxxxxxV/0070',
+    deliveryNote: 'Dodání do konce října',
     highlight: 'Škoda Epiq First Edition 55 kWh 155 kW — úplně nové kompaktní elektrické SUV v limitované výbavě First Edition. Dvoubarevná kombinace Bílá Platinum + Černá střecha, LED paket, 13" OneInfotainment, KESSY, vyhřívaná přední sedadla, Side Assist, Macaw 20" kola a domácí wallbox v ceně. Ušetříte 104 990 Kč oproti české ceně.',
     technicalSpecs: {
       'Motor a výkon': [

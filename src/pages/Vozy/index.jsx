@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown, Flame } from 'lucide-react'
+import { Search, SlidersHorizontal, X, ChevronDown, Fuel, Cog, Zap, Package, Truck, ShoppingCart, ArrowRight, ArrowUpDown, Flame, Star, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { cars, formatPrice } from '../../data/cars'
 import { useCart } from '../../context/CartContext'
@@ -59,6 +59,19 @@ function CarCard({ car, index }) {
           <Flame size={13} className="text-white" />
           <span className="text-white text-xs font-black tracking-widest uppercase">Cenová bomba</span>
           <Flame size={13} className="text-white" />
+        </div>
+      )}
+      {!car.isReserved && !car.isBomb && car.topVybava && (
+        <div className="bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center gap-1.5 py-1.5">
+          <Star size={12} className="text-yellow-300 fill-yellow-300" />
+          <span className="text-white text-xs font-black tracking-widest uppercase">TOP výbava</span>
+          <Star size={12} className="text-yellow-300 fill-yellow-300" />
+        </div>
+      )}
+      {!car.isReserved && car.deliveryNote && (
+        <div className="bg-[#0d6efd] flex items-center justify-center gap-1.5 py-1.5">
+          <Clock size={12} className="text-white" />
+          <span className="text-white text-xs font-black tracking-wide uppercase">{car.deliveryNote}</span>
         </div>
       )}
 
