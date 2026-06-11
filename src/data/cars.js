@@ -7637,6 +7637,7 @@
     isSale: true,
     freeDelivery: true,
     isBomb: false,
+    isReserved: true,
     image: '/cars/kamiq-monte-carlo-config.webp',
     imageCount: 3,
     internalId: 'TMBxxxxxxV/0063',
