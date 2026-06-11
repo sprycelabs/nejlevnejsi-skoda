@@ -28,6 +28,7 @@ import OjeteVozyDetail from './pages/OjeteVozyDetail'
 import ScrollToTop from './components/ScrollToTop'
 import Cart from './components/Cart'
 import CookieBanner from './components/CookieBanner'
+import FloatingActions from './components/FloatingActions'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -95,6 +96,7 @@ export default function App() {
           <ScrollToTop />
           <Cart />
           <CookieBanner />
+          <FloatingActions />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/vozy" element={<VozyPage />} />

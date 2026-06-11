@@ -6,7 +6,7 @@ import {
   ArrowLeft, ShoppingCart, Phone, Mail, Fuel, Cog, Zap, Package,
   Truck, ShieldCheck, BadgePercent, Calendar, Palette, ChevronRight,
   Star, CheckCircle2, ArrowRight, Accessibility, Flame, Gift, Clock,
-  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X, Tag, Sparkles
+  AlertCircle, Scissors, Banknote, ChevronLeft, Maximize2, X, Tag, Sparkles, Eye, Bell
 } from 'lucide-react'
 import { cars, formatPrice } from '../../data/cars'
 import Navbar from '../../components/Navbar'
@@ -43,6 +43,9 @@ export default function VozDetail() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('prehled')
   const [failedImages, setFailedImages] = useState(new Set())
+  const [watchEmail, setWatchEmail] = useState('')
+  const [watchSent, setWatchSent] = useState(false)
+  const viewCount = 8 + ((car.id * 13 + 7) % 19)
   const handleImgError = (idx) => setFailedImages(prev => new Set(prev).add(idx))
 
   const prev = useCallback(() => setActiveIdx(i => (i - 1 + images.length) % images.length), [images.length])
@@ -799,6 +802,11 @@ export default function VozDetail() {
                     }
                   </div>
 
+                  <div className="flex items-center gap-2 text-xs text-gray-400 px-3">
+                    <Eye size={13} className="text-gray-300" />
+                    <span><strong className="text-gray-600">{viewCount} lidí</strong> si prohlédlo tento vůz dnes</span>
+                  </div>
+
                   <button
                     onClick={() => addToCart(car)}
                     className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base"
@@ -816,6 +824,56 @@ export default function VozDetail() {
 
                 </div>
               </motion.div>
+
+              {/* HLÍDEJ CENU — jen pro rezervovaná auta */}
+              {car.isReserved && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.28 }}
+                  className="bg-amber-50 border border-amber-200 rounded-lg p-4"
+                >
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-9 h-9 bg-amber-500 rounded-md flex items-center justify-center shrink-0">
+                      <Bell size={17} className="text-white" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-gray-900 text-sm">Hlídej podobný vůz</div>
+                      <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">Tento vůz je rezervován. Napište nám email a dáme vám vědět, jakmile bude k dispozici podobný.</div>
+                    </div>
+                  </div>
+                  {watchSent ? (
+                    <div className="bg-amber-100 border border-amber-300 rounded-md px-3 py-2.5 text-xs font-semibold text-amber-800 text-center">
+                      ✓ Zaregistrováno — ozveme se vám!
+                    </div>
+                  ) : (
+                    <form
+                      onSubmit={e => {
+                        e.preventDefault()
+                        if (!watchEmail) return
+                        window.location.href = `mailto:info@nejlevnejsi-skoda.cz?subject=Hlídej%20vůz%3A%20${encodeURIComponent(car.name)}&body=Dobrý%20den%2C%20mám%20zájem%20o%20podobný%20vůz%20jako%20${encodeURIComponent(car.name + ' ' + car.variant)}.%20Prosím%20kontaktujte%20mě%20na%3A%20${encodeURIComponent(watchEmail)}`
+                        setWatchSent(true)
+                      }}
+                      className="flex gap-2"
+                    >
+                      <input
+                        type="email"
+                        required
+                        value={watchEmail}
+                        onChange={e => setWatchEmail(e.target.value)}
+                        placeholder="váš@email.cz"
+                        className="flex-1 text-xs border border-amber-200 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                      />
+                      <button
+                        type="submit"
+                        className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-2 rounded-md transition-colors shrink-0"
+                      >
+                        Hlídat
+                      </button>
+                    </form>
+                  )}
+                </motion.div>
+              )}
 
               {/* ZTP sleva */}
               <motion.div
