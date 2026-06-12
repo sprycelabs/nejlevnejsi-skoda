@@ -49,7 +49,12 @@ function CarCard({ car, index }) {
             : 'border border-gray-100'
       }`}
     >
-      {car.isReserved && (
+      {car.isSold && (
+        <div className="bg-gray-900 flex items-center justify-center gap-1.5 py-1.5">
+          <span className="text-white text-xs font-black tracking-widest uppercase">Prodáno</span>
+        </div>
+      )}
+      {!car.isSold && car.isReserved && (
         <div className="bg-gray-700 flex items-center justify-center gap-1.5 py-1.5">
           <span className="text-white text-xs font-black tracking-widest uppercase">Rezervováno</span>
         </div>

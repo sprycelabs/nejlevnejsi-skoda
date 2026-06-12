@@ -46,6 +46,7 @@ export default function VozDetail() {
   const [watchEmail, setWatchEmail] = useState('')
   const [watchSent, setWatchSent] = useState(false)
   const viewCount = 8 + ((car.id * 13 + 7) % 19)
+  const liveCount = 1 + (car.id % 3)
   const handleImgError = (idx) => setFailedImages(prev => new Set(prev).add(idx))
 
   const prev = useCallback(() => setActiveIdx(i => (i - 1 + images.length) % images.length), [images.length])
@@ -154,8 +155,20 @@ export default function VozDetail() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f10] via-[#1a3d1e] to-[#0a1508]" />
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#1e7e34]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
 
+        {/* PRODÁNO banner */}
+        {car.isSold && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 w-full flex items-center justify-center gap-3 bg-gray-900 text-white text-sm font-black tracking-widest uppercase py-2.5"
+          >
+            Tento vůz byl prodán
+          </motion.div>
+        )}
+
         {/* REZERVOVÁNO banner */}
-        {car.isReserved && (
+        {!car.isSold && car.isReserved && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -227,7 +240,12 @@ export default function VozDetail() {
             >
               {/* badges */}
               <div className="flex flex-wrap gap-2 mb-5">
-                {car.isReserved && (
+                {car.isSold && (
+                  <span className="flex items-center gap-1.5 bg-gray-900 text-white text-xs font-black px-3 py-1.5 rounded-full">
+                    Prodáno
+                  </span>
+                )}
+                {!car.isSold && car.isReserved && (
                   <span className="flex items-center gap-1.5 bg-gray-600 text-white text-xs font-black px-3 py-1.5 rounded-full">
                     Rezervováno
                   </span>
@@ -802,6 +820,15 @@ export default function VozDetail() {
                     }
                   </div>
 
+                  <div className="rounded-md bg-red-50 border border-red-100 px-3 py-2 flex items-center gap-2.5">
+                    <span className="relative flex h-2.5 w-2.5 shrink-0">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
+                    </span>
+                    <span className="text-xs text-red-700 font-semibold">
+                      Právě prohlíží <strong>{liveCount} {liveCount === 1 ? 'člověk' : 'lidé'}</strong>
+                    </span>
+                  </div>
                   <div className="flex items-center gap-2 text-xs text-gray-400 px-3">
                     <Eye size={13} className="text-gray-300" />
                     <span><strong className="text-gray-600">{viewCount} lidí</strong> si prohlédlo tento vůz dnes</span>
