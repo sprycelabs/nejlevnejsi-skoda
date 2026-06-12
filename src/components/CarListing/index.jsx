@@ -141,7 +141,7 @@ export default function CarListing() {
               transition={{ delay: 0.1 }}
               className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900"
             >
-              Vozy ihned k odběru
+              Vybíráme z naší nabídky
             </motion.h2>
           </div>
           <motion.a
