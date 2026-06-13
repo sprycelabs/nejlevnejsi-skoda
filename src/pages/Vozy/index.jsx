@@ -17,6 +17,7 @@ const MIN_PRICE = Math.min(...cars.map(c => c.salePrice))
 
 const SORT_OPTIONS = [
   { value: 'default', label: 'Výchozí řazení' },
+  { value: 'newest', label: 'Naposledy přidané' },
   { value: 'price-asc', label: 'Cena: od nejnižší' },
   { value: 'price-desc', label: 'Cena: od nejvyšší' },
   { value: 'discount', label: 'Největší sleva' },
@@ -189,6 +190,11 @@ export default function VozyPage() {
     })
 
     switch (sort) {
+      case 'newest': return [...result].sort((a, b) => {
+        const numA = parseInt((a.internalId || '').replace(/\D/g, ''), 10) || 0
+        const numB = parseInt((b.internalId || '').replace(/\D/g, ''), 10) || 0
+        return numB - numA
+      })
       case 'price-asc': return [...result].sort((a, b) => a.salePrice - b.salePrice)
       case 'price-desc': return [...result].sort((a, b) => b.salePrice - a.salePrice)
       case 'discount': return [...result].sort((a, b) => b.discount - a.discount)
