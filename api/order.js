@@ -66,7 +66,12 @@ async function generateOrderNumber() {
 
 const PROFORMA_DEPOSIT_PCT = 0.20
 
-function customerEmail(form, items, total, orderNumber, discount) {
+function paymentMethodLabel(pm) {
+  if (pm === 'osobne') return 'Platba osobně (hotovost / karta obchodnímu zástupci)'
+  return 'Platba převodem (zálohová faktura)'
+}
+
+function customerEmail(form, items, total, orderNumber, discount, paymentMethod) {
   const isCompany   = !!form.companyName
   const name        = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
   const proformaAmt = Math.round(total * PROFORMA_DEPOSIT_PCT)
@@ -136,6 +141,16 @@ function customerEmail(form, items, total, orderNumber, discount) {
             </tfoot>
           </table>
 
+          <!-- Způsob platby -->
+          <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 20px;margin-bottom:20px;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="color:#0369a1;font-size:13px;font-weight:700;">Způsob platby:</td>
+                <td style="color:#0c4a6e;font-size:13px;font-weight:700;text-align:right;">${paymentMethodLabel(paymentMethod)}</td>
+              </tr>
+            </table>
+          </div>
+
           <!-- Info box -->
           <div style="background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:16px 20px;margin-bottom:28px;">
             <p style="margin:0 0 6px;font-weight:700;color:#92400e;font-size:14px;">Proforma faktura v příloze · záloha ${formatPrice(proformaAmt)}</p>
@@ -181,7 +196,7 @@ function customerEmail(form, items, total, orderNumber, discount) {
 </html>`
 }
 
-function clientNotificationEmail(form, items, total, orderNumber, attachmentCount, discount) {
+function clientNotificationEmail(form, items, total, orderNumber, attachmentCount, discount, paymentMethod) {
   const isCompany = !!form.companyName
   const name = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
   const contactPerson = isCompany ? form.contactPerson : `${form.firstName} ${form.lastName}`
@@ -216,6 +231,7 @@ function clientNotificationEmail(form, items, total, orderNumber, attachmentCoun
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Telefon</td><td style="padding:6px 0;font-size:13px;"><a href="tel:${form.phone}" style="color:#1e7e34;">${form.phone}</a></td></tr>
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Adresa</td><td style="padding:6px 0;font-size:13px;">${form.street}, ${form.zip} ${form.city}</td></tr>
             ${form.note ? `<tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Poznámka</td><td style="padding:6px 0;font-size:13px;">${form.note}</td></tr>` : ''}
+            <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Způsob platby</td><td style="padding:6px 0;font-size:13px;font-weight:700;color:#0369a1;">${paymentMethodLabel(paymentMethod)}</td></tr>
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Přílohy od zákazníka</td><td style="padding:6px 0;font-size:13px;font-weight:700;color:${attachmentCount > 0 ? '#1e7e34' : '#9ca3af'};">${attachmentCount > 0 ? `${attachmentCount} soubor${attachmentCount === 1 ? '' : attachmentCount < 5 ? 'y' : 'ů'}` : 'žádné'}</td></tr>
           </table>
 
@@ -250,7 +266,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { form, items, total, discount, fileAttachments = [] } = req.body
+  const { form, items, total, discount, fileAttachments = [], paymentMethod } = req.body
 
   if (!form || !items || !total) {
     return res.status(400).json({ error: 'Missing data' })
@@ -262,7 +278,7 @@ export default async function handler(req, res) {
     // Vygeneruj PDF fakturu
     const logoBase64     = loadLogoBase64()
     const variableSymbol = generateVariableSymbol(orderNumber)
-    const pdfBuffer = await generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol, discount })
+    const pdfBuffer = await generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol, discount, paymentMethod })
     const pdfBase64 = pdfBuffer.toString('base64')
     const invoiceFilename = `faktura-${orderNumber}.pdf`
 
@@ -296,7 +312,7 @@ export default async function handler(req, res) {
       from: `Nejlevnější Škoda CZ <${FROM}>`,
       to: form.email,
       subject: `Vaše objednávka ${orderNumber} — proforma faktura v příloze`,
-      html: customerEmail(form, items, total, orderNumber, discount),
+      html: customerEmail(form, items, total, orderNumber, discount, paymentMethod),
       attachments: [attachment],
     })
 
@@ -305,7 +321,7 @@ export default async function handler(req, res) {
       from: `Nejlevnější Škoda CZ <${FROM}>`,
       to: CLIENT_EMAIL,
       subject: `Nová objednávka ${orderNumber} — ${form.companyName || `${form.firstName} ${form.lastName}`}`,
-      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount),
+      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount, paymentMethod),
       attachments: [attachment, ...customerFileAttachments],
     })
 

@@ -45,7 +45,12 @@ function addDays(date, n) {
   return d
 }
 
-export async function generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol, discount }) {
+function paymentMethodLabel(pm) {
+  if (pm === 'osobne') return 'Platba osobně (hotovost / karta obchodnímu zástupci)'
+  return 'Platba převodem (zálohová faktura)'
+}
+
+export async function generateInvoicePDF({ form, items, orderNumber, logoBase64, variableSymbol, discount, paymentMethod }) {
   return new Promise((resolve, reject) => {
     const fontRegular = path.join(__dirname, 'fonts', 'Calibri-Regular.ttf')
     const fontBold    = path.join(__dirname, 'fonts', 'Calibri-Bold.ttf')
@@ -347,7 +352,14 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     R(8, GRAY).text('Variabilní symbol:', pxR, y + 24, { width: halfW, lineBreak: false })
     B(8.5, DARK).text(vs, pxR, y + 35, { width: halfW, lineBreak: false })
 
-    y += payH + 18
+    y += payH + 12
+
+    // ── ZPŮSOB PLATBY ────────────────────────────────────────────────────────
+    const pmH = 22
+    doc.roundedRect(ML, y, CW, pmH, 3).lineWidth(0.6).strokeColor('#bae6fd').fillAndStroke('#f0f9ff', '#bae6fd')
+    R(8, '#0369a1').text('Způsob platby:', ML + 12, y + 7, { width: 120, lineBreak: false })
+    B(8.5, '#0c4a6e').text(paymentMethodLabel(paymentMethod), ML + 134, y + 7, { width: CW - 146, lineBreak: false })
+    y += pmH + 14
 
     // ── PRÁVNÍ TEXTY ─────────────────────────────────────────────────────────
     const legalH = 54
