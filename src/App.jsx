@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { Helmet } from 'react-helmet-async'
 import SEO from './components/SEO'
@@ -109,6 +109,9 @@ export default function App() {
             <Route path="/beru-slevu" element={<BeruSlevu />} />
             <Route path="/ojete-vozy" element={<OjeteVozy />} />
             <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
+            {/* FB reklamy — redirecty na správné detail stránky */}
+            <Route path="/fabia-dynamic-config" element={<Navigate to="/vozy/fabia-dynamic-config" replace />} />
+            <Route path="/fabia-dynamic" element={<Navigate to="/vozy/fabia-dynamic" replace />} />
             {/* Klientské centrum */}
             <Route path="/klientske-centrum/login" element={<KlientskeCentrumLogin />} />
             <Route
