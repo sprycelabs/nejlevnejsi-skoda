@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Navigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -21,18 +21,7 @@ export default function VozDetail() {
   const related = cars.filter(c => c.slug !== slug).slice(0, 3)
 
   if (!car) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navbar />
-        <div className="flex-1 flex items-center justify-center flex-col gap-4 pt-24">
-          <p className="text-2xl font-black text-gray-700">Vůz nenalezen</p>
-          <Link to="/vozy" className="text-[#1e7e34] font-semibold hover:underline flex items-center gap-1">
-            <ArrowLeft size={16} /> Zpět na vozy
-          </Link>
-        </div>
-        <Footer />
-      </div>
-    )
+    return <Navigate to="/vozy" replace />
   }
 
   const savings = car.originalPrice - car.salePrice
