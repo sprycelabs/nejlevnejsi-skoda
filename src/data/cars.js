@@ -905,7 +905,7 @@
     originalPrice: 512700,
     salePrice: 299999,
     discount: 41,
-    inStock: 2,
+    inStock: 0,
     isNew: true,
     isSale: true,
     freeDelivery: true,
