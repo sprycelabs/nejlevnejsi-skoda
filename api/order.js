@@ -74,7 +74,8 @@ function paymentMethodLabel(pm) {
 function customerEmail(form, items, total, orderNumber, discount, paymentMethod) {
   const isCompany   = !!form.companyName
   const name        = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
-  const proformaAmt = Math.round(total * PROFORMA_DEPOSIT_PCT)
+  const originalTotal = items.reduce((sum, { car, qty }) => sum + (car.originalPrice || car.salePrice) * qty, 0)
+  const proformaAmt = Math.round(originalTotal * PROFORMA_DEPOSIT_PCT)
 
   const itemsRows = items.map(({ car, qty }) => `
     <tr>
