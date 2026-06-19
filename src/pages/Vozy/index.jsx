@@ -152,6 +152,14 @@ function CarCard({ car, index }) {
               <ShoppingCart size={15} />
               Vyprodáno
             </span>
+          ) : car.isReserved ? (
+            <span
+              className="flex-1 flex items-center justify-center gap-1.5 bg-gray-200 text-gray-400 text-sm font-semibold py-3 px-4 rounded-md cursor-not-allowed"
+              onClick={e => { e.preventDefault(); e.stopPropagation() }}
+            >
+              <ShoppingCart size={15} />
+              Rezervováno
+            </span>
           ) : (
             <button
               onClick={e => { e.preventDefault(); e.stopPropagation(); addToCart(car) }}

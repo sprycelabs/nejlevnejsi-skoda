@@ -828,6 +828,11 @@ export default function VozDetail() {
                       <ShoppingCart size={18} />
                       Vyprodáno
                     </div>
+                  ) : car.isReserved ? (
+                    <div className="w-full flex items-center justify-center gap-2 bg-gray-200 text-gray-400 font-bold py-4 rounded-md text-base cursor-not-allowed">
+                      <ShoppingCart size={18} />
+                      Rezervováno
+                    </div>
                   ) : (
                     <button
                       onClick={() => addToCart(car)}
@@ -1055,6 +1060,10 @@ export default function VozDetail() {
         {car.inStock === 0 ? (
           <span className="flex items-center gap-1 bg-gray-200 text-gray-400 font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap cursor-not-allowed">
             <ShoppingCart size={14} /> Vyprodáno
+          </span>
+        ) : car.isReserved ? (
+          <span className="flex items-center gap-1 bg-gray-200 text-gray-400 font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap cursor-not-allowed">
+            <ShoppingCart size={14} /> Rezervováno
           </span>
         ) : (
           <button
