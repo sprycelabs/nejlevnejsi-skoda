@@ -345,7 +345,7 @@ export default function VozDetail() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="w-full h-full object-contain p-6"
+                    className={`w-full h-full object-contain p-6 ${car.inStock === 0 ? 'grayscale' : ''}`}
                     onError={() => handleImgError(activeIdx)}
                   />
                 </AnimatePresence>
@@ -400,7 +400,7 @@ export default function VozDetail() {
                     <img
                       src={failedImages.has(i) ? car.image : img}
                       alt={`náhled ${i + 1}`}
-                      className="w-full h-full object-contain bg-gray-50 p-1"
+                      className={`w-full h-full object-contain bg-gray-50 p-1 ${car.inStock === 0 ? 'grayscale' : ''}`}
                       onError={() => handleImgError(i)}
                     />
                   </button>
@@ -823,13 +823,20 @@ export default function VozDetail() {
                     <span><strong className="text-gray-600">{viewCount} lidí</strong> si prohlédlo tento vůz dnes</span>
                   </div>
 
-                  <button
-                    onClick={() => addToCart(car)}
-                    className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base"
-                  >
-                    <ShoppingCart size={18} />
-                    Přidat do košíku
-                  </button>
+                  {car.inStock === 0 ? (
+                    <div className="w-full flex items-center justify-center gap-2 bg-gray-200 text-gray-400 font-bold py-4 rounded-md text-base cursor-not-allowed">
+                      <ShoppingCart size={18} />
+                      Vyprodáno
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => addToCart(car)}
+                      className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base"
+                    >
+                      <ShoppingCart size={18} />
+                      Přidat do košíku
+                    </button>
+                  )}
 
                   <a
                     href="tel:+420733455966"
@@ -1045,12 +1052,18 @@ export default function VozDetail() {
         >
           <Phone size={14} /> Zavolat
         </a>
-        <button
-          onClick={() => addToCart(car)}
-          className="flex items-center gap-1 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors"
-        >
-          <ShoppingCart size={14} /> Do košíku
-        </button>
+        {car.inStock === 0 ? (
+          <span className="flex items-center gap-1 bg-gray-200 text-gray-400 font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap cursor-not-allowed">
+            <ShoppingCart size={14} /> Vyprodáno
+          </span>
+        ) : (
+          <button
+            onClick={() => addToCart(car)}
+            className="flex items-center gap-1 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors"
+          >
+            <ShoppingCart size={14} /> Do košíku
+          </button>
+        )}
       </div>
 
       {/* Spacer aby footer nebyl pod fixní lištou na mobilu */}

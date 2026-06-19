@@ -35,6 +35,7 @@ function FilterChip({ label, onRemove }) {
 
 function CarCard({ car, index }) {
   const { addToCart } = useCart()
+  const soldOut = car.inStock === 0
   return (
     <Link to={`/vozy/${car.slug}`} className="block">
     <motion.div
@@ -43,19 +44,26 @@ function CarCard({ car, index }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       className={`bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group flex flex-col h-full ${
-        car.isReserved
-          ? 'border-2 border-gray-400 ring-2 ring-gray-200 opacity-80'
-          : car.isBomb
-            ? 'border-2 border-orange-400 ring-2 ring-orange-200'
-            : 'border border-gray-100'
+        soldOut
+          ? 'border-2 border-gray-300 ring-2 ring-gray-100 opacity-70'
+          : car.isReserved
+            ? 'border-2 border-gray-400 ring-2 ring-gray-200 opacity-80'
+            : car.isBomb
+              ? 'border-2 border-orange-400 ring-2 ring-orange-200'
+              : 'border border-gray-100'
       }`}
     >
-      {car.isSold && (
+      {soldOut && (
+        <div className="bg-gray-500 flex items-center justify-center gap-1.5 py-1.5">
+          <span className="text-white text-xs font-black tracking-widest uppercase">Vyprodáno</span>
+        </div>
+      )}
+      {!soldOut && car.isSold && (
         <div className="bg-gray-900 flex items-center justify-center gap-1.5 py-1.5">
           <span className="text-white text-xs font-black tracking-widest uppercase">Prodáno</span>
         </div>
       )}
-      {!car.isSold && car.isReserved && (
+      {!soldOut && !car.isSold && car.isReserved && (
         <div className="bg-gray-700 flex items-center justify-center gap-1.5 py-1.5">
           <span className="text-white text-xs font-black tracking-widest uppercase">Rezervováno</span>
         </div>
@@ -85,9 +93,14 @@ function CarCard({ car, index }) {
         <img
           src={car.image}
           alt={car.name}
-          className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+          className={`h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300 ${soldOut ? 'grayscale' : ''}`}
         />
-        {car.isReserved && (
+        {soldOut && (
+          <div className="absolute inset-0 bg-gray-900/20 flex items-center justify-center">
+            <span className="bg-gray-700/80 text-white text-sm font-black px-4 py-2 rounded-full tracking-wide">Vyprodáno</span>
+          </div>
+        )}
+        {!soldOut && car.isReserved && (
           <div className="absolute inset-0 bg-gray-900/10 flex items-center justify-center">
             <span className="bg-gray-800/80 text-white text-sm font-black px-4 py-2 rounded-full tracking-wide">Rezervováno</span>
           </div>
@@ -111,9 +124,9 @@ function CarCard({ car, index }) {
           <div className="flex items-center gap-1.5 text-xs text-gray-600"><Fuel size={13} className="text-gray-400 shrink-0" />{car.fuel}</div>
           <div className="flex items-center gap-1.5 text-xs text-gray-600"><Cog size={13} className="text-gray-400 shrink-0" />{car.transmission}</div>
           <div className="flex items-center gap-1.5 text-xs text-gray-600"><Zap size={13} className="text-gray-400 shrink-0" />{car.consumption}</div>
-          <div className={`flex items-center gap-1.5 text-xs font-medium ${car.inStock <= 3 ? 'text-orange-600' : 'text-gray-600'}`}>
-            <Package size={13} className={`shrink-0 ${car.inStock <= 3 ? 'text-orange-500' : 'text-gray-400'}`} />
-            {car.inStock <= 3 ? `Poslední ${car.inStock} ks!` : `Skladem ${car.inStock} ks`}
+          <div className={`flex items-center gap-1.5 text-xs font-medium ${soldOut ? 'text-gray-400' : car.inStock <= 3 ? 'text-orange-600' : 'text-gray-600'}`}>
+            <Package size={13} className={`shrink-0 ${soldOut ? 'text-gray-300' : car.inStock <= 3 ? 'text-orange-500' : 'text-gray-400'}`} />
+            {soldOut ? 'Vyprodáno' : car.inStock <= 3 ? `Poslední ${car.inStock} ks!` : `Skladem ${car.inStock} ks`}
           </div>
         </div>
 
@@ -131,13 +144,23 @@ function CarCard({ car, index }) {
         </div>
 
         <div className="flex gap-2">
-          <button
-            onClick={e => { e.preventDefault(); e.stopPropagation(); addToCart(car) }}
-            className="flex-1 flex items-center justify-center gap-1.5 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-semibold py-3 px-4 rounded-md transition-colors"
-          >
-            <ShoppingCart size={15} />
-            Do košíku
-          </button>
+          {soldOut ? (
+            <span
+              className="flex-1 flex items-center justify-center gap-1.5 bg-gray-200 text-gray-400 text-sm font-semibold py-3 px-4 rounded-md cursor-not-allowed"
+              onClick={e => { e.preventDefault(); e.stopPropagation() }}
+            >
+              <ShoppingCart size={15} />
+              Vyprodáno
+            </span>
+          ) : (
+            <button
+              onClick={e => { e.preventDefault(); e.stopPropagation(); addToCart(car) }}
+              className="flex-1 flex items-center justify-center gap-1.5 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-semibold py-3 px-4 rounded-md transition-colors"
+            >
+              <ShoppingCart size={15} />
+              Do košíku
+            </button>
+          )}
           <span className="flex items-center gap-1 border border-gray-200 hover:border-[#1e7e34] text-gray-600 hover:text-[#1e7e34] text-sm font-medium py-3 px-4 rounded-md transition-colors">
             Detail <ArrowRight size={14} />
           </span>
