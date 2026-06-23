@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from 'react-router-dom'
+import { useParams, Link, Navigate, useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -16,6 +16,7 @@ import { Helmet } from 'react-helmet-async'
 
 export default function VozDetail() {
   const { slug } = useParams()
+  const navigate = useNavigate()
   const { addToCart } = useCart()
   const car = cars.find(c => c.slug === slug)
   const related = cars.filter(c => c.slug !== slug).slice(0, 3)
@@ -261,7 +262,48 @@ export default function VozDetail() {
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white mb-2">{car.name}</h1>
               <p className="text-gray-300 text-base sm:text-xl mb-2">{car.variant} · {car.power}</p>
               {car.internalId && (
-                <p className="text-gray-600 text-xs font-mono mb-5 sm:mb-8">{car.internalId}</p>
+                <p className="text-gray-600 text-xs font-mono mb-3">{car.internalId}</p>
+              )}
+
+              {/* color variants switcher */}
+              {car.colorVariants && car.colorVariants.length > 1 && (
+                <div className="mb-5 sm:mb-8">
+                  <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Dostupné barvy</p>
+                  <div className="flex items-center gap-3">
+                    {car.colorVariants.map(v => (
+                      <button
+                        key={v.slug}
+                        onClick={() => navigate(`/vozy/${v.slug}`)}
+                        title={v.color}
+                        className={`w-9 h-9 rounded-full flex-shrink-0 transition-all ring-offset-2 ring-offset-[#0d1f10] ${
+                          v.slug === car.slug
+                            ? 'ring-2 ring-white scale-110'
+                            : 'ring-1 ring-white/30 hover:ring-white/60 hover:scale-105'
+                        }`}
+                        style={{ backgroundColor: v.hex }}
+                      />
+                    ))}
+                    <span className="text-gray-300 text-sm ml-1">{car.color}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* available colors (informational, no navigation) */}
+              {car.availableColors && car.availableColors.length > 0 && (
+                <div className="mb-5 sm:mb-8">
+                  <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Dostupné barvy</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {car.availableColors.map(v => (
+                      <div key={v.color} className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5">
+                        <span
+                          className="w-4 h-4 rounded-full flex-shrink-0 ring-1 ring-white/20"
+                          style={{ backgroundColor: v.hex }}
+                        />
+                        <span className="text-gray-300 text-xs">{v.color}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
 
               {/* quick specs row */}
