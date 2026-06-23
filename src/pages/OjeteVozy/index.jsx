@@ -6,7 +6,7 @@ import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 
 const PRICE = 249000
-const STOCK = 2
+const STOCK = 0
 const TOTAL_STOCK = 16
 
 function czk(n) {

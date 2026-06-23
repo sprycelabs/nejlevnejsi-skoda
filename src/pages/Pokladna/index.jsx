@@ -143,6 +143,13 @@ export default function Pokladna() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    const soldOutItems = items.filter(i => i.car.inStock === 0)
+    if (soldOutItems.length > 0) {
+      const names = soldOutItems.map(i => `${i.car.name} ${i.car.variant}`).join(', ')
+      setSubmitError(`Omlouváme se, ale následující vozidla již nejsou dostupná a nelze je objednat: ${names}. Odstraňte je prosím z košíku.`)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
     const errs = validate()
     const sErrs = {}
     if (!paymentMethod) sErrs.invoice = 'Povinné'
@@ -469,7 +476,6 @@ export default function Pokladna() {
                     <div className="flex flex-col gap-2">
                       {[
                         { value: 'prevod', label: 'Zálohová faktura – platba převodem', desc: 'Platba bankovním převodem na základě zálohové faktury' },
-                        { value: 'osobne', label: 'Zálohová faktura – platba osobně', desc: 'Platba v hotovosti nebo kartou obchodnímu zástupci' },
                       ].map(opt => (
                         <label
                           key={opt.value}
