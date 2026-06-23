@@ -217,7 +217,7 @@ export default function OjeteVozyDetail() {
               <div className="flex flex-wrap gap-2 mb-5">
                 <span className="bg-gray-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">Ojeté</span>
                 <span className="bg-[#1e7e34] text-white text-xs font-bold px-3 py-1.5 rounded-full">Aukční série</span>
-                <span className="bg-[#fd7e14] text-white text-xs font-bold px-3 py-1.5 rounded-full">Zbývá jen {STOCK} z {TOTAL_STOCK} kusů</span>
+                <span className="bg-gray-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">Vyprodáno · Brzy opět naskladníme</span>
               </div>
 
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white mb-2">
@@ -572,18 +572,15 @@ export default function OjeteVozyDetail() {
                 </div>
 
                 <div className="p-5 space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-md bg-orange-50 text-orange-700">
-                    <div className="w-2 h-2 rounded-full bg-orange-500 shrink-0 animate-pulse" />
-                    Zbývá jen {STOCK} z {TOTAL_STOCK} kusů
+                  <div className="flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-md bg-gray-100 text-gray-600">
+                    <div className="w-2 h-2 rounded-full bg-gray-400 shrink-0" />
+                    Vyprodáno · Brzy opět naskladníme
                   </div>
 
-                  <button
-                    onClick={() => addToCart(CAR_CART)}
-                    className="w-full flex items-center justify-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold py-4 rounded-md transition-colors text-base"
-                  >
+                  <div className="w-full flex items-center justify-center gap-2 bg-gray-200 text-gray-400 font-bold py-4 rounded-md text-base cursor-not-allowed">
                     <ShoppingCart size={18} />
-                    Přidat do košíku
-                  </button>
+                    Vyprodáno
+                  </div>
 
                   <a
                     href="tel:+420733455966"

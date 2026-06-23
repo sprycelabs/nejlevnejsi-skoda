@@ -109,10 +109,10 @@ export default function OjeteVozy() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.05 }}
-                className="inline-flex items-center gap-2 bg-[#1e7e34]/20 border border-[#1e7e34]/40 text-[#86efac] text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase"
+                className="inline-flex items-center gap-2 bg-gray-500/30 border border-gray-400/40 text-gray-300 text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase"
               >
-                <Star size={12} fill="currentColor" />
-                Zbývá jen {STOCK} z {TOTAL_STOCK} vozů · Aukční výprodej
+                <span className="w-2 h-2 rounded-full bg-gray-400 shrink-0" />
+                Vyprodáno · Brzy opět naskladníme
               </motion.div>
 
               <motion.h1
@@ -183,12 +183,12 @@ export default function OjeteVozy() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="relative flex items-end justify-center lg:justify-end"
             >
-              {/* cena badge — desktop only */}
-              <div className="hidden lg:block absolute top-0 right-0 z-10 bg-[#1e7e34] rounded-xl px-5 py-4 shadow-xl shadow-green-900/40 text-center">
-                <div className="text-green-200 text-xs font-bold uppercase tracking-widest mb-1">Cena vč. DPH</div>
-                <div className="text-white text-3xl font-black leading-none">{czk(PRICE)}</div>
-                <div className="mt-2 pt-2 border-t border-white/20 text-green-100 text-xs">
-                  Zbývá jen <strong className="text-white">{STOCK} z {TOTAL_STOCK} kusů</strong>
+              {/* vyprodáno badge — desktop only */}
+              <div className="hidden lg:block absolute top-0 right-0 z-10 bg-gray-600 rounded-xl px-5 py-4 shadow-xl shadow-black/40 text-center">
+                <div className="text-gray-300 text-xs font-bold uppercase tracking-widest mb-1">Stav skladu</div>
+                <div className="text-white text-2xl font-black leading-none">Vyprodáno</div>
+                <div className="mt-2 pt-2 border-t border-white/20 text-gray-300 text-xs">
+                  Brzy opět naskladníme
                 </div>
               </div>
 
