@@ -23,8 +23,7 @@ const SELLER = {
 }
 
 const BANK = {
-  account1: '368 512 688 / 0300',
-  account2: '7064728369 / 0800',
+  account1: '7064728369 / 0800',
 }
 
 function czk(amount) {
@@ -210,7 +209,6 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const bx0 = ML + 10
     R(7.5, GRAY).text('Číslo účtu:', bx0, y + 7, { width: boxW - 20 })
     B(9.5, DARK).text(BANK.account1, bx0, y + 18, { width: boxW - 20 })
-    R(8, GRAY).text(`nebo ${BANK.account2}`, bx0, y + 31, { width: boxW - 20 })
 
     // Druhý box — datum splatnosti
     const bx1 = ML + boxW + 10
@@ -346,7 +344,6 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const pxL = ML + 12
     R(8, GRAY).text('Číslo bankovního účtu:', pxL, y + 24, { width: halfW, lineBreak: false })
     B(8.5, DARK).text(BANK.account1, pxL, y + 35, { width: halfW, lineBreak: false })
-    R(8, GRAY).text(`nebo ${BANK.account2}`, pxL, y + 47, { width: halfW, lineBreak: false })
 
     // Pravý sloupec — variabilní symbol
     const pxR = ML + 12 + halfW + 12
