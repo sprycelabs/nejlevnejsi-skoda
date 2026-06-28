@@ -66,6 +66,12 @@ async function generateOrderNumber() {
 
 const PROFORMA_DEPOSIT_PCT = 0.20
 
+function charityLabel(charity) {
+  if (charity === 'zivot_detem') return 'Život dětem'
+  if (charity === 'dobry_andel') return 'Dobrý anděl'
+  return 'nevybráno'
+}
+
 function paymentMethodLabel(pm) {
   if (pm === 'osobne') return 'Platba osobně (hotovost / karta obchodnímu zástupci)'
   return 'Platba převodem (zálohová faktura)'
@@ -197,7 +203,7 @@ function customerEmail(form, items, total, orderNumber, discount, paymentMethod)
 </html>`
 }
 
-function clientNotificationEmail(form, items, total, orderNumber, attachmentCount, discount, paymentMethod) {
+function clientNotificationEmail(form, items, total, orderNumber, attachmentCount, discount, paymentMethod, charity) {
   const isCompany = !!form.companyName
   const name = isCompany ? form.companyName : `${form.firstName} ${form.lastName}`
   const contactPerson = isCompany ? form.contactPerson : `${form.firstName} ${form.lastName}`
@@ -234,6 +240,7 @@ function clientNotificationEmail(form, items, total, orderNumber, attachmentCoun
             ${form.note ? `<tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Poznámka</td><td style="padding:6px 0;font-size:13px;">${form.note}</td></tr>` : ''}
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Způsob platby</td><td style="padding:6px 0;font-size:13px;font-weight:700;color:#0369a1;">${paymentMethodLabel(paymentMethod)}</td></tr>
             <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Přílohy od zákazníka</td><td style="padding:6px 0;font-size:13px;font-weight:700;color:${attachmentCount > 0 ? '#1e7e34' : '#9ca3af'};">${attachmentCount > 0 ? `${attachmentCount} soubor${attachmentCount === 1 ? '' : attachmentCount < 5 ? 'y' : 'ů'}` : 'žádné'}</td></tr>
+            <tr><td style="padding:6px 0;color:#6b7280;font-size:13px;">Charity (1 000 Kč)</td><td style="padding:6px 0;font-size:13px;font-weight:700;color:#1e7e34;">❤️ ${charityLabel(charity)}</td></tr>
           </table>
 
           <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
@@ -267,7 +274,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { form, items, total, discount, fileAttachments = [], paymentMethod } = req.body
+  const { form, items, total, discount, fileAttachments = [], paymentMethod, charity } = req.body
 
   if (!form || !items || !total) {
     return res.status(400).json({ error: 'Missing data' })
@@ -322,7 +329,7 @@ export default async function handler(req, res) {
       from: `Nejlevnější Škoda CZ <${FROM}>`,
       to: CLIENT_EMAIL,
       subject: `Nová objednávka ${orderNumber} — ${form.companyName || `${form.firstName} ${form.lastName}`}`,
-      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount, paymentMethod),
+      html: clientNotificationEmail(form, items, total, orderNumber, customerFileAttachments.length, discount, paymentMethod, charity),
       attachments: [attachment, ...customerFileAttachments],
     })
 
