@@ -26,7 +26,7 @@ const footerLinks = {
     { label: 'Kontakt', href: '/kontakt' },
     { label: 'Obchodní podmínky', href: '/doc/terms.pdf', blank: true },
     { label: 'GDPR', href: '/doc/gdpr.pdf', blank: true },
-    { label: 'Cookies', href: '/kontakt' },
+    { label: 'Dokumenty ke stažení', href: '/stazeni' },
   ],
 }
 
@@ -121,7 +121,7 @@ export default function Footer() {
           <div className="flex gap-4">
             <a href="/doc/gdpr.pdf" target="_blank" rel="noopener" className="hover:text-gray-300 transition-colors">GDPR</a>
             <a href="/doc/terms.pdf" target="_blank" rel="noopener" className="hover:text-gray-300 transition-colors">Obchodní podmínky</a>
-            <a href="/kontakt" className="hover:text-gray-300 transition-colors">Cookies</a>
+            <a href="/stazeni" className="hover:text-gray-300 transition-colors">Dokumenty ke stažení</a>
           </div>
         </div>
       </div>

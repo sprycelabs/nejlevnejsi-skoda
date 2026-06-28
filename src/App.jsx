@@ -34,6 +34,8 @@ import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import KlientskeCentrum from './pages/KlientskeCentrum'
 import KlientskeCentrumLogin from './pages/KlientskeCentrum/Login'
+import Pomahame from './pages/Pomahame'
+import Stazeni from './pages/Stazeni'
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -109,6 +111,8 @@ export default function App() {
             <Route path="/beru-slevu" element={<BeruSlevu />} />
             <Route path="/ojete-vozy" element={<OjeteVozy />} />
             <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
+            <Route path="/pomahame" element={<Pomahame />} />
+            <Route path="/stazeni" element={<Stazeni />} />
             {/* FB reklamy — redirecty na správné detail stránky */}
             <Route path="/fabia-dynamic-config" element={<Navigate to="/vozy/fabia-dynamic-config" replace />} />
             <Route path="/fabia-dynamic" element={<Navigate to="/vozy/fabia-dynamic" replace />} />
