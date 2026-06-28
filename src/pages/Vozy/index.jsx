@@ -9,7 +9,7 @@ import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
 import PromoBeruSlevu from '../../components/PromoBeruSlevu'
 
-const MODELS = [...new Set(cars.map(c => c.name.split(' - ')[0].trim()))].sort((a, b) => a.localeCompare(b, 'cs'))
+const MODELS = [...new Set(cars.map(c => c.name.split(' ').slice(0, 2).join(' ')))].sort((a, b) => a.localeCompare(b, 'cs'))
 const FUELS = [...new Set(cars.map(c => c.fuel))]
 const TRANSMISSIONS = [...new Set(cars.map(c => c.transmission))]
 const MAX_PRICE = Math.max(...cars.map(c => c.salePrice))

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 
 const clients = [
+  { name: 'ČEZ', logo: '/logo/cez.webp', url: 'https://www.cez.cz' },
   { name: 'Bayer', logo: '/logo/bayer.webp', url: 'https://www.bayer.com' },
   { name: 'Ahold Delhaize', logo: '/logo/ahold.webp', url: 'https://www.aholddelhaize.com' },
   { name: 'Borgesius', logo: '/logo/borgesius.webp', url: 'https://www.borgesius.nl' },
