@@ -10,6 +10,8 @@ const documents = [
   { name: 'Potvrzení o vedení účtu – Česká spořitelna', path: '/stazeni/spor_potvrzeni_ucet.pdf', desc: 'Potvrzení o vedení bankovního účtu u České spořitelny.' },
   { name: 'Potvrzení o vedení účtu – ČSOB', path: '/stazeni/ucet.pdf', desc: 'Potvrzení o vedení bankovního účtu u ČSOB.' },
   { name: 'Výpis z obchodního rejstříku', path: '/stazeni/vypis.pdf', desc: 'Aktuální výpis společnosti Glenford Corp s.r.o. z obchodního rejstříku.' },
+  { name: 'Oznámení zákazníkům', path: '/stazeni/oznameni_zakaznikum.pdf', desc: '' },
+  { name: 'Plná moc – přihlášení k registraci', path: '/stazeni/plna_moc_prihlaseni.pdf', desc: '' },
 ]
 
 export default function Stazeni() {
