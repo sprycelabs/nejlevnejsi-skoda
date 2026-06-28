@@ -8,7 +8,7 @@ const documents = [
   { name: 'Zásady ochrany osobních údajů (GDPR)', path: '/doc/gdpr.pdf', desc: 'Informace o zpracování osobních údajů.' },
   { name: 'Potvrzení o vedení účtu – FIO banka', path: '/stazeni/fio_potvrzeni_ucet.pdf', desc: 'Potvrzení o vedení bankovního účtu u FIO banky.' },
   { name: 'Potvrzení o vedení účtu – Česká spořitelna', path: '/stazeni/spor_potvrzeni_ucet.pdf', desc: 'Potvrzení o vedení bankovního účtu u České spořitelny.' },
-  { name: 'Bankovní účet', path: '/stazeni/ucet.pdf', desc: 'Číslo bankovního účtu pro platby.' },
+  { name: 'Potvrzení o vedení účtu – ČSOB', path: '/stazeni/ucet.pdf', desc: 'Potvrzení o vedení bankovního účtu u ČSOB.' },
   { name: 'Výpis z obchodního rejstříku', path: '/stazeni/vypis.pdf', desc: 'Aktuální výpis společnosti Glenford Corp s.r.o. z obchodního rejstříku.' },
 ]
 
