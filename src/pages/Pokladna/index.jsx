@@ -660,7 +660,7 @@ export default function Pokladna() {
                 <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart size={22} className="text-[#1e7e34]" fill="#1e7e34" />
                 </div>
-                <h2 className="text-2xl font-black text-gray-900 mb-2">Komu věnujeme 1 000 Kč?</h2>
+                <h2 className="text-2xl font-black text-gray-900 mb-2">Komu věnujeme <span className="whitespace-nowrap">1 000 Kč?</span></h2>
                 <p className="text-gray-500 text-sm">Z vašeho nákupu pošleme 1 000 Kč nadaci dle vašeho výběru.</p>
               </div>
 
