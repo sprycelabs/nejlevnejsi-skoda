@@ -33,7 +33,7 @@ export default function Pomahame() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#1e7e34_0%,_transparent_60%)] opacity-40 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_#0d3318_0%,_transparent_70%)] pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full py-20 sm:py-32">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-32 pb-20 sm:py-32">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left */}
             <div>
