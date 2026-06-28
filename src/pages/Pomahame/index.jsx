@@ -157,7 +157,7 @@ export default function Pomahame() {
             {/* Život dětem */}
             <motion.div {...fadeUp(0.05)} className="bg-gray-50 rounded-3xl p-10 flex flex-col">
               <div className="h-20 flex items-center mb-8">
-                <img src="/pomaha/zivot_detem.webp" alt="Život dětem" className="h-full w-auto object-contain" />
+                <img src="/pomaha/zivot_detem.webp?v=2" alt="Život dětem" className="h-full w-auto object-contain" />
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-3">Život dětem</h3>
               <p className="text-gray-500 leading-relaxed flex-1 mb-8">
@@ -176,7 +176,7 @@ export default function Pomahame() {
             {/* Dobrý anděl */}
             <motion.div {...fadeUp(0.1)} className="bg-gray-50 rounded-3xl p-10 flex flex-col">
               <div className="h-20 flex items-center mb-8">
-                <img src="/pomaha/dobry_andel.webp" alt="Dobrý anděl" className="h-full w-auto object-contain" />
+                <img src="/pomaha/dobry_andel.webp?v=2" alt="Dobrý anděl" className="h-full w-auto object-contain" />
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-3">Dobrý anděl</h3>
               <p className="text-gray-500 leading-relaxed flex-1 mb-8">

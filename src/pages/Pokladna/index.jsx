@@ -666,8 +666,8 @@ export default function Pokladna() {
 
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {[
-                  { key: 'zivot_detem', logo: '/pomaha/zivot_detem.webp', name: 'Život dětem', url: 'https://www.zivotdetem.cz' },
-                  { key: 'dobry_andel', logo: '/pomaha/dobry_andel.webp', name: 'Dobrý anděl', url: 'https://www.dobryandel.cz' },
+                  { key: 'zivot_detem', logo: '/pomaha/zivot_detem.webp?v=2', name: 'Život dětem', url: 'https://www.zivotdetem.cz' },
+                  { key: 'dobry_andel', logo: '/pomaha/dobry_andel.webp?v=2', name: 'Dobrý anděl', url: 'https://www.dobryandel.cz' },
                 ].map(c => (
                   <button
                     key={c.key}
