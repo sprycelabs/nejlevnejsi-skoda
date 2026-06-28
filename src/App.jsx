@@ -77,7 +77,7 @@ function HomePage() {
         <ClientsBar />
         <QuickLinks />
         <CarListing />
-        <BombDeal />
+        {/* <BombDeal /> */}
         <HowItWorks />
         <ProcessSection />
         <WhyUs />

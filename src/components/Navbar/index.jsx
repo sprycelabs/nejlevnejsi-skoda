@@ -10,6 +10,7 @@ const navLinks = [
   { label: 'Jak to funguje', href: '/#jak-to-funguje' },
   { label: 'Časté dotazy', href: '/faq' },
   { label: 'Kontakt', href: '/kontakt' },
+  { label: 'Pomáháme', href: '/pomahame' },
 ]
 
 export default function Navbar() {
