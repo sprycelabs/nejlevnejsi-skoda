@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X, Truck, FileText } from 'lucide-react'
+import { ChevronRight, ShoppingCart, Trash2, Plus, Minus, ShieldCheck, AlertCircle, CheckCircle2, User, Building2, Loader2, Tag, X, Truck, FileText, Heart } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
@@ -81,6 +81,8 @@ export default function Pokladna() {
   const [discountInput, setDiscountInput] = useState('')
   const [appliedDiscount, setAppliedDiscount] = useState(null)
   const [discountError, setDiscountError] = useState('')
+  const [charityModal, setCharityModal] = useState(false)
+  const [pendingSubmitData, setPendingSubmitData] = useState(null)
 
   // Přepočítává se vždy z aktuálního cartTotal — reaguje na změny košíku
   const discountAmount = appliedDiscount
@@ -167,10 +169,16 @@ export default function Pokladna() {
       }, 50)
       return
     }
+    // Validace OK — zobraz modal pro výběr charity
+    setPendingSubmitData({ form, items, total: discountedTotal, discount: appliedDiscount ? { ...appliedDiscount, amount: discountAmount } : null, paymentMethod })
+    setCharityModal(true)
+  }
+
+  async function doSubmit(charity) {
+    setCharityModal(false)
     setLoading(true)
     setSubmitError('')
     try {
-      // Převeď soubory zákazníka na base64
       const fileAttachments = await Promise.all(
         attachedFiles.map(file => new Promise((resolve) => {
           const reader = new FileReader()
@@ -186,11 +194,7 @@ export default function Pokladna() {
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          form, items, total: discountedTotal, fileAttachments,
-          discount: appliedDiscount ? { ...appliedDiscount, amount: discountAmount } : null,
-          paymentMethod,
-        }),
+        body: JSON.stringify({ ...pendingSubmitData, fileAttachments, charity }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Chyba serveru')
@@ -198,9 +202,8 @@ export default function Pokladna() {
       clearCart()
       setSubmitted(true)
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      // Google Ads konverze — odeslání objednávky
       if (typeof window.gtag_report_conversion === 'function') {
-        window.gtag_report_conversion(discountedTotal)
+        window.gtag_report_conversion(pendingSubmitData.total)
       }
     } catch (err) {
       setSubmitError('Nepodařilo se odeslat objednávku. Zkuste to prosím znovu nebo nás kontaktujte.')
@@ -629,6 +632,62 @@ export default function Pokladna() {
       </section>
 
       <Footer />
+
+      {/* Charity modal */}
+      <AnimatePresence>
+        {charityModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative"
+            >
+              <button
+                onClick={() => setCharityModal(false)}
+                className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 transition-colors"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="text-center mb-8">
+                <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart size={22} className="text-[#1e7e34]" fill="#1e7e34" />
+                </div>
+                <h2 className="text-2xl font-black text-gray-900 mb-2">Komu věnujeme 1 000 Kč?</h2>
+                <p className="text-gray-500 text-sm">Z vašeho nákupu pošleme 1 000 Kč nadaci dle vašeho výběru.</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {[
+                  { key: 'zivot_detem', logo: '/pomaha/zivot_detem.webp', name: 'Život dětem', url: 'https://www.zivotdetem.cz' },
+                  { key: 'dobry_andel', logo: '/pomaha/dobry_andel.webp', name: 'Dobrý anděl', url: 'https://www.dobryandel.cz' },
+                ].map(c => (
+                  <button
+                    key={c.key}
+                    type="button"
+                    onClick={() => doSubmit(c.key)}
+                    className="group flex flex-col items-center gap-4 p-6 rounded-xl border-2 border-gray-100 hover:border-[#1e7e34] hover:bg-green-50 transition-all"
+                  >
+                    <img src={c.logo} alt={c.name} className="h-16 w-auto object-contain" />
+                    <span className="font-bold text-gray-800 text-sm group-hover:text-[#1e7e34] transition-colors">{c.name}</span>
+                  </button>
+                ))}
+              </div>
+
+              <p className="text-center text-xs text-gray-400">
+                Výběr nemá vliv na cenu ani průběh vaší objednávky.
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
