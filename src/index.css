@@ -29,16 +29,16 @@ body {
 }
 
 .client-logo {
-  height: 44px !important;
-  width: auto !important;
-  max-width: unset !important;
+  height: 44px;
+  width: auto;
+  max-width: unset;
   object-fit: contain;
   display: block;
 }
 
 @media (min-width: 640px) {
   .client-logo {
-    height: 48px !important;
+    height: 48px;
   }
 }
 
