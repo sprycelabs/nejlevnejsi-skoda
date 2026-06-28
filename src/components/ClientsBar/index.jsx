@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 
 const clients = [
-  { name: 'ČEZ', logo: '/logo/cez.webp', url: 'https://www.cez.cz' },
+  { name: 'ČEZ', logo: '/logo/cez.webp', url: 'https://www.cez.cz', height: 72 },
   { name: 'Bayer', logo: '/logo/bayer.webp', url: 'https://www.bayer.com' },
   { name: 'Ahold Delhaize', logo: '/logo/ahold.webp', url: 'https://www.aholddelhaize.com' },
   { name: 'Borgesius', logo: '/logo/borgesius.webp', url: 'https://www.borgesius.nl' },
@@ -41,6 +41,7 @@ export default function ClientsBar() {
                   src={client.logo}
                   alt={client.name}
                   className="client-logo transition-all duration-300 hover:opacity-75"
+                  style={client.height ? { height: client.height } : undefined}
                 />
               </a>
             </motion.div>
