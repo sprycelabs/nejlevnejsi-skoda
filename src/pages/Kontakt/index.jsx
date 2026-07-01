@@ -34,6 +34,7 @@ const contactItems = [
   {
     icon: MapPin,
     label: 'Kancelář',
+    companies: ['Cosoleto Group s.r.o.', 'Glenford Corp s.r.o.'],
     value: 'Primátorská 296/38, Praha 8',
     sub: 'Schůzky po domluvě',
     href: 'https://maps.google.com/?q=Primátorská+296/38,+180+00+Praha+8',
@@ -204,6 +205,9 @@ export default function Kontakt() {
                   </div>
                   <div>
                     <div className="text-xs text-gray-400 uppercase tracking-wider mb-0.5">{item.label}</div>
+                    {item.companies && item.companies.map(c => (
+                      <div key={c} className="text-xs text-gray-500">{c}</div>
+                    ))}
                     <div className="font-bold text-gray-900 text-sm">{item.value}</div>
                     <div className="text-xs text-gray-500 mt-0.5">{item.sub}</div>
                   </div>
@@ -215,6 +219,9 @@ export default function Kontakt() {
                   </div>
                   <div>
                     <div className="text-xs text-gray-400 uppercase tracking-wider mb-0.5">{item.label}</div>
+                    {item.companies && item.companies.map(c => (
+                      <div key={c} className="text-xs text-gray-500">{c}</div>
+                    ))}
                     <div className="font-bold text-gray-900 text-sm">{item.value}</div>
                     <div className="text-xs text-gray-500 mt-0.5">{item.sub}</div>
                   </div>

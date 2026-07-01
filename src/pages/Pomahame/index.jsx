@@ -117,7 +117,7 @@ export default function Pomahame() {
                 },
               ].map((item, i) => (
                 <motion.div key={item.num} {...fadeUp(i * 0.1)} className="flex gap-6 p-6 rounded-2xl border border-gray-100 hover:border-[#1e7e34]/30 hover:shadow-sm transition-all">
-                  <span className="text-4xl font-black text-gray-100 shrink-0 leading-none">{item.num}</span>
+                  <span className="text-4xl font-black text-gray-300 shrink-0 leading-none">{item.num}</span>
                   <div>
                     <h3 className="font-black text-gray-900 mb-2">{item.title}</h3>
                     <p className="text-gray-500 text-sm leading-relaxed">{item.text}</p>
@@ -161,7 +161,7 @@ export default function Pomahame() {
               </div>
               <h3 className="text-2xl font-black text-gray-900 mb-3">Život dětem</h3>
               <p className="text-gray-500 leading-relaxed flex-1 mb-8">
-                Nadace Život dětem již řadu let pomáhá vážně nemocným dětem a jejich rodinám po celé České republice. Finančně i prakticky podporuje rodiny v nejtěžších chvílích jejich života.
+                Život dětem o.p.s. již řadu let pomáhá vážně nemocným dětem a jejich rodinám po celé České republice. Finančně i prakticky podporuje rodiny v nejtěžších chvílích jejich života.
               </p>
               <a
                 href="https://www.zivotdetem.cz"
