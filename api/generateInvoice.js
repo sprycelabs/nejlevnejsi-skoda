@@ -23,7 +23,7 @@ const SELLER = {
 }
 
 const BANK = {
-  account1: '7064728369 / 0800',
+  account1: '2003525274 / 2010',
 }
 
 function czk(amount) {
