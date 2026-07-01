@@ -601,12 +601,7 @@ export default function Pokladna() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-100 rounded-md p-3 mb-5 text-xs text-blue-800 leading-relaxed">
-                    <ShieldCheck size={15} className="text-blue-400 shrink-0 mt-0.5" />
-                    <span>
-                      Odesláním nám sdělíte zájem o vůz. <strong>Do 24 hodin vás kontaktujeme</strong> telefonicky nebo e-mailem pro potvrzení. Zároveň obdržíte <strong>proforma fakturu</strong> s platebními údaji.
-                    </span>
-                  </div>
+
 
                   {submitError && (
                     <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-md p-3 mb-4 text-xs text-red-700">
