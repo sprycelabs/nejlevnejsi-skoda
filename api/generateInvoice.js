@@ -86,7 +86,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const carItems = items.map(({ car, qty }) => ({
       name:       `${car.name} ${car.variant}`,
       internalId: car.internalId || null,
-      isUsed:     car.isUsed || false,
+      isUsed:     car.isUsed || !!car.mileage,
       qty,
       total: car.salePrice * qty,
     }))
