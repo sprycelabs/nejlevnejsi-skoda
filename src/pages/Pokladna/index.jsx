@@ -444,7 +444,7 @@ export default function Pokladna() {
 
                   <ul className="divide-y divide-gray-100 mb-4">
                     {items.map(({ car, qty }) => (
-                      <li key={car.id} className="py-4 flex gap-3">
+                      <li key={car.slug} className="py-4 flex gap-3">
                         <div className="w-16 h-12 bg-gray-50 rounded flex items-center justify-center shrink-0">
                           <img src={car.image} alt={car.name} className="w-full h-full object-contain p-1" />
                         </div>

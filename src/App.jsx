@@ -38,7 +38,10 @@ import Pomahame from './pages/Pomahame'
 import Stazeni from './pages/Stazeni'
 import AdminLogin from './pages/Admin/Login'
 import AdminPanel from './pages/Admin'
+import AdminOrderDetail from './pages/Admin/OrderDetail'
+import AdminCreateOrder from './pages/Admin/CreateOrder'
 import AdminRoute from './components/AdminRoute'
+import { AdminAuthProvider } from './context/AdminAuthContext'
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -96,6 +99,7 @@ export default function App() {
   return (
     <HelmetProvider>
     <BrowserRouter>
+      <AdminAuthProvider>
       <AuthProvider>
         <CartProvider>
           <ScrollToTop />
@@ -119,16 +123,11 @@ export default function App() {
             {/* FB reklamy — redirecty na správné detail stránky */}
             <Route path="/fabia-dynamic-config" element={<Navigate to="/vozy/fabia-dynamic-config" replace />} />
             <Route path="/fabia-dynamic" element={<Navigate to="/vozy/fabia-dynamic" replace />} />
-            {/* Admin */}
+            {/* Admin — vlastní auth session oddělená od zákaznické */}
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminPanel />
-                </AdminRoute>
-              }
-            />
+            <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+            <Route path="/admin/objednavky/:orderNumber" element={<AdminRoute><AdminOrderDetail /></AdminRoute>} />
+            <Route path="/admin/nova-objednavka" element={<AdminRoute><AdminCreateOrder /></AdminRoute>} />
             {/* Klientské centrum */}
             <Route path="/klientske-centrum/login" element={<KlientskeCentrumLogin />} />
             <Route
@@ -142,6 +141,7 @@ export default function App() {
           </Routes>
         </CartProvider>
       </AuthProvider>
+      </AdminAuthProvider>
     </BrowserRouter>
     </HelmetProvider>
   )

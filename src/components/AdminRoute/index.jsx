@@ -1,10 +1,8 @@
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'
-
-const ADMIN_EMAILS = ['schonfeldmatej33@gmail.com']
+import { useAdminAuth } from '../../context/AdminAuthContext'
 
 export default function AdminRoute({ children }) {
-  const { user, loading } = useAuth()
+  const { user, loading, isAdmin } = useAdminAuth()
 
   if (loading) {
     return (
@@ -14,7 +12,7 @@ export default function AdminRoute({ children }) {
     )
   }
 
-  if (!user || !ADMIN_EMAILS.includes(user.email)) {
+  if (!user || !isAdmin) {
     return <Navigate to="/admin/login" replace />
   }
 

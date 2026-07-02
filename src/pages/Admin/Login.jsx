@@ -2,28 +2,24 @@ import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { LogIn, Mail, Lock, AlertCircle, ShieldCheck } from 'lucide-react'
-import { useAuth } from '../../context/AuthContext'
-
-const ADMIN_EMAILS = ['schonfeldmatej33@gmail.com']
+import { useAdminAuth } from '../../context/AdminAuthContext'
 
 export default function AdminLogin() {
-  const { user, signIn } = useAuth()
+  const { user, isAdmin, signIn } = useAdminAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  if (user && ADMIN_EMAILS.includes(user.email)) {
-    return <Navigate to="/admin" replace />
-  }
+  if (user && isAdmin) return <Navigate to="/admin" replace />
 
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
     setLoading(true)
 
-    const { error: signInError } = await signIn(email, password)
+    const { data, error: signInError } = await signIn(email, password)
 
     if (signInError) {
       setError('Nesprávný e-mail nebo heslo.')
@@ -31,7 +27,7 @@ export default function AdminLogin() {
       return
     }
 
-    if (!ADMIN_EMAILS.includes(email)) {
+    if (data?.user?.app_metadata?.role !== 'admin') {
       setError('Tento účet nemá přístup do administrace.')
       setLoading(false)
       return

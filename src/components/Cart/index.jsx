@@ -63,7 +63,7 @@ export default function Cart() {
               ) : (
                 <ul className="divide-y divide-gray-100">
                   {items.map(({ car, qty }) => (
-                    <li key={car.id} className="flex gap-4 px-6 py-5">
+                    <li key={car.slug} className="flex gap-4 px-6 py-5">
                       {/* Image */}
                       <div className="w-20 h-16 bg-gray-50 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
                         <img src={car.image} alt={car.name} className="w-full h-full object-contain p-1" />

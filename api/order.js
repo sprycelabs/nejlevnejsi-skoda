@@ -295,7 +295,28 @@ export default async function handler(req, res) {
       content: pdfBase64,
     }
 
-    // Ulož fakturu do Vercel Blob (pokud je token k dispozici)
+    // Ulož fakturu do Supabase Storage (soukromý bucket 'invoices')
+    let invoicePath = null
+    try {
+      const supabaseForStorage = getSupabase()
+      if (supabaseForStorage) {
+        const { data: storageData, error: storageErr } = await supabaseForStorage.storage
+          .from('invoices')
+          .upload(invoiceFilename, pdfBuffer, {
+            contentType: 'application/pdf',
+            upsert: true,
+          })
+        if (storageErr) {
+          console.error('Storage upload failed:', storageErr.message)
+        } else {
+          invoicePath = storageData.path
+        }
+      }
+    } catch (storageErr) {
+      console.error('Storage upload error:', storageErr.message)
+    }
+
+    // Vercel Blob (ponecháno pro zpětnou kompatibilitu, pokud je token)
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       try {
         await put(`invoices/${invoiceFilename}`, pdfBuffer, {
@@ -304,8 +325,7 @@ export default async function handler(req, res) {
           token: process.env.BLOB_READ_WRITE_TOKEN,
         })
       } catch (blobErr) {
-        console.error('Blob upload failed:', blobErr)
-        // Pokračuj i bez uložení — email se pošle tak jako tak
+        console.error('Blob upload failed:', blobErr.message)
       }
     }
 
@@ -337,17 +357,59 @@ export default async function handler(req, res) {
     try {
       const supabase = getSupabase()
       if (supabase && items?.length > 0) {
-        const rows = items.map(({ car, qty }) => ({
-          email:        form.email,
-          car_name:     car.name,
-          car_slug:     car.slug ?? null,
-          car_variant:  car.variant ?? null,
-          car_color:    car.color ?? null,
-          price:        car.salePrice * qty,
-          order_number: orderNumber,
-          internal_id:  car.internalId ?? null,
-          status:       'prijato',
-        }))
+        const isCompany = !!form.companyName
+        const totalItems = items.reduce((s, { car, qty }) => s + car.salePrice * qty, 0)
+        const discountAmt = discount?.amount ?? 0
+
+        const rows = items.map(({ car, qty }) => {
+          const lineOriginal = car.salePrice * qty
+          // Poměrná sleva na tento řádek
+          const lineFinal = totalItems > 0
+            ? Math.round(lineOriginal - (discountAmt * lineOriginal / totalItems))
+            : lineOriginal
+
+          return {
+            // Zákazník
+            email:           form.email,
+            first_name:      isCompany ? null : (form.firstName ?? null),
+            last_name:       isCompany ? null : (form.lastName ?? null),
+            company_name:    isCompany ? (form.companyName ?? null) : null,
+            ico:             isCompany ? (form.ico ?? null) : null,
+            dic:             isCompany ? (form.dic ?? null) : null,
+            contact_person:  isCompany ? (form.contactPerson ?? null) : null,
+            phone:           form.phone ?? null,
+            street:          form.street ?? null,
+            city:            form.city ?? null,
+            zip:             form.zip ?? null,
+            customer_type:   isCompany ? 'firma' : 'fyzicka',
+            notes:           form.note ?? null,
+
+            // Objednávka
+            order_number:    orderNumber,
+            payment_method:  paymentMethod ?? null,
+            delivery:        !!form.delivery,
+            discount_code:   discount?.code ?? null,
+            discount_amount: discountAmt,
+            charity:         charity ?? null,
+
+            // Vůz
+            car_name:        car.name,
+            car_slug:        car.slug ?? null,
+            car_variant:     car.variant ?? null,
+            car_color:       car.color ?? null,
+            internal_id:     car.internalId ?? null,
+            qty,
+            is_used:         car.isUsed || !!car.mileage,
+            price:           lineOriginal,
+            price_original:  lineOriginal,
+            price_final:     lineFinal,
+            deposit_paid:    Math.round(lineFinal * PROFORMA_DEPOSIT_PCT),
+
+            status: 'prijato',
+            invoice_path: invoicePath,
+          }
+        })
+
         const { error: dbErr } = await supabase.from('orders').insert(rows)
         if (dbErr) console.error('Supabase insert error:', dbErr.message)
       }
