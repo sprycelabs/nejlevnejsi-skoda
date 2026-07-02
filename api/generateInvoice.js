@@ -86,6 +86,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     const carItems = items.map(({ car, qty }) => ({
       name:       `${car.name} ${car.variant}`,
       internalId: car.internalId || null,
+      isUsed:     car.isUsed || false,
       qty,
       total: car.salePrice * qty,
     }))
@@ -265,7 +266,7 @@ export async function generateInvoicePDF({ form, items, orderNumber, logoBase64,
     }
 
     carItems.forEach((item, i) => {
-      drawRow(item.name, 'Nový osobní automobil', item.qty, item.total, i % 2 ? LGRAY : null, item.internalId || null)
+      drawRow(item.name, item.isUsed ? 'Ojetý osobní automobil' : 'Nový osobní automobil', item.qty, item.total, i % 2 ? LGRAY : null, item.internalId || null)
     })
 
     // Sleva — zobrazit mezisoučet, slevu a cenu po slevě

@@ -12766,6 +12766,7 @@ export const ojeteVozy = [
     originalPrice: 320000,
     discount: 22,
     inStock: 0,
+    isUsed: true,
     freeDelivery: false,
     image: '/ojete-hero.webp',
     color: 'Šedá metalíza',
@@ -12788,6 +12789,7 @@ export const ojeteVozy = [
     originalPrice: 429000,
     discount: 18,
     inStock: 1,
+    isUsed: true,
     freeDelivery: false,
     image: '/cars/seat-ateca-fr.webp',
     images: [
