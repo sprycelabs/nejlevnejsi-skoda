@@ -21,9 +21,9 @@ export function CartProvider({ children }) {
 
   function addToCart(car) {
     setItems(prev => {
-      const existing = prev.find(i => i.car.id === car.id)
+      const existing = prev.find(i => i.car.slug === car.slug)
       if (existing) {
-        return prev.map(i => i.car.id === car.id ? { ...i, qty: i.qty + 1 } : i)
+        return prev.map(i => i.car.slug === car.slug ? { ...i, qty: i.qty + 1 } : i)
       }
       return [...prev, { car, qty: 1 }]
     })
@@ -42,13 +42,13 @@ export function CartProvider({ children }) {
     }
   }
 
-  function removeFromCart(carId) {
-    setItems(prev => prev.filter(i => i.car.id !== carId))
+  function removeFromCart(carSlug) {
+    setItems(prev => prev.filter(i => i.car.slug !== carSlug))
   }
 
-  function updateQty(carId, qty) {
-    if (qty < 1) return removeFromCart(carId)
-    setItems(prev => prev.map(i => i.car.id === carId ? { ...i, qty } : i))
+  function updateQty(carSlug, qty) {
+    if (qty < 1) return removeFromCart(carSlug)
+    setItems(prev => prev.map(i => i.car.slug === carSlug ? { ...i, qty } : i))
   }
 
   function clearCart() {

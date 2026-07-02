@@ -110,7 +110,7 @@ export default function App() {
             <Route path="/akce-kveten" element={<AkceKveten />} />
             <Route path="/beru-slevu" element={<BeruSlevu />} />
             <Route path="/ojete-vozy" element={<OjeteVozy />} />
-            <Route path="/ojete-vozy/octavia-combi" element={<OjeteVozyDetail />} />
+            <Route path="/ojete-vozy/:slug" element={<OjeteVozyDetail />} />
             <Route path="/pomahame" element={<Pomahame />} />
             <Route path="/stazeni" element={<Stazeni />} />
             {/* FB reklamy — redirecty na správné detail stránky */}

@@ -453,17 +453,17 @@ export default function Pokladna() {
                           <p className="text-xs text-gray-400">{car.variant}</p>
                           <div className="flex items-center justify-between mt-1.5">
                             <div className="flex items-center gap-1 border border-gray-200 rounded">
-                              <button type="button" onClick={() => updateQty(car.id, qty - 1)} className="p-1 hover:bg-gray-100">
+                              <button type="button" onClick={() => updateQty(car.slug, qty - 1)} className="p-1 hover:bg-gray-100">
                                 <Minus size={11} className="text-gray-500" />
                               </button>
                               <span className="text-xs font-semibold w-5 text-center">{qty}</span>
-                              <button type="button" onClick={() => updateQty(car.id, qty + 1)} className="p-1 hover:bg-gray-100">
+                              <button type="button" onClick={() => updateQty(car.slug, qty + 1)} className="p-1 hover:bg-gray-100">
                                 <Plus size={11} className="text-gray-500" />
                               </button>
                             </div>
                             <div className="flex items-center gap-2">
                               <span className="font-black text-[#1e7e34] text-sm">{formatPrice(car.salePrice * qty)}</span>
-                              <button type="button" onClick={() => removeFromCart(car.id)} className="text-gray-300 hover:text-red-400 transition-colors">
+                              <button type="button" onClick={() => removeFromCart(car.slug)} className="text-gray-300 hover:text-red-400 transition-colors">
                                 <Trash2 size={14} />
                               </button>
                             </div>

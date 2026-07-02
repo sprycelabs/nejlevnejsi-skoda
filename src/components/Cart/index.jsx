@@ -77,14 +77,14 @@ export default function Cart() {
                           {/* Qty controls */}
                           <div className="flex items-center gap-1 border border-gray-200 rounded-md">
                             <button
-                              onClick={() => updateQty(car.id, qty - 1)}
+                              onClick={() => updateQty(car.slug, qty - 1)}
                               className="p-1.5 hover:bg-gray-100 transition-colors"
                             >
                               <Minus size={13} className="text-gray-600" />
                             </button>
                             <span className="text-sm font-semibold w-6 text-center">{qty}</span>
                             <button
-                              onClick={() => updateQty(car.id, qty + 1)}
+                              onClick={() => updateQty(car.slug, qty + 1)}
                               className="p-1.5 hover:bg-gray-100 transition-colors"
                             >
                               <Plus size={13} className="text-gray-600" />
@@ -96,7 +96,7 @@ export default function Cart() {
 
                       {/* Remove */}
                       <button
-                        onClick={() => removeFromCart(car.id)}
+                        onClick={() => removeFromCart(car.slug)}
                         className="self-start p-1.5 hover:bg-red-50 hover:text-red-500 text-gray-300 rounded-lg transition-colors"
                       >
                         <Trash2 size={16} />
