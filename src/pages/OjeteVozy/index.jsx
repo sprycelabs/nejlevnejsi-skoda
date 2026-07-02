@@ -14,14 +14,6 @@ const TRANSMISSIONS = [...new Set(ojeteVozy.map(c => c.transmission))]
 const MAX_PRICE = ojeteVozy.length ? Math.max(...ojeteVozy.map(c => c.salePrice)) : 1000000
 const MIN_PRICE = ojeteVozy.length ? Math.min(...ojeteVozy.map(c => c.salePrice)) : 0
 
-const PRICE = 249000
-const STOCK = 0
-const TOTAL_STOCK = 16
-
-function czk(n) {
-  return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(n)
-}
-
 const SORT_OPTIONS = [
   { value: 'default', label: 'Výchozí řazení' },
   { value: 'price-asc', label: 'Cena: od nejnižší' },
@@ -316,8 +308,8 @@ export default function OjeteVozy() {
   return (
     <div className="min-h-screen bg-white">
       <SEO
-        title="Ojeté vozy Škoda | Octavia Combi z aukce za výjimečnou cenu"
-        description="Prověřené ojeté Škody Octavia Combi z holandského leasingu. Kompletní servis 120 000 km hotový předem. Dovoz a registrace v ČR v ceně."
+        title="Ojeté vozy | Škoda, VW, Audi, SEAT, CUPRA — prověřené vozy z leasingu"
+        description="Prověřené ojeté vozy z finančního a operativního leasingu. Škoda, Volkswagen, Audi, SEAT, CUPRA. Doprava a registrace v ceně, transparentní popis stavu, záruka na skryté vady."
         canonical="/ojete-vozy"
       />
       <Navbar />
@@ -335,28 +327,28 @@ export default function OjeteVozy() {
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-4 sm:pb-16 w-full">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-36 pb-10 sm:pb-16 w-full">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.05 }}
-                className="inline-flex items-center gap-2 bg-gray-500/30 border border-gray-400/40 text-gray-300 text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase"
+                className="inline-flex items-center gap-2 bg-[#1e7e34]/20 border border-[#1e7e34]/40 text-[#86efac] text-xs font-bold px-4 py-1.5 rounded-full mb-5 tracking-wider uppercase"
               >
-                <span className="w-2 h-2 rounded-full bg-gray-400 shrink-0" />
-                Vyprodáno · Brzy opět naskladníme
+                <span className="w-2 h-2 rounded-full bg-[#4ade80] shrink-0" />
+                Ojeté vozy
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-3xl sm:text-4xl xl:text-6xl font-black text-white leading-tight mb-4"
+                className="text-3xl sm:text-4xl xl:text-5xl font-black text-white leading-tight mb-5"
               >
-                Škoda Octavia Combi{' '}
+                Prověřené ojeté vozy{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#28a745] to-[#86efac]">
-                  za výjimečnou cenu
+                  připravené k odběru
                 </span>
               </motion.h1>
 
@@ -364,30 +356,30 @@ export default function OjeteVozy() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-gray-300 text-sm sm:text-lg leading-relaxed mb-6 max-w-lg"
+                className="text-gray-300 text-sm sm:text-base leading-relaxed mb-8 max-w-lg"
               >
-                Prověřené ojeté Octavie z holandského leasingu s kompletní servisní historií. Každý vůz prošel servisem 120 000 km — připraven k okamžitému provozu.
+                Nabízíme vozy po ukončení finančního nebo operativního leasingu — převážně ze skupiny Volkswagen (Škoda, VW, Audi, SEAT, CUPRA). U každého vozu uvádíme podrobný popis stavu včetně všech závad. Žádná překvapení.
               </motion.p>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.25 }}
-                className="flex flex-wrap gap-3 mb-6 sm:mb-10"
+                className="flex flex-wrap gap-3 mb-8"
               >
                 <a
                   href="tel:+420733455966"
-                  className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-200 shadow-lg shadow-green-900/40 text-sm sm:text-base"
+                  className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-6 py-3.5 rounded-md transition-all duration-200 shadow-lg shadow-green-900/40 text-sm"
                 >
-                  <Phone size={17} />
-                  Mám zájem
+                  <Phone size={16} />
+                  Zavolat
                 </a>
                 <a
-                  href="/ojete-vozy/octavia-combi"
-                  className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-200 text-sm sm:text-base"
+                  href="#katalog"
+                  className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold px-6 py-3.5 rounded-md transition-all duration-200 text-sm"
                 >
-                  Detail vozu
-                  <ArrowRight size={15} />
+                  Zobrazit vozy
+                  <ArrowRight size={14} />
                 </a>
               </motion.div>
 
@@ -398,8 +390,8 @@ export default function OjeteVozy() {
                 className="flex flex-wrap items-center gap-5"
               >
                 {[
-                  { icon: ShieldCheck, text: 'Prověřená historie' },
-                  { icon: Truck,       text: 'Dovoz a registrace v ceně' },
+                  { icon: ShieldCheck, text: 'Transparentní popis stavu' },
+                  { icon: Truck,       text: 'Doprava a registrace v ceně' },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm">
                     <Icon size={15} className="text-[#28a745]" />
@@ -409,40 +401,31 @@ export default function OjeteVozy() {
               </motion.div>
             </div>
 
+            {/* Right — klíčové benefity */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative flex items-end justify-center lg:justify-end"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3"
             >
-              <div className="hidden lg:block absolute top-0 right-0 z-10 bg-gray-600 rounded-xl px-5 py-4 shadow-xl shadow-black/40 text-center">
-                <div className="text-gray-300 text-xs font-bold uppercase tracking-widest mb-1">Stav skladu</div>
-                <div className="text-white text-2xl font-black leading-none">Vyprodáno</div>
-                <div className="mt-2 pt-2 border-t border-white/20 text-gray-300 text-xs">
-                  Brzy opět naskladníme
-                </div>
-              </div>
-
-              <img
-                src="/ojete-hero.webp"
-                alt="Škoda Octavia Combi"
-                className="w-full max-h-52 sm:max-h-72 lg:max-h-none object-contain lg:max-w-2xl lg:translate-y-16"
-                style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}
-              />
+              {[
+                { title: 'Doprava po celé ČR', desc: 'Dovoz a registrace vozu na nového majitele jsou součástí ceny.' },
+                { title: 'Doživotní záruka', desc: 'Na skryté vady poskytujeme doživotní záruku bez výjimky.' },
+                { title: '12 měs. / 50 000 km', desc: 'Na technický stav vozů bez tovární záruky — podle toho, co nastane dříve.' },
+                { title: 'Poctivý popis stavu', desc: 'Uvádíme všechny závady, poškození i kosmetické vady. Žádná překvapení.' },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.07 }}
+                  className="bg-white/5 border border-white/10 rounded-xl p-5"
+                >
+                  <div className="font-black text-white text-sm mb-1.5">{item.title}</div>
+                  <div className="text-gray-400 text-xs leading-relaxed">{item.desc}</div>
+                </motion.div>
+              ))}
             </motion.div>
-          </div>
-        </div>
-
-        <div className="lg:hidden relative z-10 px-4 pb-4">
-          <div className="flex items-center justify-between bg-[#1e7e34] rounded-xl px-5 py-4 shadow-xl">
-            <div>
-              <div className="text-green-200 text-xs font-bold uppercase tracking-widest mb-0.5">Cena vč. DPH</div>
-              <div className="text-white text-2xl font-black leading-tight">{czk(PRICE)}</div>
-            </div>
-            <div className="text-right">
-              <div className="text-green-200 text-xs mb-0.5">Zbývá</div>
-              <div className="text-white font-black text-xl">{STOCK} <span className="text-green-200 font-normal text-sm">z {TOTAL_STOCK}</span></div>
-            </div>
           </div>
         </div>
 
@@ -454,7 +437,7 @@ export default function OjeteVozy() {
       </section>
 
       {/* ── KATALOG ───────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-gray-50 min-h-[60vh]">
+      <div id="katalog" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-gray-50 min-h-[60vh]">
         <div className="flex gap-0 lg:gap-8">
           {/* Sidebar filtry — desktop */}
           <aside className="hidden lg:block w-64 shrink-0">
