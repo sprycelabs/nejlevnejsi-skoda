@@ -36,6 +36,9 @@ import KlientskeCentrum from './pages/KlientskeCentrum'
 import KlientskeCentrumLogin from './pages/KlientskeCentrum/Login'
 import Pomahame from './pages/Pomahame'
 import Stazeni from './pages/Stazeni'
+import AdminLogin from './pages/Admin/Login'
+import AdminPanel from './pages/Admin'
+import AdminRoute from './components/AdminRoute'
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -116,6 +119,16 @@ export default function App() {
             {/* FB reklamy — redirecty na správné detail stránky */}
             <Route path="/fabia-dynamic-config" element={<Navigate to="/vozy/fabia-dynamic-config" replace />} />
             <Route path="/fabia-dynamic" element={<Navigate to="/vozy/fabia-dynamic" replace />} />
+            {/* Admin */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminPanel />
+                </AdminRoute>
+              }
+            />
             {/* Klientské centrum */}
             <Route path="/klientske-centrum/login" element={<KlientskeCentrumLogin />} />
             <Route
