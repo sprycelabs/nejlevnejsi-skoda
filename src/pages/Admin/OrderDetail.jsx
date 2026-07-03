@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { supabaseAdmin as supabase } from '../../lib/supabaseAdmin'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  ArrowLeft, ShieldCheck, Mail, Phone, MapPin, Building2, Hash,
-  Users, CreditCard, Truck, Tag, Heart, FileText, AlertCircle, Download, Loader2, Check, SendHorizonal
+  ArrowLeft, Mail, Phone, MapPin, Building2, Hash,
+  Users, CreditCard, Truck, Tag, Heart, FileText, AlertCircle, Download, Loader2, Check,
+  SendHorizonal, Pencil, X, Save
 } from 'lucide-react'
 
 const STATUSES = [
@@ -49,12 +50,48 @@ function Row({ icon: Icon, label, value }) {
   )
 }
 
-function Section({ title, children }) {
+function Section({ title, children, action }) {
   return (
     <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-6 space-y-4">
-      <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{title}</p>
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{title}</p>
+        {action}
+      </div>
       {children}
     </div>
+  )
+}
+
+function Field({ label, children }) {
+  return (
+    <div>
+      <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">{label}</label>
+      {children}
+    </div>
+  )
+}
+
+function Input({ value, onChange, placeholder, type = 'text' }) {
+  return (
+    <input
+      type={type}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="w-full bg-[#0d1117] border border-[#30363d] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#28a745] transition-colors"
+    />
+  )
+}
+
+function Textarea({ value, onChange, placeholder, rows = 3 }) {
+  return (
+    <textarea
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      placeholder={placeholder}
+      rows={rows}
+      className="w-full bg-[#0d1117] border border-[#30363d] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#28a745] transition-colors resize-none"
+    />
   )
 }
 
@@ -68,6 +105,53 @@ export default function AdminOrderDetail() {
   const [currentStatus, setCurrentStatus] = useState(null)
   const [statusSaving, setStatusSaving] = useState(false)
   const [emailToast, setEmailToast] = useState('')
+  const [editing, setEditing] = useState(false)
+  const [editData, setEditData] = useState({})
+  const [savingEdit, setSavingEdit] = useState(false)
+  const [saveError, setSaveError] = useState('')
+
+  function set(field) {
+    return val => setEditData(prev => ({ ...prev, [field]: val }))
+  }
+
+  function startEdit() {
+    const o = rows[0]
+    setEditData({
+      email:          o.email || '',
+      first_name:     o.first_name || '',
+      last_name:      o.last_name || '',
+      company_name:   o.company_name || '',
+      ico:            o.ico || '',
+      dic:            o.dic || '',
+      contact_person: o.contact_person || '',
+      phone:          o.phone || '',
+      street:         o.street || '',
+      city:           o.city || '',
+      zip:            o.zip || '',
+      notes:          o.notes || '',
+      admin_note:     o.admin_note || '',
+      payment_method: o.payment_method || '',
+      delivery:       o.delivery || false,
+    })
+    setSaveError('')
+    setEditing(true)
+  }
+
+  async function saveEdit() {
+    setSavingEdit(true)
+    setSaveError('')
+    const { error: err } = await supabase
+      .from('orders')
+      .update(editData)
+      .eq('order_number', decodeURIComponent(orderNumber))
+    if (err) {
+      setSaveError(err.message)
+    } else {
+      setRows(prev => prev.map(r => ({ ...r, ...editData })))
+      setEditing(false)
+    }
+    setSavingEdit(false)
+  }
 
   async function updateStatus(newStatus) {
     if (newStatus === currentStatus || statusSaving) return
@@ -88,10 +172,7 @@ export default function AdminOrderDetail() {
       const { data: { session } } = await supabase.auth.getSession()
       const res = await fetch('/api/admin-status-email', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
         body: JSON.stringify({ orderNumber: decodeURIComponent(orderNumber), status }),
       })
       const json = await res.json()
@@ -110,16 +191,11 @@ export default function AdminOrderDetail() {
       const { data: { session } } = await supabase.auth.getSession()
       const res = await fetch('/api/admin-invoice-url', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
         body: JSON.stringify({ path }),
       })
       const json = await res.json()
-      if (json.url) {
-        window.open(json.url, '_blank')
-      }
+      if (json.url) window.open(json.url, '_blank')
     } catch (e) {
       console.error('Invoice download failed:', e)
     } finally {
@@ -169,7 +245,6 @@ export default function AdminOrderDetail() {
 
   return (
     <div className="min-h-screen bg-[#0d1117] text-white">
-      {/* Topbar */}
       <header className="border-b border-[#30363d] bg-[#161b22] sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center gap-4">
           <button
@@ -200,7 +275,7 @@ export default function AdminOrderDetail() {
       </AnimatePresence>
 
       <main className="max-w-5xl mx-auto px-6 py-8 space-y-6">
-        {/* Hlavička objednávky */}
+        {/* Hlavička */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <p className="text-gray-500 text-sm font-mono mb-1">{o.order_number}</p>
@@ -208,21 +283,156 @@ export default function AdminOrderDetail() {
           </div>
           <div className="flex items-center gap-3">
             <StatusBadge status={currentStatus || o.status} />
+            {!editing && (
+              <button
+                onClick={startEdit}
+                className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold border border-[#30363d] text-gray-300 hover:text-white hover:border-gray-500 transition-colors"
+              >
+                <Pencil size={14} />
+                Upravit
+              </button>
+            )}
             {o.invoice_path && (
               <button
                 onClick={() => downloadInvoice(o.invoice_path)}
                 disabled={invoiceLoading}
                 className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold border border-[#30363d] text-gray-300 hover:text-white hover:border-gray-500 transition-colors disabled:opacity-50"
               >
-                {invoiceLoading
-                  ? <Loader2 size={14} className="animate-spin" />
-                  : <Download size={14} />
-                }
+                {invoiceLoading ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
                 Faktura
               </button>
             )}
           </div>
         </motion.div>
+
+        {/* Edit form */}
+        <AnimatePresence>
+          {editing && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="bg-[#161b22] border border-[#28a745]/30 rounded-xl p-6 space-y-6"
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-bold text-[#28a745] uppercase tracking-widest">Úprava objednávky</p>
+                <button onClick={() => setEditing(false)} className="text-gray-500 hover:text-white transition-colors">
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Zákazník */}
+                <div className="space-y-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Zákazník</p>
+                  <Field label="E-mail">
+                    <Input value={editData.email} onChange={set('email')} placeholder="email@example.cz" type="email" />
+                  </Field>
+                  {isCompany ? (
+                    <>
+                      <Field label="Název firmy">
+                        <Input value={editData.company_name} onChange={set('company_name')} />
+                      </Field>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Field label="IČO">
+                          <Input value={editData.ico} onChange={set('ico')} />
+                        </Field>
+                        <Field label="DIČ">
+                          <Input value={editData.dic} onChange={set('dic')} />
+                        </Field>
+                      </div>
+                      <Field label="Kontaktní osoba">
+                        <Input value={editData.contact_person} onChange={set('contact_person')} />
+                      </Field>
+                    </>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-3">
+                      <Field label="Jméno">
+                        <Input value={editData.first_name} onChange={set('first_name')} />
+                      </Field>
+                      <Field label="Příjmení">
+                        <Input value={editData.last_name} onChange={set('last_name')} />
+                      </Field>
+                    </div>
+                  )}
+                  <Field label="Telefon">
+                    <Input value={editData.phone} onChange={set('phone')} placeholder="+420 000 000 000" type="tel" />
+                  </Field>
+                  <Field label="Ulice">
+                    <Input value={editData.street} onChange={set('street')} />
+                  </Field>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="PSČ">
+                      <Input value={editData.zip} onChange={set('zip')} />
+                    </Field>
+                    <Field label="Město">
+                      <Input value={editData.city} onChange={set('city')} />
+                    </Field>
+                  </div>
+                </div>
+
+                {/* Platba & ostatní */}
+                <div className="space-y-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Platba & ostatní</p>
+                  <Field label="Způsob platby">
+                    <select
+                      value={editData.payment_method}
+                      onChange={e => set('payment_method')(e.target.value)}
+                      className="w-full bg-[#0d1117] border border-[#30363d] rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#28a745] transition-colors"
+                    >
+                      <option value="osobne">Platba osobně (hotovost / karta)</option>
+                      <option value="prevod">Platba převodem</option>
+                    </select>
+                  </Field>
+                  <Field label="Doprava">
+                    <button
+                      type="button"
+                      onClick={() => set('delivery')(!editData.delivery)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-semibold transition-colors ${
+                        editData.delivery
+                          ? 'bg-[#28a745]/15 border-[#28a745]/40 text-[#28a745]'
+                          : 'bg-transparent border-[#30363d] text-gray-400'
+                      }`}
+                    >
+                      <Truck size={14} />
+                      {editData.delivery ? 'Ano — zákazník chce dopravu' : 'Ne — osobní odběr'}
+                    </button>
+                  </Field>
+                  <Field label="Poznámka zákazníka">
+                    <Textarea value={editData.notes} onChange={set('notes')} placeholder="Poznámka od zákazníka…" />
+                  </Field>
+                  <Field label="Interní poznámka (jen pro admina)">
+                    <Textarea value={editData.admin_note} onChange={set('admin_note')} placeholder="Interní poznámka…" />
+                  </Field>
+                </div>
+              </div>
+
+              {saveError && (
+                <div className="flex items-center gap-2 bg-red-900/20 border border-red-800/40 rounded-lg px-4 py-3">
+                  <AlertCircle size={14} className="text-red-400 shrink-0" />
+                  <p className="text-red-400 text-sm">{saveError}</p>
+                </div>
+              )}
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  onClick={() => setEditing(false)}
+                  className="px-5 py-2 text-sm text-gray-400 hover:text-white border border-[#30363d] hover:border-gray-500 rounded-lg transition-colors"
+                >
+                  Zrušit
+                </button>
+                <button
+                  onClick={saveEdit}
+                  disabled={savingEdit}
+                  className="flex items-center gap-2 px-5 py-2 text-sm font-bold bg-[#1e7e34] hover:bg-[#28a745] disabled:opacity-50 text-white rounded-lg transition-colors"
+                >
+                  {savingEdit ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+                  Uložit změny
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Zákazník */}
@@ -263,7 +473,7 @@ export default function AdminOrderDetail() {
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
           <Section title="Vozy">
             <div className="space-y-3">
-              {rows.map((r, i) => (
+              {rows.map(r => (
                 <div key={r.id} className="bg-[#0d1117] rounded-xl p-5">
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div>
@@ -278,9 +488,7 @@ export default function AdminOrderDetail() {
                       {r.is_used ? 'Ojetý' : 'Nový'}
                     </span>
                   </div>
-                  {r.internal_id && (
-                    <p className="text-gray-600 text-xs font-mono mb-3">{r.internal_id}</p>
-                  )}
+                  {r.internal_id && <p className="text-gray-600 text-xs font-mono mb-3">{r.internal_id}</p>}
                   <div className="border-t border-[#30363d] pt-3">
                     <p className="text-xs text-gray-500 mb-0.5">Cena vozu</p>
                     <p className="text-white font-bold text-sm">{formatPrice(r.price_original || r.price)}</p>
@@ -353,7 +561,7 @@ export default function AdminOrderDetail() {
           </div>
         </motion.div>
 
-        {o.admin_note && (
+        {o.admin_note && !editing && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <Section title="Interní poznámka">
               <p className="text-gray-300 text-sm leading-relaxed">{o.admin_note}</p>
