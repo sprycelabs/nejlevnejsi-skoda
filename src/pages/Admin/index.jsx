@@ -458,8 +458,8 @@ export default function AdminPanel() {
     setError('')
 
     const [ordersRes, customersRes] = await Promise.all([
-      supabase.from('orders').select('*').order('created_at', { ascending: false }),
-      supabase.from('customers').select('*').order('created_at', { ascending: false }),
+      supabase.from('orders').select('*').eq('is_new', true).order('created_at', { ascending: false }),
+      supabase.from('customers').select('*').eq('is_new', true).order('created_at', { ascending: false }),
     ])
 
     if (ordersRes.error) setError('Chyba při načítání objednávek: ' + ordersRes.error.message)
