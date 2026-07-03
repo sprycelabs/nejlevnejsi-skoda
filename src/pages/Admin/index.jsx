@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   LogOut, ShieldCheck, ShoppingBag, Users, RefreshCw, AlertCircle, Package,
   UserPlus, X, Lock, Eye, EyeOff, CheckCircle2, Car, MapPin, CreditCard,
-  Truck, Tag, Heart, FileText, Phone, Mail, Building2, Hash, Plus
+  Truck, Tag, Heart, FileText, Phone, Mail, Building2, Hash, Plus, Search, SlidersHorizontal
 } from 'lucide-react'
 
 const STATUS_LABELS = {
@@ -74,28 +74,100 @@ function groupOrders(orders) {
   return Object.values(map).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
 }
 
+const ALL_STATUSES = [
+  { key: 'prijato',            label: 'Přijato' },
+  { key: 'zpracovava_se',      label: 'Zpracovává se' },
+  { key: 'potvrzeno_dealerem', label: 'Potvrzeno dealerem' },
+  { key: 'na_ceste',           label: 'Na cestě' },
+  { key: 'prihlasovani',       label: 'Přihlašování' },
+  { key: 'dorucovani',         label: 'Doručování' },
+  { key: 'doruceno',           label: 'Doručeno' },
+]
+
 // ——— Objednávky ———
 function OrdersTab({ orders, loading, error, onAcknowledge }) {
   const navigate = useNavigate()
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
+  const [showNew, setShowNew] = useState(false)
 
   if (loading) return <LoadingSpinner />
   if (error) return <ErrorBox message={error} />
 
   const grouped = groupOrders(orders)
+  const newCount = grouped.filter(o => !o.acknowledged).length
+
+  const filtered = grouped.filter(o => {
+    if (showNew && o.acknowledged) return false
+    const q = search.trim().toLowerCase()
+    const matchesSearch = !q || [o.order_number, o.email, o.first_name, o.last_name, o.company_name]
+      .some(v => v?.toLowerCase().includes(q))
+    const matchesStatus = !statusFilter || o.status === statusFilter
+    return matchesSearch && matchesStatus
+  })
 
   return (
     <>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#30363d]">
-        <span className="text-xs text-gray-500">{grouped.length} objednávek</span>
-        <button
-          onClick={() => navigate('/admin/nova-objednavka')}
-          className="flex items-center gap-1.5 text-xs font-semibold text-[#28a745] border border-[#28a745]/40 hover:bg-[#28a745]/10 px-3 py-1.5 rounded-lg transition-colors"
-        >
-          <Plus size={13} />
-          Nová objednávka
-        </button>
+      <div className="px-4 py-3 border-b border-[#30363d] space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <div className="relative flex-1 max-w-sm">
+            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Hledat e-mail, jméno, číslo objednávky…"
+              className="w-full bg-[#0d1117] border border-[#30363d] rounded-lg pl-8 pr-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#28a745] transition-colors"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowNew(v => !v)}
+              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors ${
+                showNew
+                  ? 'bg-[#28a745]/15 text-[#28a745] border-[#28a745]/40'
+                  : 'text-gray-500 border-[#30363d] hover:text-gray-300'
+              }`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#28a745]" />
+              Nové {newCount > 0 && `(${newCount})`}
+            </button>
+            <button
+              onClick={() => navigate('/admin/nova-objednavka')}
+              className="flex items-center gap-1.5 text-xs font-semibold text-[#28a745] border border-[#28a745]/40 hover:bg-[#28a745]/10 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              <Plus size={13} />
+              Nová objednávka
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <SlidersHorizontal size={11} className="text-gray-600 shrink-0" />
+          <button
+            onClick={() => setStatusFilter('')}
+            className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
+              !statusFilter ? 'bg-[#28a745]/15 text-[#28a745] border-[#28a745]/30' : 'text-gray-500 border-[#30363d] hover:text-gray-300'
+            }`}
+          >
+            Vše
+          </button>
+          {ALL_STATUSES.map(s => (
+            <button
+              key={s.key}
+              onClick={() => setStatusFilter(f => f === s.key ? '' : s.key)}
+              className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
+                statusFilter === s.key
+                  ? 'bg-[#28a745]/15 text-[#28a745] border-[#28a745]/30'
+                  : 'text-gray-500 border-[#30363d] hover:text-gray-300'
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-gray-600">{filtered.length} / {grouped.length} objednávek</p>
       </div>
-      {grouped.length === 0 && <Empty label="Žádné objednávky" />}
+      {filtered.length === 0 && <Empty label="Žádné výsledky" />}
       <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
@@ -106,7 +178,7 @@ function OrdersTab({ orders, loading, error, onAcknowledge }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-[#21262d]">
-          {grouped.map(o => {
+          {filtered.map(o => {
             const isNew = !o.acknowledged
             return (
               <motion.tr
@@ -386,8 +458,8 @@ export default function AdminPanel() {
     setError('')
 
     const [ordersRes, customersRes] = await Promise.all([
-      supabase.from('orders').select('*').eq('is_new', true).order('created_at', { ascending: false }),
-      supabase.from('customers').select('*').eq('is_new', true).order('created_at', { ascending: false }),
+      supabase.from('orders').select('*').order('created_at', { ascending: false }),
+      supabase.from('customers').select('*').order('created_at', { ascending: false }),
     ])
 
     if (ordersRes.error) setError('Chyba při načítání objednávek: ' + ordersRes.error.message)
@@ -447,7 +519,7 @@ export default function AdminPanel() {
 
       <div className="border-b border-[#30363d] bg-[#161b22]/50">
         <div className="max-w-7xl mx-auto px-6 flex gap-1">
-          <TabButton active={tab === 'orders'} onClick={() => setTab('orders')} icon={ShoppingBag} label="Objednávky" count={groupOrders(orders).length} />
+          <TabButton active={tab === 'orders'} onClick={() => setTab('orders')} icon={ShoppingBag} label="Objednávky" count={groupOrders(orders).filter(o => !o.acknowledged).length} />
           <TabButton active={tab === 'customers'} onClick={() => setTab('customers')} icon={Users} label="Zákazníci" count={customers.length} />
         </div>
       </div>

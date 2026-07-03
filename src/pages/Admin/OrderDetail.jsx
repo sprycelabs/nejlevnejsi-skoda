@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabaseAdmin as supabase } from '../../lib/supabaseAdmin'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft, ShieldCheck, Mail, Phone, MapPin, Building2, Hash,
-  Users, CreditCard, Truck, Tag, Heart, FileText, AlertCircle, Download, Loader2, Check
+  Users, CreditCard, Truck, Tag, Heart, FileText, AlertCircle, Download, Loader2, Check, SendHorizonal
 } from 'lucide-react'
 
 const STATUSES = [
@@ -67,6 +67,7 @@ export default function AdminOrderDetail() {
   const [invoiceLoading, setInvoiceLoading] = useState(false)
   const [currentStatus, setCurrentStatus] = useState(null)
   const [statusSaving, setStatusSaving] = useState(false)
+  const [emailToast, setEmailToast] = useState('')
 
   async function updateStatus(newStatus) {
     if (newStatus === currentStatus || statusSaving) return
@@ -75,8 +76,32 @@ export default function AdminOrderDetail() {
       .from('orders')
       .update({ status: newStatus })
       .eq('order_number', decodeURIComponent(orderNumber))
-    if (!err) setCurrentStatus(newStatus)
+    if (!err) {
+      setCurrentStatus(newStatus)
+      sendStatusEmail(newStatus)
+    }
     setStatusSaving(false)
+  }
+
+  async function sendStatusEmail(status) {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      const res = await fetch('/api/admin-status-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ orderNumber: decodeURIComponent(orderNumber), status }),
+      })
+      const json = await res.json()
+      if (json.success) {
+        setEmailToast('Email zákazníkovi odeslán')
+        setTimeout(() => setEmailToast(''), 3500)
+      }
+    } catch (e) {
+      console.error('Status email failed:', e)
+    }
   }
 
   async function downloadInvoice(path) {
@@ -158,6 +183,21 @@ export default function AdminOrderDetail() {
           <span className="text-sm font-bold">Admin Panel</span>
         </div>
       </header>
+
+      <AnimatePresence>
+        {emailToast && (
+          <motion.div
+            key="email-toast"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            className="fixed top-16 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 bg-[#1a2e1d] border border-[#28a745]/40 text-[#28a745] text-sm font-semibold px-5 py-3 rounded-full shadow-xl"
+          >
+            <SendHorizonal size={14} />
+            {emailToast}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="max-w-5xl mx-auto px-6 py-8 space-y-6">
         {/* Hlavička objednávky */}
