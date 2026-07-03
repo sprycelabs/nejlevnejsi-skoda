@@ -497,7 +497,6 @@ export default function AdminPanel() {
       <header className="border-b border-[#30363d] bg-[#161b22] sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <ShieldCheck size={18} className="text-[#28a745]" />
             <span className="font-black text-sm tracking-tight">Admin Panel</span>
             <span className="text-[#30363d]">/</span>
             <span className="text-gray-500 text-sm">nejlevnejsi-skoda.cz</span>
