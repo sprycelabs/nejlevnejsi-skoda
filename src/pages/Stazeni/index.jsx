@@ -13,7 +13,7 @@ const documents = [
   { name: 'Výpis z obchodního rejstříku – Cosoleto Group s.r.o.', path: '/stazeni/vypis-cosoleto.pdf', desc: 'Aktuální výpis společnosti Cosoleto Group s.r.o. z obchodního rejstříku.' },
   { name: 'Oznámení zákazníkům', path: '/stazeni/oznameni_zakaznikum.pdf', desc: '' },
   { name: 'Plná moc – přihlášení k registraci', path: '/stazeni/plna_moc_prihlaseni.pdf', desc: '' },
-  { name: 'Šablona faktury', path: '/doc/faktura-sablona.pdf', desc: '' },
+  { name: 'Potvrzení o vedení účtu – Komerční banka (Cosoleto)', path: '/stazeni/Potvrzeni_Cosoleto_KB.pdf', desc: 'Potvrzení o vedení bankovního účtu u Komerční banky pro Cosoleto Group s.r.o.' },
 ]
 
 export default function Stazeni() {
