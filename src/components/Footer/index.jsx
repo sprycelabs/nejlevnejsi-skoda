@@ -94,14 +94,21 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Vedení společnosti */}
+      {/* Vedení společností */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <p className="text-gray-500 text-xs">
-            <span className="text-gray-400 font-semibold">Vedení společností:</span>
-            {' '}e-mail: info@glenfordcorp.cz, info@cosoleto.cz
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 space-y-2">
+          <p className="text-gray-400 text-xs font-semibold">Vedení společností:</p>
+          <p className="text-gray-500 text-xs leading-relaxed">
+            Cosoleto Group s.r.o. · <a href="mailto:info@cosoleto.cz" className="hover:text-gray-300 transition-colors">info@cosoleto.cz</a>
+            {' · '}ID datové schránky: d7nxyq3
+            {' · '}DUNS no.: 496910254
+            {' · '}číslo účtu: 131-4421150267 / 0100
+          </p>
+          <p className="text-gray-500 text-xs leading-relaxed">
+            Glenford Corp s.r.o. · <a href="mailto:info@glenfordcorp.cz" className="hover:text-gray-300 transition-colors">info@glenfordcorp.cz</a>
             {' · '}ID datové schránky: 8xq2ue8
-            {' · '}Číslo bankovního účtu: 368 512 688 / 0300 nebo 7064728369 / 0800
+            {' · '}DUNS no.: 351659931
+            {' · '}čísla účtů: 7064728369 / 0800 · 61901005 / 5500 · 2003525274 / 2010
           </p>
         </div>
       </div>
