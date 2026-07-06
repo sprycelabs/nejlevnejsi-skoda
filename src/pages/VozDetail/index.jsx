@@ -183,6 +183,20 @@ export default function VozDetail() {
           </motion.div>
         )}
 
+        {/* MY2025 banner */}
+        {car.year === 2025 && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="relative z-10 w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#1e7e34] to-[#28a745] text-white text-sm font-black tracking-widest uppercase py-2.5"
+          >
+            <Sparkles size={14} />
+            Nový vůz · MY2025
+            <Sparkles size={14} />
+          </motion.div>
+        )}
+
         {/* TOP VÝBAVA banner */}
         {!car.isReserved && !car.isBomb && car.topVybava && (
           <motion.div
