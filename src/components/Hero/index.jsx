@@ -159,7 +159,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative flex items-end justify-center lg:justify-end"
+            className="relative flex flex-col items-center lg:items-end"
           >
             {/* BERU_SLEVU badge — desktop */}
             <motion.div
@@ -197,6 +197,22 @@ export default function Hero() {
               className="w-full scale-125 sm:scale-100 lg:scale-125 xl:scale-150 lg:max-w-2xl xl:max-w-3xl lg:translate-y-24 origin-bottom"
               style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.15))' }}
             />
+
+            {/* Dobrý anděl badge */}
+            <motion.a
+              href="/pomahame"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="hidden lg:flex items-center gap-3 bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-sm rounded-xl px-4 py-3 transition-all duration-200 lg:translate-y-24 mt-4 self-end"
+            >
+              <img src="/pomaha/dobry_andel.webp" alt="Dobrý anděl" className="h-8 w-auto" />
+              <div>
+                <p className="text-white text-xs font-black leading-tight">Držitelé certifikátu</p>
+                <p className="text-white/60 text-xs leading-tight">Dobrý anděl · zjistit více</p>
+              </div>
+              <ArrowRight size={14} className="text-white/60 ml-1" />
+            </motion.a>
           </motion.div>
 
         </div>
