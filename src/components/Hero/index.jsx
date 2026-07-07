@@ -204,14 +204,14 @@ export default function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="hidden lg:flex items-center gap-3 bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-sm rounded-xl px-4 py-3 transition-all duration-200 lg:translate-y-24 mt-4 self-end"
+              className="hidden lg:flex items-center gap-4 bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-sm rounded-2xl px-6 py-4 transition-all duration-200 lg:translate-y-24 mt-4 self-end"
             >
-              <img src="/pomaha/dobry_andel.webp" alt="Dobrý anděl" className="h-8 w-auto" />
+              <img src="/pomaha/dobry_andel.webp" alt="Dobrý anděl" className="h-14 w-auto" />
               <div>
-                <p className="text-white text-xs font-black leading-tight">Držitelé certifikátu</p>
-                <p className="text-white/60 text-xs leading-tight">Dobrý anděl · zjistit více</p>
+                <p className="text-white text-sm font-black leading-tight">Držitelé certifikátu</p>
+                <p className="text-white/60 text-sm leading-tight mt-0.5">Dobrý anděl · zjistit více</p>
               </div>
-              <ArrowRight size={14} className="text-white/60 ml-1" />
+              <ArrowRight size={18} className="text-white/60 ml-2" />
             </motion.a>
           </motion.div>
 
