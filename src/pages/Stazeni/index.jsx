@@ -14,7 +14,7 @@ const documents = [
   { name: 'Oznámení zákazníkům', path: '/stazeni/oznameni_zakaznikum.pdf', desc: '' },
   { name: 'Plná moc – přihlášení k registraci', path: '/stazeni/plna_moc_prihlaseni.pdf', desc: '' },
   { name: 'Potvrzení o vedení účtu – Komerční banka (Cosoleto)', path: '/stazeni/Potvrzeni_Cosoleto_KB.pdf', desc: 'Potvrzení o vedení bankovního účtu u Komerční banky pro Cosoleto Group s.r.o.' },
-  { name: 'Certifikát – Spolupráce s nadacemi', path: '/doc/certifikat.pdf', desc: 'Certifikát potvrzující spolupráci s nadacemi Život dětem a Dobrý anděl.' },
+  { name: 'Certifikát – Dobrý anděl', path: '/doc/certifikat.pdf', desc: 'Certifikát potvrzující spolupráci s nadací Dobrý anděl.' },
 ]
 
 export default function Stazeni() {

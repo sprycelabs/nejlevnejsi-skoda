@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Heart, Car, ArrowRight, Download, FileText } from 'lucide-react'
+import { Heart, Car, ArrowRight } from 'lucide-react'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import SEO from '../../components/SEO'
@@ -195,27 +195,15 @@ export default function Pomahame() {
         </div>
       </section>
 
-      {/* Certifikát */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp()} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col sm:flex-row items-center gap-6">
-            <div className="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center shrink-0">
-              <FileText size={26} className="text-[#1e7e34]" />
-            </div>
-            <div className="flex-1 text-center sm:text-left">
-              <p className="font-black text-gray-900 text-lg">Certifikát spolupráce s nadacemi</p>
-              <p className="text-gray-500 text-sm mt-1">Doklad o naší spolupráci s nadacemi Život dětem a Dobrý anděl.</p>
-            </div>
-            <a
-              href="/doc/certifikat.pdf"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white text-sm font-bold px-5 py-3 rounded-xl transition-colors shrink-0"
-            >
-              <Download size={15} />
-              Stáhnout
-            </a>
+      {/* Certifikát Dobrý anděl */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp()} className="text-center mb-10">
+            <p className="text-[#1e7e34] font-bold text-sm uppercase tracking-widest mb-3">Doklad spolupráce</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900">Certifikát Dobrý anděl</h2>
+          </motion.div>
+          <motion.div {...fadeUp(0.1)} className="bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+            <img src="/certifikat.webp" alt="Certifikát Dobrý anděl" className="w-full h-auto block" />
           </motion.div>
         </div>
       </section>
