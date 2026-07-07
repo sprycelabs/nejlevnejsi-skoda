@@ -11,7 +11,12 @@ import PromoBeruSlevu from '../../components/PromoBeruSlevu'
 
 const MODELS = [...new Set(cars.map(c => c.name.split(' ').slice(0, 2).join(' ')))].sort((a, b) => a.localeCompare(b, 'cs'))
 const FUELS = [...new Set(cars.map(c => c.fuel))]
-const TRANSMISSIONS = [...new Set(cars.map(c => c.transmission))]
+const TRANSMISSIONS = ['Automatická', 'Manuální']
+const getTransmissionCategory = (t) => {
+  const l = t.toLowerCase()
+  if (l.includes('automat') || l.includes('dsg') || l.includes('cvt')) return 'Automatická'
+  return 'Manuální'
+}
 const MAX_PRICE = Math.max(...cars.map(c => c.salePrice))
 const MIN_PRICE = Math.min(...cars.map(c => c.salePrice))
 
@@ -213,7 +218,7 @@ export default function VozyPage() {
       if (search && !`${car.name} ${car.variant}`.toLowerCase().includes(search.toLowerCase())) return false
       if (selectedModels.length && !selectedModels.some(m => car.name.startsWith(m))) return false
       if (selectedFuels.length && !selectedFuels.includes(car.fuel)) return false
-      if (selectedTransmissions.length && !selectedTransmissions.includes(car.transmission)) return false
+      if (selectedTransmissions.length && !selectedTransmissions.includes(getTransmissionCategory(car.transmission))) return false
       if (car.salePrice < priceRange[0] || car.salePrice > priceRange[1]) return false
       if (onlyFreeDelivery && !car.freeDelivery) return false
       if (onlyNew && !car.isNew) return false
