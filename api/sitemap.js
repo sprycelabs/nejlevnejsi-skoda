@@ -1,6 +1,6 @@
 import { cars } from '../src/data/cars.js'
 
-const BASE_URL = 'https://www.nejlevnejsi-skoda.cz'
+const BASE_URL = 'https://nejlevnejsi-skoda.cz'
 
 const STATIC = [
   { url: '/',          priority: '1.0', changefreq: 'daily' },
