@@ -18,37 +18,14 @@ function getSupabaseAnon() {
   return createClient(url, key)
 }
 
+const STATUSES_WITH_EMAIL = new Set([
+  'zpracovava_se', 'potvrzeno_dealerem', 'na_ceste', 'prihlasovani', 'dorucovani', 'doruceno',
+])
+
 const STATUS_CONFIG = {
-  zpracovava_se: {
-    subject:  'Vaše objednávka se zpracovává',
-    headline: 'Zpracováváme vaši objednávku',
-    message:  'Vaši objednávku jsme přijali a právě ji zpracováváme. Objednáváme váš vůz u evropského dealera. Ozveme se vám s dalšími informacemi.',
-  },
-  potvrzeno_dealerem: {
-    subject:  'Váš vůz byl potvrzen dealerem',
-    headline: 'Vůz potvrzen dealerem',
-    message:  'Skvělá zpráva! Váš vůz byl úspěšně potvrzen evropským dealerem. Přípravy na expedici jsou v plném proudu.',
-  },
-  na_ceste: {
-    subject:  'Váš vůz je na cestě!',
-    headline: 'Vůz míří do České republiky',
-    message:  'Váš vůz byl expedován a právě míří do České republiky. Budeme vás průběžně informovat o dalším postupu a termínu doručení.',
-  },
-  prihlasovani: {
-    subject:  'Přihlašování vozu — potřebujeme vaši součinnost',
-    headline: 'Přihlašujeme váš vůz',
-    message:  'Váš vůz dorazil a právě probíhá jeho přihlášení v České republice. V případě potřeby vás budeme kontaktovat.',
-  },
-  dorucovani: {
-    subject:  'Váš vůz se doručuje',
-    headline: 'Vůz je na cestě za vámi',
-    message:  'Váš vůz je přihlášen a nyní probíhá jeho doručení. Brzy se ozveme s přesným termínem předání.',
-  },
-  doruceno: {
-    subject:  'Váš vůz byl doručen — gratulujeme!',
-    headline: 'Vůz úspěšně doručen',
-    message:  'Váš vůz byl úspěšně doručen. Děkujeme za důvěru a přejeme mnoho bezpečných kilometrů! Pokud budete cokoliv potřebovat, jsme tu pro vás.',
-  },
+  subject:  'Aktualizace vaší objednávky',
+  headline: 'Stav vaší objednávky se změnil',
+  message:  'Stav vaší objednávky byl aktualizován. Přihlaste se do klientského centra pro zobrazení aktuálního stavu.',
 }
 
 function buildEmail({ config, customerName, orderNumber }) {
@@ -110,8 +87,8 @@ export default async function handler(req, res) {
   const { orderNumber, status } = req.body
   if (!orderNumber || !status) return res.status(400).json({ error: 'Chybí orderNumber nebo status' })
 
-  const config = STATUS_CONFIG[status]
-  if (!config) return res.status(200).json({ skipped: true, reason: 'Tento status nemá email' })
+  if (!STATUSES_WITH_EMAIL.has(status)) return res.status(200).json({ skipped: true, reason: 'Tento status nemá email' })
+  const config = STATUS_CONFIG
 
   const supabase = getSupabaseAdmin()
   const { data: rows, error: dbErr } = await supabase
