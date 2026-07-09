@@ -31,8 +31,8 @@ const STATUS_CONFIG = {
   },
   na_ceste: {
     subject:  'Váš vůz je na cestě!',
-    headline: 'Vůz je na cestě k vám',
-    message:  'Váš vůz byl expedován a míří k vám. Budeme vás průběžně informovat o dalším postupu.',
+    headline: 'Vůz míří do České republiky',
+    message:  'Váš vůz byl expedován a právě míří do České republiky. Budeme vás průběžně informovat o dalším postupu a termínu doručení.',
   },
   prihlasovani: {
     subject:  'Přihlašování vozu — potřebujeme vaši součinnost',
