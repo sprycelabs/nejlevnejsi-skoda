@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft, Mail, Phone, MapPin, Building2, Hash,
   Users, CreditCard, Truck, Tag, Heart, FileText, AlertCircle, Download, Loader2, Check,
-  SendHorizonal, Pencil, X, Save
+  SendHorizonal, Pencil, X, Save, Trash2
 } from 'lucide-react'
 
 const STATUSES = [
@@ -109,6 +109,8 @@ export default function AdminOrderDetail() {
   const [editData, setEditData] = useState({})
   const [savingEdit, setSavingEdit] = useState(false)
   const [saveError, setSaveError] = useState('')
+  const [confirmCancel, setConfirmCancel] = useState(false)
+  const [canceling, setCanceling] = useState(false)
 
   function set(field) {
     return val => setEditData(prev => ({ ...prev, [field]: val }))
@@ -183,6 +185,16 @@ export default function AdminOrderDetail() {
     } catch (e) {
       console.error('Status email failed:', e)
     }
+  }
+
+  async function cancelOrder() {
+    setCanceling(true)
+    const { error: err } = await supabase
+      .from('orders')
+      .update({ is_canceled: true })
+      .eq('order_number', decodeURIComponent(orderNumber))
+    if (!err) navigate('/admin')
+    setCanceling(false)
   }
 
   async function downloadInvoice(path) {
@@ -291,6 +303,34 @@ export default function AdminOrderDetail() {
                 <Pencil size={14} />
                 Upravit
               </button>
+            )}
+            {!confirmCancel ? (
+              <button
+                onClick={() => setConfirmCancel(true)}
+                className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold border border-red-500/30 text-red-400 hover:text-red-300 hover:border-red-500/60 transition-colors"
+              >
+                <Trash2 size={14} />
+                Stornovat
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-red-400 font-semibold">Opravdu stornovat?</span>
+                <button
+                  onClick={cancelOrder}
+                  disabled={canceling}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 transition-colors disabled:opacity-50"
+                >
+                  {canceling ? <Loader2 size={12} className="animate-spin" /> : <Check size={12} />}
+                  Ano
+                </button>
+                <button
+                  onClick={() => setConfirmCancel(false)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-[#30363d] text-gray-400 hover:text-white transition-colors"
+                >
+                  <X size={12} />
+                  Ne
+                </button>
+              </div>
             )}
             {o.invoice_path && (
               <button

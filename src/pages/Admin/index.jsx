@@ -458,7 +458,7 @@ export default function AdminPanel() {
     setError('')
 
     const [ordersRes, customersRes] = await Promise.all([
-      supabase.from('orders').select('*').eq('is_new', true).order('created_at', { ascending: false }),
+      supabase.from('orders').select('*').eq('is_new', true).or('is_canceled.is.null,is_canceled.eq.false').order('created_at', { ascending: false }),
       supabase.from('customers').select('*').eq('is_new', true).order('created_at', { ascending: false }),
     ])
 
