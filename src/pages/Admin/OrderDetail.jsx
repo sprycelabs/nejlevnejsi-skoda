@@ -78,6 +78,7 @@ function Input({ value, onChange, placeholder, type = 'text' }) {
       value={value}
       onChange={e => onChange(e.target.value)}
       placeholder={placeholder}
+      autoComplete="off"
       className="w-full bg-[#0d1117] border border-[#30363d] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#28a745] transition-colors"
     />
   )
