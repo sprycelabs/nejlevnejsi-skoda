@@ -213,13 +213,6 @@ function CarDetailPanel({ carData, order }) {
         </div>
       )}
 
-      {order.notes && (
-        <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
-          <p className="text-amber-700 text-xs font-semibold uppercase tracking-wide mb-1">Vaše poznámka</p>
-          <p className="text-gray-700 text-sm">{order.notes}</p>
-        </div>
-      )}
-
       {/* Link na detail */}
       {order.car_slug && (
         <a
@@ -253,11 +246,21 @@ function OrderCard({ order, index }) {
       transition={{ duration: 0.4, delay: index * 0.08 }}
       className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
     >
-      {/* Zpráva od nás — vždy viditelná, nad fotkou */}
-      {order.admin_note && (
-        <div className="mx-6 mt-6 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
-          <p className="text-blue-600 text-xs font-semibold uppercase tracking-wide mb-1">Zpráva od nás</p>
-          <p className="text-gray-700 text-sm leading-relaxed">{order.admin_note}</p>
+      {/* Poznámky — vždy viditelné, nad fotkou */}
+      {(order.admin_note || order.notes) && (
+        <div className="mx-6 mt-6 space-y-2">
+          {order.admin_note && (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
+              <p className="text-blue-600 text-xs font-semibold uppercase tracking-wide mb-1">Zpráva od nás</p>
+              <p className="text-gray-700 text-sm leading-relaxed">{order.admin_note}</p>
+            </div>
+          )}
+          {order.notes && (
+            <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
+              <p className="text-amber-700 text-xs font-semibold uppercase tracking-wide mb-1">Vaše poznámka</p>
+              <p className="text-gray-700 text-sm leading-relaxed">{order.notes}</p>
+            </div>
+          )}
         </div>
       )}
 
