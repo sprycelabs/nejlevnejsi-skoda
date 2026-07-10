@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import '@fontsource-variable/inter';
 @import "tailwindcss";
 
 @theme {
@@ -10,7 +10,7 @@
   --color-dark: #111827;
   --color-dark-2: #1f2937;
 
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
 }
 
 * {
