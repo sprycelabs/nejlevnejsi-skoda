@@ -2,8 +2,21 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+function fontPreloadPlugin() {
+  return {
+    name: 'font-preload',
+    transformIndexHtml(html, ctx) {
+      if (!ctx.bundle) return html
+      const fontFile = Object.keys(ctx.bundle).find(f => f.includes('inter-latin-wght-normal') && f.endsWith('.woff2'))
+      if (!fontFile) return html
+      const tag = `<link rel="preload" href="/${fontFile}" as="font" type="font/woff2" crossorigin />`
+      return html.replace('</head>', `  ${tag}\n  </head>`)
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), fontPreloadPlugin()],
   server: {
     port: parseInt(process.env.PORT) || 5173,
     strictPort: false,
