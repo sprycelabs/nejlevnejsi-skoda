@@ -131,10 +131,12 @@ export default function AdminOrderDetail() {
       street:         o.street || '',
       city:           o.city || '',
       zip:            o.zip || '',
-      notes:          o.notes || '',
-      admin_note:     o.admin_note || '',
-      payment_method: o.payment_method || '',
-      delivery:       o.delivery || false,
+      notes:                o.notes || '',
+      admin_note:           o.admin_note || '',
+      payment_method:       o.payment_method || '',
+      delivery:             o.delivery || false,
+      deposit_paid:         o.deposit_paid ?? '',
+      final_payment_paid:   o.final_payment_paid ?? '',
     })
     setSaveError('')
     setEditing(true)
@@ -439,6 +441,14 @@ export default function AdminOrderDetail() {
                       {editData.delivery ? 'Ano — zákazník chce dopravu' : 'Ne — osobní odběr'}
                     </button>
                   </Field>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Field label="Záloha zaplacena (Kč)">
+                      <Input value={editData.deposit_paid} onChange={set('deposit_paid')} placeholder="0" type="number" />
+                    </Field>
+                    <Field label="Doplatek zaplacen (Kč)">
+                      <Input value={editData.final_payment_paid} onChange={set('final_payment_paid')} placeholder="0" type="number" />
+                    </Field>
+                  </div>
                   <Field label="Poznámka zákazníka">
                     <Textarea value={editData.notes} onChange={set('notes')} placeholder="Poznámka od zákazníka…" />
                   </Field>
@@ -561,10 +571,27 @@ export default function AdminOrderDetail() {
                 <span className="text-white font-bold">Celkem k úhradě</span>
                 <span className="text-white font-black text-lg">{formatPrice(finalPrice)}</span>
               </div>
-              <div className="flex justify-between items-center bg-[#28a745]/10 border border-[#28a745]/20 rounded-lg px-4 py-3">
-                <span className="text-[#28a745] font-semibold text-sm">Záloha (20 %)</span>
-                <span className="text-[#28a745] font-black">{formatPrice(o.deposit_paid)}</span>
-              </div>
+              {o.deposit_paid > 0 && (
+                <div className="flex justify-between items-center bg-[#28a745]/10 border border-[#28a745]/20 rounded-lg px-4 py-3">
+                  <span className="text-[#28a745] font-semibold text-sm">Záloha zaplacena</span>
+                  <span className="text-[#28a745] font-black">{formatPrice(o.deposit_paid)}</span>
+                </div>
+              )}
+              {o.final_payment_paid > 0 && (
+                <div className="flex justify-between items-center bg-[#28a745]/10 border border-[#28a745]/20 rounded-lg px-4 py-3">
+                  <span className="text-[#28a745] font-semibold text-sm">Doplatek zaplacen</span>
+                  <span className="text-[#28a745] font-black">{formatPrice(o.final_payment_paid)}</span>
+                </div>
+              )}
+              {(() => {
+                const remaining = finalPrice - (o.deposit_paid ?? 0) - (o.final_payment_paid ?? 0)
+                return remaining > 0 ? (
+                  <div className="flex justify-between items-center bg-orange-500/10 border border-orange-500/20 rounded-lg px-4 py-3">
+                    <span className="text-orange-400 font-semibold text-sm">Zbývá doplatit</span>
+                    <span className="text-orange-400 font-black">{formatPrice(remaining)}</span>
+                  </div>
+                ) : null
+              })()}
             </div>
           </Section>
         </motion.div>

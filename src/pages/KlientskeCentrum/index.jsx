@@ -336,13 +336,12 @@ function OrderCard({ order, index }) {
             {(() => {
               const fmt = v => new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(v)
               const total = order.price
-              const paid = order.deposit_paid ?? 0
-              const deposit = Math.round(total * 0.2)
-              const finalPayment = total - deposit
-              const depositPaid = paid >= deposit
-              const finalPaid = paid >= total
-              const remaining = Math.max(0, total - paid)
-              const pct = Math.min(100, Math.round((paid / total) * 100))
+              const deposit = order.deposit_paid ?? 0
+              const finalPmt = order.final_payment_paid ?? 0
+              const totalPaid = deposit + finalPmt
+              const remaining = Math.max(0, total - totalPaid)
+              const pct = Math.min(100, Math.round((totalPaid / total) * 100))
+              const isFullyPaid = remaining === 0
               return (
                 <div className="space-y-3">
                   {/* Progress bar */}
@@ -353,31 +352,31 @@ function OrderCard({ order, index }) {
                     </div>
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div
-                        className={`h-full rounded-full transition-all duration-700 ${finalPaid ? 'bg-[#28a745]' : 'bg-blue-500'}`}
+                        className={`h-full rounded-full transition-all duration-700 ${isFullyPaid ? 'bg-[#28a745]' : 'bg-blue-500'}`}
                         style={{ width: `${pct}%` }}
                       />
                     </div>
                   </div>
                   {/* Řádky */}
                   <div className="grid grid-cols-2 gap-2">
-                    <div className={`rounded-xl px-4 py-3 ${depositPaid ? 'bg-green-50 border border-green-100' : 'bg-gray-50 border border-gray-100'}`}>
-                      <p className="text-xs text-gray-400 mb-0.5">Záloha (20 %)</p>
-                      <p className={`text-sm font-black ${depositPaid ? 'text-[#28a745]' : 'text-gray-400'}`}>
-                        {fmt(deposit)}
+                    <div className={`rounded-xl px-4 py-3 ${deposit > 0 ? 'bg-green-50 border border-green-100' : 'bg-gray-50 border border-gray-100'}`}>
+                      <p className="text-xs text-gray-400 mb-0.5">Záloha zaplacena</p>
+                      <p className={`text-sm font-black ${deposit > 0 ? 'text-[#28a745]' : 'text-gray-400'}`}>
+                        {deposit > 0 ? fmt(deposit) : '—'}
                       </p>
-                      {depositPaid && <p className="text-[10px] text-green-600 mt-0.5">✓ Uhrazeno</p>}
+                      {deposit > 0 && <p className="text-[10px] text-green-600 mt-0.5">✓ Uhrazeno</p>}
                     </div>
-                    {finalPaid ? (
+                    {finalPmt > 0 ? (
                       <div className="rounded-xl px-4 py-3 bg-green-50 border border-green-100">
                         <p className="text-xs text-gray-400 mb-0.5">Doplatek zaplacen</p>
-                        <p className="text-sm font-black text-[#28a745]">{fmt(finalPayment)}</p>
-                        <p className="text-[10px] text-green-600 mt-0.5">✓ Vše uhrazeno</p>
+                        <p className="text-sm font-black text-[#28a745]">{fmt(finalPmt)}</p>
+                        <p className="text-[10px] text-green-600 mt-0.5">✓ {isFullyPaid ? 'Vše uhrazeno' : 'Uhrazeno'}</p>
                       </div>
                     ) : (
                       <div className={`rounded-xl px-4 py-3 ${remaining > 0 ? 'bg-orange-50 border border-orange-100' : 'bg-gray-50 border border-gray-100'}`}>
                         <p className="text-xs text-gray-400 mb-0.5">Zbývá doplatit</p>
                         <p className={`text-sm font-black ${remaining > 0 ? 'text-orange-600' : 'text-gray-400'}`}>
-                          {fmt(remaining)}
+                          {remaining > 0 ? fmt(remaining) : '—'}
                         </p>
                       </div>
                     )}
