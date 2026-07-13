@@ -3910,6 +3910,7 @@
     inStock: 1,
     isNew: true,
     isSale: true,
+    isReserved: true,
     freeDelivery: true,
     isBomb: false,
     image: '/cars/fabia-01-config.webp',
