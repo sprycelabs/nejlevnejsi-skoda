@@ -1,14 +1,7 @@
 {
   "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.nejlevnejsi-skoda.cz" }],
-      "destination": "https://nejlevnejsi-skoda.cz/:path*",
-      "permanent": true
-    },
     { "source": "/fabia-dynamic-config", "destination": "/vozy/fabia-dynamic-config", "permanent": true },
-    { "source": "/fabia-dynamic",        "destination": "/vozy/fabia-dynamic",        "permanent": true },
-    { "source": "/:path+/",             "destination": "/:path+",                    "permanent": true }
+    { "source": "/fabia-dynamic",        "destination": "/vozy/fabia-dynamic",        "permanent": true }
   ],
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
