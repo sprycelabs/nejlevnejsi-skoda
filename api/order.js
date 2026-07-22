@@ -24,7 +24,7 @@ function loadLogoBase64() {
 }
 
 const FROM = 'platby@nejlevnejsi-skoda.cz'
-const CLIENT_EMAIL = 'platby@nejlevnejsi-skoda.cz'
+const CLIENT_EMAIL = 'info@nejlevnejsi-skoda.cz'
 
 function formatPrice(price) {
   return new Intl.NumberFormat('cs-CZ', {
@@ -335,14 +335,16 @@ export default async function handler(req, res) {
       content: f.data, // base64
     }))
 
-    // Email zákazníkovi — pouze proforma faktura, bez nahraných souborů
-    await resend.emails.send({
-      from: `Nejlevnější Škoda CZ <${FROM}>`,
-      to: form.email,
-      subject: `Vaše objednávka ${orderNumber} — proforma faktura v příloze`,
-      html: customerEmail(form, items, total, orderNumber, discount, paymentMethod),
-      attachments: [attachment],
-    })
+    // POZASTAVENO — email zákazníkovi je dočasně vypnutý.
+    // Zákazník po odeslání vidí potvrzení na webu, ale žádný email mu nechodí.
+    // Pro znovuzapnutí odkomentuj následující blok:
+    // await resend.emails.send({
+    //   from: `Nejlevnější Škoda CZ <${FROM}>`,
+    //   to: form.email,
+    //   subject: `Vaše objednávka ${orderNumber} — proforma faktura v příloze`,
+    //   html: customerEmail(form, items, total, orderNumber, discount, paymentMethod),
+    //   attachments: [attachment],
+    // })
 
     // Notifikace klientovi — faktura + všechny soubory od zákazníka
     await resend.emails.send({

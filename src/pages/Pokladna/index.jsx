@@ -230,7 +230,7 @@ export default function Pokladna() {
               </div>
             )}
             <p className="text-gray-500 leading-relaxed mb-8">
-              Děkujeme za vaši objednávku. Potvrzení jsme zaslali na <strong>{form.email}</strong>. Fakturu s platebními údaji obdržíte do 24 hodin.
+              Děkujeme za vaši objednávku. Náš tým ji nyní zpracuje a co nejdříve vás budeme kontaktovat s potvrzením a dalšími kroky.
             </p>
             <Link to="/" className="inline-flex items-center gap-2 bg-[#1e7e34] hover:bg-[#28a745] text-white font-bold px-8 py-3 rounded-md transition-colors">
               Zpět na hlavní stránku
